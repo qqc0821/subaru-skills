@@ -1,0 +1,8 @@
+interface:
+  display_name: "Subaru Slides"
+  short_description: "端到端制作可编辑与视觉型 PPTX 演示文稿与配图"
+  brand_color: "#D24B3E"
+  default_prompt: "Use $subaru-slides to turn this topic into a polished PPTX deck with a clear narrative and a deliberate visual system."
+
+policy:
+  allow_implicit_invocation: true

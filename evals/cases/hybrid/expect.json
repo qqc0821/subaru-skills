@@ -1,0 +1,12 @@
+{
+  "id": "hybrid",
+  "description": "混合模式（Path B')",
+  "path": "B2",
+  "assert": {
+    "slide_count_min": 5,
+    "image_count_min": 1,
+    "text_chars_min": 150,
+    "cjk_chars_min": 80,
+    "placeholders_max": 0
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "note": "Rules applied by tools/check_consistency.py across skills/**/*.md",
+  "single_value": [
+    {
+      "id": "image-canvas-resolution",
+      "pattern": "(2048x1152|1920x1080)",
+      "message": "Image canvas resolution is declared inconsistently"
+    }
+  ],
+  "contradiction": [
+    {
+      "id": "snoopy-negative-constraint",
+      "a": "始终指定.*NOT Snoopy",
+      "b": "不要.*NOT Snoopy",
+      "message": "Contradictory guidance about the NOT Snoopy constraint"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "full-ai-visual",
+  "description": "全 AI 视觉页（Path B）",
+  "path": "B",
+  "assert": {
+    "slide_count_min": 5,
+    "image_count_min": 5,
+    "placeholders_max": 0
+  }
+}

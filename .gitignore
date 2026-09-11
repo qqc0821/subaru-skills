@@ -141,3 +141,14 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Harness / build / eval artifacts
+.codex-build/
+output/
+.chart-data-*/
+evals/artifacts/
+evals/results/
+
+# Python caches
+__pycache__/
+*.pyc

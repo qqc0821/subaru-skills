@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: subaru-harness
+        name: subaru-skills harness (make check)
+        entry: make check
+        language: system
+        pass_filenames: false
+        always_run: true

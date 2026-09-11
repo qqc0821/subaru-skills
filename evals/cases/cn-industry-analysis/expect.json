@@ -1,0 +1,13 @@
+{
+  "id": "cn-industry-analysis",
+  "description": "中文行业分析 deck（原生可编辑图表）",
+  "path": "A",
+  "assert": {
+    "slide_count_min": 6,
+    "chart_count_min": 1,
+    "text_chars_min": 300,
+    "cjk_chars_min": 150,
+    "font_families_max": 2,
+    "placeholders_max": 0
+  }
+}
