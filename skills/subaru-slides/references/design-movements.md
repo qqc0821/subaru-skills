@@ -172,7 +172,7 @@ overflow: hidden;              /* 无溢出 */
 ### 场景2：用户不确定想要什么风格
 
 1. 用默认审美画像作为讨论起点
-2. 按主题在 `proven-styles-gallery.md` 的推荐表中选3个
+2. 按主题在 `../styles/index.json` 的 `theme_recommendations` 中选3个
 3. 用本文件中的设计运动名称作为讨论锚点（如「这个方向偏田中一光，那个偏构成主义」）
 
 ### 场景3：需要从零设计一个新风格
@@ -180,7 +180,7 @@ overflow: hidden;              /* 无溢出 */
 1. 在本文件中选择1-2个设计运动作为视觉DNA
 2. 提取其核心视觉特征（配色、构图、字体、元素）
 3. 写成Base Style prompt
-4. 在 `proven-styles-gallery.md` 中增加为新风格
+4. 在 `../styles/index.json` 与 `../styles/<id>.md` 中登记新风格
 
 ---
 

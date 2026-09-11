@@ -1,27 +1,36 @@
-# Runtime and dependency notes
+# Dependencies and Capabilities
 
-`subaru-slides` is designed to work in a project-local Codex skill directory.
+`subaru-slides` is **capability-portable**: it probes the host and degrades gracefully.
+No external skill is a hard dependency; any detected capability is an optional enhancer.
 
-## Core image-to-PPTX path
+## Capabilities
+| Capability | Detected by | Enables |
+|---|---|---|
+| Native editable builder | `@oai/artifact-tool` / `python-pptx` | Path A / B' |
+| Image generation | the host's image-generation capability | Path B / B' |
+| HTML deck runtime | `deck-stage.js` | Path C |
+| HTML→PPTX converter | an html2pptx-style converter | Path C export |
+| Renderer | `soffice` + `pdftoppm` | visual QA |
+| Bundled fallback | `scripts/create_slides.py` (PEP 723) | image-only PPTX |
 
-- Python 3.10 or newer
-- `uv` for isolated execution
-- `python-pptx>=1.0.0`
-- `Pillow>=10.0.0`
-- Entry point: `scripts/create_slides.py`
+Run `scripts/detect_capabilities.py` (human or `--json`) to detect all of the above.
 
-The helper uses PEP 723 inline metadata, so a separate virtual environment or committed dependency cache is not required. Run it with `uv run` from the project root.
+## Selection order
+`A 原生可编辑 → B' 混合 → C HTML deck → B 全 AI 视觉 → fallback`
 
-## Editable HTML path
+## Degrade rules
+- **No native builder** → cannot do A/B'; use C or B and state that text will not be editable.
+- **No image generation** → skip AI imagery; A/C use native visuals only.
+- **No renderer** → run structural checks only and state that visual verification was not performed.
+- **Optional skills absent** → no action needed; the probe simply reports them as unavailable.
 
-Use the available `$presentations` skill to convert HTML slides into editable PPTX files and to preview them. The helper paths and Node.js packages for this path are owned by that workflow; do not hard-code a home-directory path here. If `$presentations` is unavailable, switch to the core image-to-PPTX path rather than guessing an installation path.
+## Bundled helper
+`scripts/create_slides.py`: Python 3.10+, PEP 723 dependencies `python-pptx>=1.0.0` and `Pillow>=10.0.0`.
+Run with `uv run`. Layouts: `fullscreen` / `title_above` / `title_below` / `title_left` / `center` / `grid`.
 
-## Optional illustration path
-
-Use the native `imagegen` capability when bitmap illustrations are useful. No Gemini key, provider-specific CLI, sibling repository, or external image skill is required by this skill.
+仓库 CI 通过 `astral-sh/setup-uv@v6` 临时提供 uv，用于重建固定输入 eval 产物。它属于测试 Harness 依赖，不是 skill 端到端运行的必需能力；缺少 uv 时应把 fallback 标为 BLOCKED，而不是静默通过。
 
 ## Local resources
-
-- `../assets/style-samples/` contains the bundled visual references.
-- `references/` contains the design framework and prompt templates.
-- No secret files, generated outputs, font downloads, or dependency caches belong in this skill directory.
+- `../styles/index.json` - style registry (single source of truth).
+- `references/` - design framework, paths, QA.
+- No secrets, generated outputs, font downloads, or dependency caches belong in this skill directory.

@@ -152,3 +152,6 @@ evals/results/
 # Python caches
 __pycache__/
 *.pyc
+
+# uv local cache
+.uv-cache/

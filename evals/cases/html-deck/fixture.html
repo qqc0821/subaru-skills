@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>subaru-slides 测试闭环</title>
+  <style>
+    :root {
+      --ink: #15202b;
+      --paper: #f4f0e6;
+      --accent: #b52f25;
+      --muted: #596671;
+      --type-title: 72px;
+      --type-subtitle: 42px;
+      --type-body: 32px;
+      --type-small: 24px;
+      --pad-x: 120px;
+      --pad-top: 100px;
+      --pad-bottom: 84px;
+      --gap-title: 48px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #111; font-family: -apple-system, "SF Pro Text", "PingFang SC", "Noto Sans SC", sans-serif; }
+    section[data-label] > *:not(img):not(picture):not(video):not(svg):not(canvas) { height: 100%; box-sizing: border-box; }
+    .slide { padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--paper); color: var(--ink); display: flex; flex-direction: column; }
+    h1, h2, p { margin: 0; }
+    h1, h2 { color: var(--ink); font-size: var(--type-title); line-height: 1.12; letter-spacing: -0.035em; }
+    .kicker { font-size: var(--type-small); color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 32px; }
+    .subtitle { margin-top: var(--gap-title); max-width: 1280px; font-size: var(--type-subtitle); line-height: 1.45; color: var(--muted); }
+    .rule { width: 180px; height: 10px; margin-top: 72px; background: var(--accent); }
+    .flow { margin-top: 72px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+    .step { border-top: 8px solid var(--ink); padding-top: 24px; }
+    .step strong { display: block; font-size: var(--type-small); color: var(--accent); margin-bottom: 12px; }
+    .step span { display: block; color: var(--ink); font-size: var(--type-body); line-height: 1.35; }
+    .status { margin-top: 72px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 80px; }
+    .status-row { display: grid; grid-template-columns: 190px 1fr; align-items: baseline; border-bottom: 2px solid #c9c1b3; padding: 22px 0; }
+    .status-row strong { font-size: var(--type-subtitle); color: var(--accent); }
+    .status-row span { color: var(--ink); font-size: var(--type-body); }
+    .foot { margin-top: auto; font-size: var(--type-small); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <deck-stage width="1920" height="1080">
+    <section data-label="01">
+      <div class="slide">
+        <p class="kicker">SUBARU SLIDES · PATH C</p>
+        <h1>测试闭环</h1>
+        <p class="subtitle">从可重复的运行证据出发，把问题、修复与回归结果连成同一条链。</p>
+        <div class="rule"></div>
+        <p class="foot">固定 HTML 案例 · 1920 × 1080</p>
+      </div>
+    </section>
+    <section data-label="02">
+      <div class="slide">
+        <p class="kicker">PROCESS</p>
+        <h2>一次问题只走一条证据链</h2>
+        <div class="flow">
+          <div class="step"><strong>01</strong><span>测试</span></div>
+          <div class="step"><strong>02</strong><span>发现</span></div>
+          <div class="step"><strong>03</strong><span>确认</span></div>
+          <div class="step"><strong>04</strong><span>优化</span></div>
+          <div class="step"><strong>05</strong><span>验证</span></div>
+        </div>
+        <p class="foot">每个失败保留最小复现、产物片段与分级。</p>
+      </div>
+    </section>
+    <section data-label="03">
+      <div class="slide">
+        <p class="kicker">GATE</p>
+        <h2>未执行不等于通过</h2>
+        <div class="status">
+          <div class="status-row"><strong>PASS</strong><span>已执行，断言全部成立</span></div>
+          <div class="status-row"><strong>FAIL</strong><span>已执行，至少一项断言失败</span></div>
+          <div class="status-row"><strong>SKIP</strong><span>路径可运行，但没有产物</span></div>
+          <div class="status-row"><strong>BLOCKED</strong><span>能力缺失，并记录明确原因</span></div>
+        </div>
+        <p class="foot">覆盖率闸门综合判定退出码。</p>
+      </div>
+    </section>
+  </deck-stage>
+  <script src="deck-stage.js"></script>
+</body>
+</html>

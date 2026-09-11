@@ -161,12 +161,25 @@ policy:
 make check     # = validate_skills + check_links + check_consistency + check_assets + check_style_system
 make test      # 脚本冒烟 / 单元测试
 make doctor    # 环境能力自检
-make eval      # eval 回归基准（无产物的 case 自动 SKIP）
+make eval      # 本机 eval 覆盖率闸门（PASS / FAIL / SKIP / BLOCKED）
+make eval-ci   # CI 重建固定输入产物后执行独立覆盖率闸门
 make new-task  # 从 docs/templates/ 生成任务三件套
 make baseline  # 把当前 findings 记为已知债务（仅在有意接受时使用）
 ```
 
+针对具体 deck 的工具：
+
+```
+make validate PPTX=deck.pptx      # 结构错误 + 启发式警告
+make render   PPTX=deck.pptx OUT=d # 逐页 PNG/PDF
+make montage  DIR=slides/ OUT=m.webp
+make lint-copy SRC=deck.pptx      # 文案反 AI 味初筛
+make new-style ID=x NAME=...       # 新建风格 preset（可选 REGISTER=1）
+```
+
 本地、Agent、CI 使用**同一个入口**，避免"我本地过了"。
+
+CI 的 `make eval-ci` 使用 `astral-sh/setup-uv@v6`，只为解析内置 `create_slides.py` 已声明的 PEP 723 依赖并重建不入库的固定测试产物；这不把 uv、图片生成或其他外部 skill 变成 `subaru-slides` 的强制运行时依赖。
 
 ### 8.2 辅助手动检查（可选；已被 `make check` 覆盖）
 

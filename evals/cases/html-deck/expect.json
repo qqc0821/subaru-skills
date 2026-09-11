@@ -1,0 +1,21 @@
+{
+  "id": "html-deck",
+  "description": "deck-stage 三页 HTML 演示",
+  "path": "C",
+  "artifact_extension": ".html",
+  "assert": {
+    "html_slide_count_min": 3,
+    "deck_stage_count_eq": 1,
+    "stage_width_eq": "1920",
+    "stage_height_eq": "1080",
+    "section_label_count_min": 3,
+    "duplicate_labels_max": 0,
+    "deck_stage_script_count_eq": 1,
+    "wrapper_fill_rule_count_eq": 1,
+    "explicit_slide_text_color_rule_count_eq": 1,
+    "font_size_min_px_min": 24,
+    "placeholders_max": 0,
+    "html_validation_error_count_max": 0,
+    "execution_path_eq": "C"
+  }
+}

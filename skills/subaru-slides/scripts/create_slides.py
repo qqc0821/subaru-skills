@@ -18,6 +18,7 @@ Usage:
 import argparse
 import math
 import sys
+from io import BytesIO
 from pathlib import Path
 
 from PIL import Image as PILImage
@@ -70,6 +71,18 @@ def get_image_size(image_path: str) -> tuple[int, int]:
         return img.size
 
 
+def add_picture(slide, image_path: str, left, top, width, height):
+    """Add an image, converting formats unsupported by python-pptx in memory."""
+    with PILImage.open(image_path) as img:
+        if img.format in {"BMP", "GIF", "JPEG", "PNG", "TIFF", "WMF"}:
+            return slide.shapes.add_picture(image_path, left, top, width, height)
+        converted = BytesIO()
+        mode = "RGBA" if "A" in img.getbands() else "RGB"
+        img.convert(mode).save(converted, format="PNG")
+        converted.seek(0)
+        return slide.shapes.add_picture(converted, left, top, width, height)
+
+
 def add_textbox(slide, text: str, left, top, width, height,
                 font_size: int = 28, font_color: RGBColor = None,
                 bold: bool = True, alignment=PP_ALIGN.LEFT):
@@ -99,10 +112,17 @@ def add_fullscreen_slide(prs, image_path: str, bg_color: RGBColor):
     set_slide_bg(slide, bg_color)
 
     img_w, img_h = get_image_size(image_path)
-    new_w, new_h, left, top = cover_image_size(
-        img_w, img_h, SLIDE_WIDTH, SLIDE_HEIGHT
-    )
-    slide.shapes.add_picture(image_path, left, top, new_w, new_h)
+    picture = add_picture(slide, image_path, 0, 0, SLIDE_WIDTH, SLIDE_HEIGHT)
+    image_ratio = img_w / img_h
+    slide_ratio = SLIDE_WIDTH / SLIDE_HEIGHT
+    if image_ratio > slide_ratio:
+        crop = (1 - slide_ratio / image_ratio) / 2
+        picture.crop_left = crop
+        picture.crop_right = crop
+    elif image_ratio < slide_ratio:
+        crop = (1 - image_ratio / slide_ratio) / 2
+        picture.crop_top = crop
+        picture.crop_bottom = crop
     return slide
 
 
@@ -151,7 +171,7 @@ def add_title_image_slide(prs, image_path: str, title: str,
         img_left = Inches(margin) + (content_w - new_w) // 2
     img_top_centered = img_top + (img_max_h - new_h) // 2
 
-    slide.shapes.add_picture(image_path, img_left, img_top_centered, new_w, new_h)
+    add_picture(slide, image_path, img_left, img_top_centered, new_w, new_h)
     return slide
 
 
@@ -168,7 +188,7 @@ def add_center_slide(prs, image_path: str, bg_color: RGBColor, margin: float):
 
     left = (SLIDE_WIDTH - new_w) // 2
     top = (SLIDE_HEIGHT - new_h) // 2
-    slide.shapes.add_picture(image_path, left, top, new_w, new_h)
+    add_picture(slide, image_path, left, top, new_w, new_h)
     return slide
 
 
@@ -198,7 +218,7 @@ def add_grid_slide(prs, image_paths: list[str], cols: int,
 
         img_left = cell_left + (cell_w - new_w) // 2
         img_top = cell_top + (cell_h - new_h) // 2
-        slide.shapes.add_picture(img_path, img_left, img_top, new_w, new_h)
+        add_picture(slide, img_path, img_left, img_top, new_w, new_h)
 
     return slide
 

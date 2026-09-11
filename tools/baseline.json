@@ -1,12 +1,4 @@
 {
   "note": "Known findings recorded by the harness. New findings fail make check.",
-  "known": [
-    "check_assets:non-webp-assets:subaru-slides",
-    "check_assets:skill-size:subaru-slides",
-    "check_consistency:forbidden:skills/subaru-slides/SKILL.md:external-skill-presentations",
-    "check_consistency:forbidden:skills/subaru-slides/references/dependencies.md:external-skill-presentations",
-    "check_style_system:missing-index:subaru-slides",
-    "validate_skills:subaru-slides:package-size",
-    "validate_skills:subaru-slides:skill-md-lines"
-  ]
+  "known": []
 }

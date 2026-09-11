@@ -1,0 +1,20 @@
+{
+  "id": "fallback-image-pptx",
+  "description": "内置 fallback 生成的三页图片型 PPTX",
+  "path": "fallback",
+  "assert": {
+    "slide_count_min": 3,
+    "slide_count_max": 3,
+    "image_count_min": 3,
+    "image_count_max": 3,
+    "text_chars_max": 0,
+    "chart_count_max": 0,
+    "table_count_max": 0,
+    "native_editable_object_count_max": 0,
+    "notes_slide_count_max": 0,
+    "placeholders_max": 0,
+    "validation_error_count_max": 0,
+    "validation_warning_count_max": 0,
+    "execution_path_eq": "fallback"
+  }
+}

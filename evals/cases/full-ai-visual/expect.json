@@ -5,6 +5,11 @@
   "assert": {
     "slide_count_min": 5,
     "image_count_min": 5,
-    "placeholders_max": 0
+    "native_editable_object_count_max": 0,
+    "notes_slide_count_max": 0,
+    "placeholders_max": 0,
+    "validation_error_count_max": 0,
+    "validation_warning_count_max": 0,
+    "execution_path_eq": "B"
   }
 }

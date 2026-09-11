@@ -64,6 +64,45 @@
 - Upstream skill: https://github.com/alchaincyf/huashu-skills/tree/master/huashu-slides
 - Local project: /Users/nicolas/Projects_app/subaru-skills
 
+## Session 2 - Optimization / Pre-P0 / P0
+
+### Key findings
+- Path A 文档与实现脱节：真实产物用原生构建器（`.codex-build/ev-trends/build.mjs`），SKILL.md 却写 HTML→html2pptx。
+- 硬依赖外部 skill（`@presentations` / imagegen）破坏可移植性；本机 DSH 技能目录并不包含它们。
+- Snoopy 风格 NOT 约束自相矛盾；图像分辨率 1920/2048 混用；风格计数 18/23/17 漂移。
+- 图表部件实际位于 `ppt/slides/charts/`，eval 首次漏检（已修）。
+
+### Decisions
+| Decision | Rationale |
+|---|---|
+| 风格数据单一事实源 `styles/index.json` + 每风格 preset | 消除多处计数/命名漂移 |
+| 能力探测优先，外部 skill 仅增强 | 可移植 |
+| SKILL.md ≤ 200 行路由器，长文下沉 `references/` | harness 规则 + 上下文效率 |
+| baseline 按 check 替换 + stale 提示 | 债务只减不增 |
+
 ## Visual/Browser Findings
 - GitHub successfully loaded the public `master/huashu-slides` tree. Visible top-level skill entries are `assets`, `references`, `scripts`, and `SKILL.md`.
 - The GitHub recursive tree confirms there are no other files inside the skill beyond the listed script, references, images, and `.DS_Store`.
+
+## Session 3 — Eval closure findings
+
+- Baseline commit: `788b450abb8fab0778adc5d0cf4eac90bcf89cdb` (`feat(subaru-slides): add skill harness and evaluation suite`). The working tree contains uncommitted user changes; do not commit or rewrite them without explicit authorization.
+- Baseline `make check` and `make test` pass.
+- Baseline `make eval` reports `0 validated, 3 skipped` and exits 0. This is a confirmed false-green coverage defect.
+- Host capability evidence: `soffice` and `pdftoppm` are available; `deck_stage`, `imagegen`, `uv`, and bundled `create_slides.py` are detected. System `python-pptx`, Pillow, Chrome, artifact-tool, and html2pptx are absent.
+- Path decision: A and B' are BLOCKED by the missing native editable builder; C is RUNNABLE as HTML but PPTX export is BLOCKED without html2pptx; B is RUNNABLE because image generation is available; fallback is RUNNABLE through `uv run` despite system Python lacking python-pptx/Pillow.
+- Visual QA is executable through soffice + pdftoppm in this environment. The earlier no-renderer claim is stale for the current runtime and must not be repeated.
+- The new policy gate correctly returns exit 1 for `0 PASS / 0 FAIL / 1 SKIP / 2 BLOCKED`; zero coverage can no longer pass silently.
+- BLOCKED status is determined only when the case has no artifact and its declared path is BLOCKED in `evals/environment.json`. Supplying an artifact still evaluates the case, so the matrix cannot hide a real result.
+- Policy is explicit in `evals/policy.json`: `min_pass=1`, `max_fail=0`, `max_skip=0`, and every BLOCKED case requires a reason.
+- P0 confirmed: `create_slides.py` accepted WebP during input validation through Pillow, but passed the original path to python-pptx, which rejects WebP. This made the bundled fallback incompatible with every newly compressed style sample. Minimal reproduction is the command in `evals/cases/fallback-image-pptx/brief.md`; failure fragment: `ValueError: unsupported image format ... got 'WEBP'`.
+- P1 confirmed after the WebP fix: fallback PPTX structurally passed the narrow eval assertions but `validate_pptx.py` reported one out-of-bounds picture on every slide. Root cause was fullscreen cover implemented with negative offsets. The rendered deck succeeded, so this is both a product-cleanliness issue and evidence that eval did not include validator errors.
+- After the crop fix, the same fallback artifact validates with 0 errors / 0 warnings and renders to three PNGs. Manual page-by-page inspection found all three images fill the slide without distortion, blank margins, or clipped primary content.
+- Current gate state is intentionally still red: fallback is PASS, A/B2 are reasoned BLOCKED, and runnable Path B remains SKIP. The remaining red state is coverage debt, not a fallback product failure.
+- Path B fixed-input regression now passes: 5 slides / 5 images, 0 validator errors, 0 validator warnings, and successful 5-page rendering. Page-by-page inspection found no obvious crop, stretch, blank-margin, or primary-text readability defect.
+- With fallback and fixed-input B executed, the coverage gate reaches `2 PASS / 0 FAIL / 0 SKIP / 2 BLOCKED` and exits 0.
+- P1 routing contract mismatch: `detect_capabilities.recommend()` selected B2 when native + image were both present, while AGENTS.md, SKILL.md, and dependencies.md define A before B2. The detector now returns A and treats image generation as an optional enhancement; synthetic capability-table tests cover A, C, B, and fallback.
+- P1 browser finding: Path C loaded and navigated correctly, but deck-stage host styles made unqualified headings and step labels white on the light paper background. The fixed fixture now sets an explicit ink color on the slide wrapper/headings/body; the HTML inspector treats that contract as required. Browser recheck reached `#1 -> #2 -> #3` with 0 console warnings/errors and no remaining obvious readability defect.
+- CI reproducibility finding: because `evals/artifacts/` is intentionally gitignored, running `make eval` in a clean checkout would correctly fail the local 3-PASS policy. CI now rebuilds only the two repository-owned fixed-input PPTX cases with `uv` and evaluates them against a separate honest matrix/policy; optional Path C and visual QA remain BLOCKED there.
+- Path A decision: do not add a nominal `python-pptx` dependency and call the existing image assembler a native builder. A maintainable Path A still needs a content schema, layout engine, native chart/table/text contracts, and dedicated cases; until then A/B2 remain explicitly BLOCKED.
+- Final false-green boundary: `run_evals.py` also returned success when no case directory existed. It now exits non-zero before artifact evaluation, with a dedicated regression test; both “no cases” and “cases but no runnable artifact” are covered.

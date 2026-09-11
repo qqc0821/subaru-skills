@@ -76,10 +76,10 @@ Complete — delivery review finished
 
 ## Session 2 — Optimization Plan & Pre-P0 Harness
 
-- **Status:** In progress
+- **Status:** Complete
 - **Goal:** 按 `optimization-plan.md` 把 subaru-slides 升级为"最好的 PPT 制作 skill"，先建设仓库级 Harness 约束 AI 辅助开发。
 - **Plan of record:** `optimization-plan.md`
-- **Current phase:** Pre-P0 H1–H7 完成；已开始 P0（P0-3/P0-4 完成）
+- **Current phase:** Pre-P0 + P0 + P1 + P2 全部完成
 
 ### H1 deliverable
 - [x] 新建 `AGENTS.md`（222 行）：仓库结构、Must/Must Not、skill 包规范、风格系统约定、依赖与能力策略、Git 约定、质量门、协作工作流、出处与许可。
@@ -103,5 +103,77 @@ Complete — delivery review finished
 - [x] P0-4：修复 Snoopy NOT 约束矛盾、统一图像分辨率为 2048x1152。
 - [x] P0-3：`skills/subaru-slides/scripts/detect_capabilities.py` 能力探测与路径推荐。
 
+### P0 deliverable
+- [x] P0-1：`SKILL.md` 瘦身为 99 行路由器。
+- [x] P0-2：新增 `references/paths/{path-a-native,path-b2-hybrid,path-b-visual,path-c-html}.md`；`dependencies.md` 重写为能力矩阵；新增 `workflow.md`、`content-structure.md`、`illustrations.md`、`qa/{checklist,render-and-validate,delivery}.md`；`proven-styles-gallery.md` 精简为策略页；`prompt-templates.md` 去重。
+- [x] P0-5：`styles/index.json` + 23 个 `styles/<id>.md`；`check_style_system` 转绿。
+- [x] 基线从 9 条降到 3 条（仅剩 P2 资产压缩债务）。
+
+### P1 deliverable
+- [x] P1-1 模板/品牌跟随：`references/template-following.md`。
+- [x] P1-2 原生证据 + 单位护栏：`references/native-evidence.md`。
+- [x] P1-3 质检工具：`tools/validate_pptx.py`、`tools/render_preview.py`、`tools/make_montage.py` + `make validate/render/montage`。
+- [x] P1-4 内容质量闸：`references/writing-quality.md` + `tools/lint_copy.py` + `make lint-copy`。
+- [x] P1-5 中文排版：`references/typography-cjk.md`。
+- [x] P1-6 演讲备注/动画：`references/speaker-notes.md`。
+- [x] 真实 deck 验证：validate 0 error/3 warn；lint-copy 2 命中。
+
+### P2 deliverable
+- [x] P2-1 设计系统/自定义风格：`references/design-system.md` + `tools/new_style.py` + `make new-style`。
+- [x] P2-2 资产压缩：17 张 PNG -> WebP，13.66 MB -> 1.04 MB；skill 14MB -> 1.3MB；**baseline 归零**。
+- [x] P2-3 测试与 CI：`tests/test_harness.py`（8 个用例）+ CI 增加 `make eval`。
+- [x] P2-4 跨 harness：`references/harnesses.md`。
+- [x] P2-5 生态联动：`references/integrations.md`。
+
 ### Next
-- [ ] P0-1 / P0-2 / P0-5：SKILL.md 路由器、路径重构（含 Path B'）、风格系统机读化。
+- [ ] 可选项：为 6 个 Path A 风格补样例图；扩展 evals 断言（validate/lint 纳入）；更多 harness 适配。
+
+---
+
+## Session 3 — subaru-slides 覆盖测试闭环
+
+- **Status:** Complete
+- **Goal:** 只对 `subaru-slides` 建立可审计的测试闭环，避免把未执行或环境阻塞误报为通过。
+- **Scope for this change:** 先完成覆盖率闸门与环境可执行矩阵，再依据矩阵选择可运行案例。
+
+### Phase 1: Baseline and environment evidence
+- [x] 记录 git SHA、静态检查、单测、eval 基线
+- [x] 记录 `doctor --json` 与 `detect_capabilities --json`
+- [x] 落地环境可执行矩阵（RUNNABLE / BLOCKED + reason）
+- **Status:** complete
+
+### Phase 2: Coverage gate
+- [x] 将案例状态拆为 PASS / FAIL / SKIP / BLOCKED
+- [x] 增加最小 PASS 数、零 FAIL、BLOCKED 必须有 reason 的覆盖率策略
+- [x] 增加单元测试，验证零覆盖不再返回成功
+- **Status:** complete
+
+### Phase 3: Runnable cases
+- [x] 根据环境矩阵只执行可运行路径；不可执行路径保留 BLOCKED 证据
+- [x] 决定不在本轮把图片装配 helper 冒充 Path A；原生 schema/布局器/对象契约留作独立建设项
+- **Status:** complete
+
+### Phase 4: Iterate and verify
+- [x] 每个确认问题记录最小复现命令与产物片段
+- [x] 最小修复后重跑失败案例与全量质量门
+- [x] 达到覆盖率策略且无明显 P0/P1 问题
+- **Status:** complete
+
+### Session 3 acceptance
+- [x] `make eval` 在 0 个 PASS 时非 0
+- [x] BLOCKED 不等同 FAIL，但缺 reason 会使覆盖率闸门失败
+- [x] 环境矩阵记录 git SHA、能力证据、路径可执行性和 claim boundary
+- [x] 路由覆盖落到 frontmatter 静态断言与路径决策表单测
+- [x] 时间戳 ledger 记录每轮模型、prompt 版本、参数与运行时 git SHA
+- [x] `make check` 与 `make test` 通过
+
+### Session 3 errors
+| Error | Attempt | Resolution |
+|---|---:|---|
+| 添加 fallback case 的首个补丁因 README 标题上下文不匹配而失败 | 1 | 检查文件实际内容后改用稳定的列表行作为补丁锚点 |
+| `uv run` 无法初始化默认缓存（只读用户缓存目录） | 1 | 改用 `/private/tmp/subaru-skills-uv-cache` 作为任务专用缓存后重试 |
+| fallback 无法把仓库 WebP 样例写入 PPTX：`unsupported image format ... WEBP` | 1 | P0：在 `create_slides.py` 内存转换不受 python-pptx 支持的格式为 PNG，再用原命令回归 |
+| fallback 结构校验报每页图片越界 | 1 | P1：fullscreen 改为画布内图片对象 + OOXML crop，保持 cover 效果且不越界 |
+| 能力探测器在 native + image 同时存在时返回 B2，与 A→B2 的仓库顺序冲突 | 1 | P1：`recommend()` 改为原生构建器优先，并用合成能力矩阵单测锁定顺序 |
+| Path C 首次浏览器截图中标题/流程文字继承 deck-stage 白色前景，在浅色背景上对比度不足 | 1 | P1：在固定 HTML 源中显式设置 `.slide`、标题与正文前景色；新增 inspector 断言后复验 `#1 -> #2 -> #3`，控制台 0 错误/告警 |
+| 沙箱不允许本地 HTTP 服务绑定 4312 端口 | 1 | 获得仅限 `python3 -m http.server` 的授权后启动临时本地服务完成浏览器验证 |

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-09-11T16:59:30Z",
+  "git_sha": "788b450abb8fab0778adc5d0cf4eac90bcf89cdb",
+  "working_tree_dirty": true,
+  "paths": {
+    "A": {
+      "status": "BLOCKED",
+      "reason": "No native editable builder was detected: artifact-tool and system python-pptx are unavailable."
+    },
+    "B2": {
+      "status": "BLOCKED",
+      "reason": "Path B' requires both image generation and a native editable builder; the native builder is unavailable."
+    },
+    "C": {
+      "status": "RUNNABLE",
+      "reason": "deck-stage is available for an HTML deck; PPTX export remains unavailable without html2pptx."
+    },
+    "B": {
+      "status": "RUNNABLE",
+      "reason": "The host image-generation capability is available."
+    },
+    "fallback": {
+      "status": "RUNNABLE",
+      "reason": "uv and the bundled PEP 723 create_slides.py helper are available."
+    }
+  },
+  "visual_qa": {
+    "status": "RUNNABLE",
+    "reason": "soffice and pdftoppm are both available; Chrome is not required for PPTX rendering."
+  }
+}

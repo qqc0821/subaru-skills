@@ -3,7 +3,7 @@
   "single_value": [
     {
       "id": "image-canvas-resolution",
-      "pattern": "(2048x1152|1920x1080)",
+      "pattern": "CANVAS:.*?(2048x1152|1920x1080)",
       "message": "Image canvas resolution is declared inconsistently"
     }
   ],

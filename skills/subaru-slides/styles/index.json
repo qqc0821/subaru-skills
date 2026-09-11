@@ -1,0 +1,448 @@
+{
+  "schema_version": 1,
+  "count": 23,
+  "styles": [
+    {
+      "id": "warm-comic-strip",
+      "name": "Snoopy温暖漫画",
+      "name_en": "Warm Comic Strip",
+      "tier": 1,
+      "themes": [
+        "品牌/产品介绍",
+        "教育/培训",
+        "个人IP"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-snoopy.webp",
+      "preset": "styles/warm-comic-strip.md",
+      "proven": true
+    },
+    {
+      "id": "manga-educational",
+      "name": "学習漫画",
+      "name_en": "Manga Educational",
+      "tier": 1,
+      "themes": [
+        "教程/培训",
+        "知识分享"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-manga.webp",
+      "preset": "styles/manga-educational.md",
+      "proven": true
+    },
+    {
+      "id": "ligne-claire",
+      "name": "清线漫画",
+      "name_en": "Ligne Claire Comics",
+      "tier": 1,
+      "themes": [
+        "产品说明",
+        "流程解释"
+      ],
+      "formality": "medium",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-ligne-claire.webp",
+      "preset": "styles/ligne-claire.md",
+      "proven": true
+    },
+    {
+      "id": "neo-pop-magazine",
+      "name": "新波普杂志",
+      "name_en": "Neo-Pop Magazine",
+      "tier": 1,
+      "themes": [
+        "年轻品牌",
+        "社交平台",
+        "活动"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-neo-pop.webp",
+      "preset": "styles/neo-pop-magazine.md",
+      "proven": true
+    },
+    {
+      "id": "whiteboard-sketch",
+      "name": "xkcd白板手绘",
+      "name_en": "Whiteboard Sketch",
+      "tier": 2,
+      "themes": [
+        "技术分享",
+        "极客受众",
+        "课堂"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-xkcd.webp",
+      "preset": "styles/whiteboard-sketch.md",
+      "proven": true
+    },
+    {
+      "id": "soviet-constructivism",
+      "name": "苏联构成主义",
+      "name_en": "Soviet Constructivism",
+      "tier": 2,
+      "themes": [
+        "产品发布/keynote",
+        "campaign",
+        "品牌宣言"
+      ],
+      "formality": "medium",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-01-苏联构成主义-constructivism.webp",
+      "preset": "styles/soviet-constructivism.md",
+      "proven": true
+    },
+    {
+      "id": "dunhuang-mural",
+      "name": "敦煌壁画",
+      "name_en": "Dunhuang Mural",
+      "tier": 2,
+      "themes": [
+        "国风/东方",
+        "文化项目",
+        "高端场合"
+      ],
+      "formality": "medium",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-10-敦煌壁画-dunhuang.webp",
+      "preset": "styles/dunhuang-mural.md",
+      "proven": true
+    },
+    {
+      "id": "ukiyo-e",
+      "name": "浮世绘",
+      "name_en": "Ukiyo-e",
+      "tier": 2,
+      "themes": [
+        "日本/东方市场",
+        "跨境品牌"
+      ],
+      "formality": "medium",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-02-浮世绘-ukiyo-e.webp",
+      "preset": "styles/ukiyo-e.md",
+      "proven": true
+    },
+    {
+      "id": "oatmeal-comic",
+      "name": "The Oatmeal信息图漫画",
+      "name_en": "The Oatmeal Information Comic",
+      "tier": 2,
+      "themes": [
+        "科普",
+        "社交传播",
+        "内部培训"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-oatmeal.webp",
+      "preset": "styles/oatmeal-comic.md",
+      "proven": true
+    },
+    {
+      "id": "warm-narrative",
+      "name": "温暖叙事",
+      "name_en": "Warm Narrative",
+      "tier": 3,
+      "themes": [
+        "用户故事",
+        "品牌故事"
+      ],
+      "formality": "medium",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-13-温暖叙事-warm-narrative.webp",
+      "preset": "styles/warm-narrative.md",
+      "proven": true
+    },
+    {
+      "id": "risograph",
+      "name": "孔版印刷",
+      "name_en": "Risograph",
+      "tier": 3,
+      "themes": [
+        "独立品牌",
+        "创意行业",
+        "音乐"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-04-孔版印刷-risograph.webp",
+      "preset": "styles/risograph.md",
+      "proven": true
+    },
+    {
+      "id": "isometric",
+      "name": "等轴测",
+      "name_en": "Isometric",
+      "tier": 3,
+      "themes": [
+        "科技产品",
+        "SaaS流程"
+      ],
+      "formality": "medium",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-05-等轴测-isometric.webp",
+      "preset": "styles/isometric.md",
+      "proven": true
+    },
+    {
+      "id": "bauhaus",
+      "name": "包豪斯",
+      "name_en": "Bauhaus",
+      "tier": 3,
+      "themes": [
+        "设计行业",
+        "建筑",
+        "教育"
+      ],
+      "formality": "medium",
+      "path": "A_or_B2",
+      "sample": "assets/style-samples/slide04-03-包豪斯-bauhaus.webp",
+      "preset": "styles/bauhaus.md",
+      "proven": true
+    },
+    {
+      "id": "blueprint",
+      "name": "工程蓝图",
+      "name_en": "Blueprint",
+      "tier": 3,
+      "themes": [
+        "技术架构",
+        "工程方案"
+      ],
+      "formality": "high",
+      "path": "A_or_B2",
+      "sample": "assets/style-samples/slide04-06-工程蓝图-blueprint.webp",
+      "preset": "styles/blueprint.md",
+      "proven": true
+    },
+    {
+      "id": "vintage-ad",
+      "name": "复古广告",
+      "name_en": "1950s Vintage Ad",
+      "tier": 3,
+      "themes": [
+        "消费品",
+        "零售",
+        "怀旧"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-07-复古广告-vintage-ad.webp",
+      "preset": "styles/vintage-ad.md",
+      "proven": true
+    },
+    {
+      "id": "dada-collage",
+      "name": "达达拼贴",
+      "name_en": "Dada Collage",
+      "tier": 3,
+      "themes": [
+        "创意行业",
+        "广告",
+        "破冰"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-08-达达拼贴-collage.webp",
+      "preset": "styles/dada-collage.md",
+      "proven": true
+    },
+    {
+      "id": "pixel-art",
+      "name": "像素画RPG",
+      "name_en": "Pixel Art RPG",
+      "tier": 3,
+      "themes": [
+        "游戏",
+        "年轻群体",
+        "gamification"
+      ],
+      "formality": "low",
+      "path": "B_or_B2",
+      "sample": "assets/style-samples/slide04-09-像素画-pixel-art.webp",
+      "preset": "styles/pixel-art.md",
+      "proven": true
+    },
+    {
+      "id": "neo-brutalism",
+      "name": "新粗野主义",
+      "name_en": "Neo-Brutalism",
+      "tier": 2,
+      "themes": [
+        "企业培训",
+        "线下分享",
+        "信息密集"
+      ],
+      "formality": "medium",
+      "path": "A",
+      "sample": null,
+      "preset": "styles/neo-brutalism.md",
+      "proven": true
+    },
+    {
+      "id": "pentagram-editorial",
+      "name": "编辑杂志风",
+      "name_en": "Pentagram Editorial",
+      "tier": 2,
+      "themes": [
+        "行业分析",
+        "咨询报告",
+        "正式商务"
+      ],
+      "formality": "high",
+      "path": "A",
+      "sample": null,
+      "preset": "styles/pentagram-editorial.md",
+      "proven": true
+    },
+    {
+      "id": "fathom-data",
+      "name": "数据叙事风",
+      "name_en": "Fathom Data Narrative",
+      "tier": 2,
+      "themes": [
+        "数据报告",
+        "行业分析",
+        "研究汇报"
+      ],
+      "formality": "high",
+      "path": "A",
+      "sample": null,
+      "preset": "styles/fathom-data.md",
+      "proven": true
+    },
+    {
+      "id": "muller-brockmann-grid",
+      "name": "瑞士网格风",
+      "name_en": "Müller-Brockmann Grid",
+      "tier": 2,
+      "themes": [
+        "培训课件",
+        "技术架构",
+        "流程说明"
+      ],
+      "formality": "high",
+      "path": "A",
+      "sample": null,
+      "preset": "styles/muller-brockmann-grid.md",
+      "proven": true
+    },
+    {
+      "id": "build-luxury-minimal",
+      "name": "奢侈极简风",
+      "name_en": "Build Luxury Minimal",
+      "tier": 2,
+      "themes": [
+        "投资/融资路演",
+        "品牌高管汇报",
+        "奢侈品"
+      ],
+      "formality": "high",
+      "path": "A",
+      "sample": null,
+      "preset": "styles/build-luxury-minimal.md",
+      "proven": true
+    },
+    {
+      "id": "takram-speculative",
+      "name": "日式思辨风",
+      "name_en": "Takram Speculative",
+      "tier": 2,
+      "themes": [
+        "培训课件/教材",
+        "设计思维",
+        "产品愿景"
+      ],
+      "formality": "medium",
+      "path": "A_or_B2",
+      "sample": null,
+      "preset": "styles/takram-speculative.md",
+      "proven": true
+    }
+  ],
+  "theme_recommendations": [
+    {
+      "theme": "品牌/产品介绍",
+      "first": "warm-comic-strip",
+      "second": "neo-pop-magazine",
+      "third": "dunhuang-mural"
+    },
+    {
+      "theme": "教育/培训",
+      "first": "neo-brutalism",
+      "second": "manga-educational",
+      "third": "warm-comic-strip"
+    },
+    {
+      "theme": "技术分享",
+      "first": "whiteboard-sketch",
+      "second": "neo-brutalism",
+      "third": "ligne-claire"
+    },
+    {
+      "theme": "数据报告",
+      "first": "pentagram-editorial",
+      "second": "fathom-data",
+      "third": "ligne-claire"
+    },
+    {
+      "theme": "年轻受众",
+      "first": "neo-pop-magazine",
+      "second": "pixel-art",
+      "third": "risograph"
+    },
+    {
+      "theme": "创意/艺术",
+      "first": "dada-collage",
+      "second": "risograph",
+      "third": "oatmeal-comic"
+    },
+    {
+      "theme": "国风/东方",
+      "first": "dunhuang-mural",
+      "second": "ukiyo-e",
+      "third": "takram-speculative"
+    },
+    {
+      "theme": "正式商务",
+      "first": "pentagram-editorial",
+      "second": "muller-brockmann-grid",
+      "third": "build-luxury-minimal"
+    },
+    {
+      "theme": "产品发布/keynote",
+      "first": "soviet-constructivism",
+      "second": "neo-pop-magazine",
+      "third": "pentagram-editorial"
+    },
+    {
+      "theme": "内部分享",
+      "first": "neo-brutalism",
+      "second": "oatmeal-comic",
+      "third": "whiteboard-sketch"
+    },
+    {
+      "theme": "行业分析/咨询",
+      "first": "fathom-data",
+      "second": "pentagram-editorial",
+      "third": "muller-brockmann-grid"
+    },
+    {
+      "theme": "培训课件/教材",
+      "first": "takram-speculative",
+      "second": "warm-narrative",
+      "third": "manga-educational"
+    },
+    {
+      "theme": "投资/融资路演",
+      "first": "build-luxury-minimal",
+      "second": "pentagram-editorial",
+      "third": "soviet-constructivism"
+    }
+  ]
+}

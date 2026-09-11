@@ -45,6 +45,10 @@ def inspect(path: str) -> dict:
         "chart_count": 0,
         "table_count": 0,
         "image_count": 0,
+        "picture_shape_count": 0,
+        "text_shape_count": 0,
+        "graphic_frame_count": 0,
+        "native_editable_object_count": 0,
         "text_chars": 0,
         "cjk_chars": 0,
         "font_families": [],
@@ -67,6 +71,12 @@ def inspect(path: str) -> dict:
                 tag = _local(el.tag)
                 if tag == "tbl":
                     metrics["table_count"] += 1
+                elif tag == "pic":
+                    metrics["picture_shape_count"] += 1
+                elif tag == "graphicFrame":
+                    metrics["graphic_frame_count"] += 1
+                elif tag == "sp" and any(_local(child.tag) == "t" and child.text for child in el.iter()):
+                    metrics["text_shape_count"] += 1
                 elif tag == "t" and el.text:
                     texts.append(el.text)
                 elif tag in ("latin", "ea", "cs"):
@@ -82,6 +92,9 @@ def inspect(path: str) -> dict:
         metrics["chart_count"] = sum(1 for n in names if re.search(r"charts?/chart\d+\.xml$", n))
         metrics["image_count"] = sum(1 for n in names if n.startswith("ppt/media/"))
         metrics["notes_slide_count"] = sum(1 for n in names if re.match(r"ppt/notesSlides/notesSlide\d+\.xml$", n))
+        metrics["native_editable_object_count"] = (
+            metrics["text_shape_count"] + metrics["chart_count"] + metrics["table_count"]
+        )
     return metrics
 
 

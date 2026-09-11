@@ -188,3 +188,139 @@
 | `make baseline` | 全库 | 清理 stale | -2 stale，7 known | Pass |
 | 能力探测 | 本机 | 输出推荐路径 | 推荐 C（deck-stage + imagegen） | Pass |
 | `make hooks` | git hooks | 安装 hook | 安装 `pre-commit` | Pass |
+
+## Session: 2026-09-11 (P0-1 / P0-2 / P0-5)
+
+### P0-5: 风格系统机读化
+- **Status:** complete
+- 新增 `styles/index.json`（23 个风格、13 条主题推荐）与 23 个 `styles/<id>.md` preset。
+- `proven-styles-gallery.md` 精简为选择策略页，数据以 index 为准。
+- `check_style_system` 转绿。
+
+### P0-1 / P0-2: 薄路由器 + 路径重构
+
+## Session: 2026-09-11 (P1)
+
+### P1 deliverable
+- [x] P1-1 模板/品牌跟随：`references/template-following.md`。
+- [x] P1-2 原生证据 + 单位护栏：`references/native-evidence.md`。
+- [x] P1-3 质检工具：`tools/validate_pptx.py`、`tools/render_preview.py`、`tools/make_montage.py` + `make validate/render/montage`。
+- [x] P1-4 内容质量闸：`references/writing-quality.md` + `tools/lint_copy.py` + `make lint-copy`。
+- [x] P1-5 中文排版：`references/typography-cjk.md`。
+- [x] P1-6 演讲备注/动画：`references/speaker-notes.md`。
+- [x] 更新 `SKILL.md`（Step 6 + 参考索引）、`qa/render-and-validate.md`、`AGENTS.md` §8.1。
+
+### P1 Test Results
+| Test | Input | Expected | Actual | Status |
+|------|-------|----------|--------|--------|
+| `make check` | 全库 | 无新 finding | PASS（57 个 md 链接） | Pass |
+| `make test` | tools/ | 5 个脚本冒烟 | 全 OK | Pass |
+| `make validate` | 真实 deck | 结构错误为 0 | 0 error / 3 warn | Pass |
+| `make lint-copy` | 真实 deck | 文案初筛 | 2 命中（"不是X而是Y" / "闭环"） | Pass |
+| `make montage` | PNG 目录 | 生成或优雅跳过 | Pillow 缺失 -> 优雅跳过 | Pass |
+| hero `make render` | 真实 deck | 无渲染器时明说 | soffice 缺失 -> 明说跳过 | Pass |
+- `SKILL.md` 从 617 行降到 99 行；长文下沉到 `references/`。
+- 新增 `references/paths/{path-a-native,path-b2-hybrid,path-b-visual,path-c-html}.md`（Path A 重定义为原生可编辑，新增 Path B' 混合模式，HTML 降为 Path C）。
+- 新增 `workflow.md`、`content-structure.md`、`illustrations.md`、`qa/{checklist,render-and-validate,delivery}.md`。
+- `dependencies.md` 重写为能力矩阵 + 降级策略；移除 `$presentations` 硬依赖。
+- `prompt-templates.md` 去掉重复的 base style 模板（改为指向 styles preset）。
+- 强化 `check_consistency.py`：single_value 支持捕获组，分辨率规则限定在 `CANVAS:` 行。
+
+### P0 Test Results
+| Test | Input | Expected | Actual | Status |
+|------|-------|----------|--------|--------|
+| `make check` | 全库 | 无新 finding | PASS, exit 0 | Pass |
+| `make baseline` | 全库 | 清理已修复债务 | 9 -> 3 known | Pass |
+| SKILL.md 行数 | 文件 | ≤200 | 99 | Pass |
+| `check_style_system` | styles/ | 结构/样例通过 | 1 index / 23 styles / 17 samples | Pass |
+| `check_consistency` | 40 个 skill md | 无新 finding | OK | Pass |
+
+## Session: 2026-09-11 (P2)
+
+### P2 deliverable
+- [x] P2-1 设计系统/自定义风格：`references/design-system.md` + `tools/new_style.py`（`--register` 原子更新 index）+ `make new-style`。
+- [x] P2-2 资产压缩：新增 `tools/compress_assets.py`；17 张 PNG -> WebP（13.66 MB -> 1.04 MB），样例引用全部更新为 `.webp`。
+- [x] P2-3 测试与 CI：`tests/test_harness.py`（8 用例）+ CI 增加 `make eval`。
+- [x] P2-4 跨 harness：`references/harnesses.md`。
+- [x] P2-5 生态联动：`references/integrations.md`。
+- [x] `.gitignore` 增加 `.uv-cache/`。
+
+### P2 Test Results
+| Test | Input | Expected | Actual | Status |
+|------|-------|----------|--------|--------|
+| `make check` | 全库 | 无新 finding | PASS；baseline = 0 | Pass |
+| `make test` | tools/ + tests | 冒烟 + 单元测试 | 5 冒烟 + 8 用例 OK | Pass |
+| `make eval` | evals | exit 0 | Pass | Pass |
+| 资产压缩 | 17 PNG | WebP 且 <=5MB | 1.04 MB | Pass |
+| `new_style.py` | demo | 创建 + 注册 + 计数更新 | count 24，随后回滚 | Pass |
+| `check_style_system` | styles/ | 样例可达 | OK | Pass |
+
+## Session: 2026-09-12 (subaru-slides eval closure)
+
+### Baseline
+- **Status:** complete
+- Recorded git SHA `788b450abb8fab0778adc5d0cf4eac90bcf89cdb` and preserved the existing dirty worktree.
+- `make check`: PASS.
+- `make test`: PASS, 8 tests.
+- `make eval`: false green, `0 validated / 3 skipped`, exit 0.
+- `python3 tools/doctor.py --json`: renderer available; system python-pptx/Pillow absent.
+- `python3 skills/subaru-slides/scripts/detect_capabilities.py --json`: recommends Path C; B and fallback are also executable; A/B' lack a native builder.
+
+### Planned edits
+- Add a machine-readable environment snapshot plus a one-page execution matrix.
+- Add PASS/FAIL/SKIP/BLOCKED accounting and a policy-driven coverage gate to `run_evals.py`.
+- Add unit coverage for zero-pass failure and BLOCKED reason validation.
+
+### Coverage gate and environment matrix
+- **Status:** complete
+- Added `evals/environment.json` and `evals/environment-matrix.md` with SHA, dirty-tree flag, RUNNABLE/BLOCKED paths, reasons, and claim boundaries.
+- Added `evals/policy.json` with minimum PASS, maximum FAIL/SKIP, and BLOCKED-reason rules.
+- Updated `tools/run_evals.py` to classify PASS/FAIL/SKIP/BLOCKED and derive its exit code only from the coverage gate.
+- Added two eval-engine unit tests; full suite is now 10 tests and passes.
+- Verified the intended red state before runnable cases: `0 PASS / 0 FAIL / 1 SKIP / 2 BLOCKED`, exit 1.
+- Re-ran `make check`: PASS.
+
+### Runnable fallback case
+- Added a deterministic fallback case using three bundled WebP assets and an explicit claim boundary.
+- First execution did not reach the script because uv's default cache directory was not writable; next attempt uses a task-specific cache under `/private/tmp`.
+- Second execution installed declared dependencies but confirmed a P0 product defect: python-pptx rejects the bundled WebP assets.
+- Applied a minimal helper fix: unsupported input formats are converted to PNG in memory before insertion; source assets and temporary files are untouched.
+- The same case then generated successfully and passed its initial structural assertions, but `validate_pptx.py` found 3 out-of-bounds picture errors.
+- Replaced negative-offset fullscreen cover with bounded picture geometry plus symmetric crop properties.
+- Regenerated the same artifact: `validate_pptx.py` now reports 0 errors / 0 warnings.
+- Rendered three pages with soffice + pdftoppm and inspected each PNG; fullscreen coverage is visually correct.
+- Eval state after the fix: fallback PASS, Path B SKIP, A/B2 BLOCKED; coverage gate remains red because `max_skip=0`.
+
+### Runnable Path B case
+- Converted `full-ai-visual` into a deterministic fixed-input assembly regression with an explicit claim boundary for image-model quality.
+- Generated a 5-page PPTX from bundled AI visual samples.
+- Structural validation: 0 errors / 0 warnings.
+- Rendering: 5 PNGs produced; all pages inspected with no obvious crop, stretch, or blank-margin defect.
+- Coverage gate: `2 PASS / 0 FAIL / 0 SKIP / 2 BLOCKED`, exit 0.
+
+### Eval evidence and routing tests
+- Added picture/text/graphic-frame/native-editable-object metrics to `pptx_inspect.py`.
+- Integrated `validate_pptx` error/warning counts and execution-path equality into case assertions.
+- Added required per-artifact run metadata and timestamped `results/runs/<run-id>.json` ledgers.
+- Added static frontmatter trigger coverage and synthetic path-routing tests.
+- Fixed path-order drift: native capability now recommends A before B2, matching repository policy.
+
+### Path C browser loop
+- Added a tracked three-slide `fixture.html` and evaluated the runtime copy with deck-stage in a real browser.
+- Initial navigation worked, but the screenshots confirmed a P1 readability defect: host styles made headings and labels white on the light slide background.
+- Added an explicit slide text-color contract to both the fixture and `html_deck_inspect.py`; the new expect assertion fails if that rule regresses.
+- Browser verification after the fix: `#1 -> #2 -> #3`, computed heading/slide color `rgb(21, 32, 43)`, 0 console warnings, 0 console errors, no remaining obvious visual issue.
+
+### Clean-checkout CI coverage
+- Added `prepare_eval_artifacts.py` to rebuild only fixed-input B/fallback cases from repository WebP assets.
+- Added isolated `environment-ci.json` / `policy-ci.json`; `make eval-ci` uses a gitignored CI artifact directory so local Path C output cannot expand the CI claim.
+- Added `astral-sh/setup-uv@v6` to CI; official GitHub release tag was checked before pinning the major version.
+- `make eval-ci`: `2 PASS / 0 FAIL / 0 SKIP / 3 BLOCKED`, exit 0.
+
+### Final closure evidence
+- `make check`: PASS; no new findings.
+- `make test`: PASS; 19 tests, including zero-case and zero-pass false-green guards.
+- Local `make eval` ran twice consecutively with identical model, prompt version, parameters, git SHA and counts: `3 PASS / 0 FAIL / 0 SKIP / 2 BLOCKED`.
+- Timestamp ledgers: `20260911T173223485545Z.json` and `20260911T173225699768Z.json`.
+- A and B' remain explicitly BLOCKED; installing `python-pptx` alone was rejected as a false Path A because there is no native content/layout/object contract yet.
+- `git diff --check`: PASS. No baseline suppression was added and no commit was created in the pre-existing dirty worktree.

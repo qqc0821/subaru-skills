@@ -13,8 +13,9 @@ sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
 
 def has_module(name: str) -> bool:
     try:
-        return importlib.util.find_spec(name) is not None
-    except (ImportError, ValueError):
+        importlib.import_module(name)
+        return True
+    except Exception:
         return False
 
 
@@ -29,7 +30,7 @@ def detect():
         "pdftoppm": shutil.which("pdftoppm"),
         "chrome": shutil.which("google-chrome") or shutil.which("chromium") or shutil.which("chromium-browser"),
         "python_pptx": has_module("pptx"),
-        "pillow": has_module("PIL"),
+        "pillow": has_module("PIL.Image"),
         "git": shutil.which("git"),
     }
 

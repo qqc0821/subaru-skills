@@ -5,8 +5,13 @@
   "assert": {
     "slide_count_min": 5,
     "image_count_min": 1,
+    "text_shape_count_min": 1,
+    "native_editable_object_count_min": 1,
     "text_chars_min": 150,
     "cjk_chars_min": 80,
-    "placeholders_max": 0
+    "placeholders_max": 0,
+    "notes_slide_count_min": 0,
+    "validation_error_count_max": 0,
+    "execution_path_eq": "B2"
   }
 }

@@ -1,6 +1,8 @@
 # Proven Style Guide: Snoopy / Peanuts 温暖漫画风
 
 > 实战验证的风格指南。核心原则：**描述情绪和世界观，不要微操构图细节。让AI自由发挥。**
+>
+> 规范来源：base style 以 `../styles/warm-comic-strip.md` 为准；本文件保留方法论与实战经验。
 
 ## 核心风格（只需要记住这些）
 

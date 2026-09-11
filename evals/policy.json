@@ -1,0 +1,12 @@
+{
+  "min_pass": 3,
+  "max_fail": 0,
+  "max_skip": 0,
+  "blocked_requires_reason": true,
+  "required_run_metadata": [
+    "model",
+    "prompt_version",
+    "parameters",
+    "execution_path"
+  ]
+}

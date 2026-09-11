@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help check check-skills check-links check-consistency check-assets check-style-system doctor baseline test eval new-task hooks
+.PHONY: help check check-skills check-links check-consistency check-assets check-style-system doctor baseline test eval eval-ci new-task hooks validate render montage lint-copy new-style
 
 help:
 	@echo "subaru-skills harness"
@@ -8,9 +8,15 @@ help:
 	@echo "  make doctor    environment capability probe"
 	@echo "  make baseline  record current findings as known baseline"
 	@echo "  make test      compile tools and smoke-test doctor"
-	@echo "  make eval      run the eval harness (skips cases without artifacts)"
+	@echo "  make eval      run the eval harness and enforce coverage policy"
+	@echo "  make eval-ci   rebuild deterministic CI fixtures, then enforce the CI coverage policy"
 	@echo "  make new-task  scaffold task_plan/findings/progress from docs/templates/"
 	@echo "  make hooks     install the make check pre-commit hook"
+	@echo "  make validate  validate a deck:  PPTX=path/to/deck.pptx"
+	@echo "  make render    render a deck:    PPTX=... [OUT=dir]"
+	@echo "  make montage   contact sheet:    DIR=slides/ [OUT=file]"
+	@echo "  make lint-copy copy lint:        SRC=deck.pptx|outline.md"
+	@echo "  make new-style scaffold a style: ID=x NAME=... [REGISTER=1]"
 
 check:
 	@PYTHON="$(PYTHON)" sh tools/check.sh
@@ -37,12 +43,41 @@ baseline:
 test:
 	@$(PYTHON) -m compileall -q tools && echo "compileall: OK"
 	@$(PYTHON) tools/doctor.py --json > /dev/null && echo "doctor: OK"
+	@$(PYTHON) tools/validate_pptx.py --help > /dev/null && echo "validate_pptx: OK"
+	@$(PYTHON) tools/render_preview.py --check > /dev/null && echo "render_preview: OK"
+	@$(PYTHON) tools/make_montage.py --help > /dev/null && echo "make_montage: OK"
+	@$(PYTHON) tools/prepare_eval_artifacts.py --help > /dev/null && echo "prepare_eval_artifacts: OK"
+	@$(PYTHON) -m unittest discover -s tests 2>&1 | tail -3
 
 eval:
 	@$(PYTHON) tools/run_evals.py
+
+eval-ci:
+	@$(PYTHON) tools/prepare_eval_artifacts.py --artifacts-dir evals/results/ci-artifacts
+	@$(PYTHON) tools/run_evals.py --artifacts-dir evals/results/ci-artifacts --policy evals/policy-ci.json --environment evals/environment-ci.json
 
 new-task:
 	@sh tools/new_task.sh
 
 hooks:
 	@sh tools/install-hooks.sh
+
+validate:
+	@test -n "$(PPTX)" || (echo "usage: make validate PPTX=path/to/deck.pptx"; exit 2)
+	@$(PYTHON) tools/validate_pptx.py "$(PPTX)"
+
+render:
+	@test -n "$(PPTX)" || (echo "usage: make render PPTX=... [OUT=dir]"; exit 2)
+	@$(PYTHON) tools/render_preview.py "$(PPTX)" $(if $(OUT),--out-dir "$(OUT)")
+
+lint-copy:
+	@test -n "$(SRC)" || (echo "usage: make lint-copy SRC=deck.pptx|outline.md"; exit 2)
+	@$(PYTHON) tools/lint_copy.py "$(SRC)"
+
+new-style:
+	@test -n "$(ID)" -a -n "$(NAME)" || (echo "usage: make new-style ID=x NAME=\"...\" [REGISTER=1]"; exit 2)
+	@$(PYTHON) tools/new_style.py "$(ID)" --name "$(NAME)" $(if $(REGISTER),--register)
+
+montage:
+	@test -n "$(DIR)" || (echo "usage: make montage DIR=slides/ [OUT=file]"; exit 2)
+	@if command -v uv >/dev/null 2>&1; then uv run --quiet tools/make_montage.py --input-dir "$(DIR)" $(if $(OUT),--out "$(OUT)") || $(PYTHON) tools/make_montage.py --input-dir "$(DIR)" $(if $(OUT),--out "$(OUT)"); else $(PYTHON) tools/make_montage.py --input-dir "$(DIR)" $(if $(OUT),--out "$(OUT)"); fi

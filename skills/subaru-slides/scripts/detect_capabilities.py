@@ -49,8 +49,9 @@ def which(*names):
 
 def has_module(name: str) -> bool:
     try:
-        return importlib.util.find_spec(name) is not None
-    except (ImportError, ValueError):
+        importlib.import_module(name)
+        return True
+    except Exception:
         return False
 
 
@@ -110,7 +111,7 @@ def detect():
         "pdftoppm": which("pdftoppm"),
         "chrome": which("google-chrome", "chromium", "chromium-browser"),
         "python_pptx": has_module("pptx"),
-        "pillow": has_module("PIL"),
+        "pillow": has_module("PIL.Image"),
         "artifact_tool": (node_has("@oai/artifact-tool") if node else False) or node_modules_have("@oai/artifact-tool"),
         "deck_stage": find_first(DECK_STAGE_HINTS) or search_for("deck-stage.js", [HOME / ".agents" / "skills", HOME / ".claude" / "skills"]),
         "html2pptx": search_for("html2pptx.js", [HOME / ".agents" / "skills", HOME / ".claude" / "skills"]),
@@ -123,10 +124,8 @@ def recommend(caps):
     native = bool(caps.get("artifact_tool") or caps.get("python_pptx"))
     image = bool(caps.get("imagegen"))
     html = bool(caps.get("deck_stage") or caps.get("html2pptx"))
-    if native and image:
-        return "B2", "hybrid: generate text-free visual bases, then overlay native editable text"
     if native:
-        return "A", "native editable builder"
+        return "A", "native editable builder; add image generation only when the selected design needs it"
     if html:
         return "C", "HTML deck runtime or converter"
     if image:

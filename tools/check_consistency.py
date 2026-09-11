@@ -69,7 +69,8 @@ def main() -> int:
         for f in files:
             for lineno, line in iter_lines(f, include_fences=True):
                 for m in rx.finditer(line):
-                    values.setdefault(m.group(0), []).append(C.rel(f) + ":" + str(lineno))
+                    value = m.group(1) if m.lastindex else m.group(0)
+                    values.setdefault(value, []).append(C.rel(f) + ":" + str(lineno))
         if len(values) > 1:
             detail = "; ".join(k + " (" + str(len(v)) + "x)" for k, v in sorted(values.items()))
             findings.append(C.Finding(CHECK, "rule:" + rule["id"], rule["message"] + ": " + detail,
