@@ -149,6 +149,11 @@ output/
 evals/artifacts/
 evals/results/
 
+# Local task scaffolding (AGENTS.md §9: these are never published)
+task_plan.md
+findings.md
+progress.md
+
 # Python caches
 __pycache__/
 *.pyc
