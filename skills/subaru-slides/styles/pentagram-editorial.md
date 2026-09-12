@@ -7,7 +7,7 @@ themes: [行业分析, 咨询报告, 正式商务]
 formality: high
 path: A
 sample: null
-proven: true
+proven: false
 palette:
   background: "#FFFDF7"
   text: "#1A1A1A"
@@ -47,4 +47,5 @@ Path A only: build native editable objects, do not render as AI image.
 
 ## 样例
 
-（待补）
+（暂无样例图。本风格为 `path: A` 原生构建，尚未产出对照样例，
+因此 `proven` 为 `false`；选择前请先按 Base Style Prompt 试做一页确认效果。）

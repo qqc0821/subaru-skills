@@ -7,7 +7,7 @@ themes: [培训课件, 技术架构, 流程说明]
 formality: high
 path: A
 sample: null
-proven: true
+proven: false
 palette:
   background: "#FFFFFF"
   text: "#000000"
@@ -47,4 +47,5 @@ Path A only.
 
 ## 样例
 
-（待补）
+（暂无样例图。本风格为 `path: A` 原生构建，尚未产出对照样例，
+因此 `proven` 为 `false`；选择前请先按 Base Style Prompt 试做一页确认效果。）

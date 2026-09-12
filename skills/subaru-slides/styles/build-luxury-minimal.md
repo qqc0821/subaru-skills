@@ -7,7 +7,7 @@ themes: [投资/融资路演, 品牌高管汇报, 奢侈品]
 formality: high
 path: A
 sample: null
-proven: true
+proven: false
 palette:
   background: "#FFFFFF"
   text: "#2D2D2D"
@@ -45,4 +45,5 @@ Path A.
 
 ## 样例
 
-（待补）
+（暂无样例图。本风格为 `path: A` 原生构建，尚未产出对照样例，
+因此 `proven` 为 `false`；选择前请先按 Base Style Prompt 试做一页确认效果。）

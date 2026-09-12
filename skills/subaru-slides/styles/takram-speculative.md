@@ -7,7 +7,7 @@ themes: [培训课件/教材, 设计思维, 产品愿景]
 formality: medium
 path: A_or_B2
 sample: null
-proven: true
+proven: false
 palette:
   background: "#F5F3EF"
   text: "#3D3D3D"
@@ -45,4 +45,5 @@ Path A (配图可 AI 辅助).
 
 ## 样例
 
-（待补）
+（暂无样例图。本风格以 `path: A_or_B2` 构建（可选用 AI 辅助配图），尚未产出对照样例，
+因此 `proven` 为 `false`；选择前请先按 Base Style Prompt 试做一页确认效果。）

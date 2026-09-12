@@ -7,7 +7,7 @@ themes: [企业培训, 线下分享, 信息密集]
 formality: medium
 path: A
 sample: null
-proven: true
+proven: false
 palette:
   background: "#F5E6D3"
   text: "#1A1A1A"
@@ -46,4 +46,5 @@ Path A preferred: mostly pure CSS/native shapes, no AI image needed.
 
 ## 样例
 
-（待补）
+（暂无样例图。本风格为 `path: A` 原生构建，尚未产出对照样例，
+因此 `proven` 为 `false`；选择前请先按 Base Style Prompt 试做一页确认效果。）
