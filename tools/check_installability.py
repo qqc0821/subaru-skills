@@ -26,10 +26,15 @@ CHECK = "check_installability"
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
 # A published skill must not reach into the repository it was cut from.
+# `make new-task` / `make new-style` are deliberately NOT listed: those scaffold
+# local files and stay valid for a consumer.
 REPO_ONLY_PATTERNS = (
     (re.compile(r"\.\./\.\./(tools|schemas|evals|tests)/"), "references repository-only ../{0}/"),
     (re.compile(r"(?<![\w/])tools/[a-z_]+\.py"), "references repository-only tools/ script"),
     (re.compile(r"(?<![\w/])schemas/[a-z._]+\.json"), "references repository-only schemas/ file"),
+    (re.compile(r"(?<![\w/])AGENTS\.md"), "references repository-only AGENTS.md"),
+    (re.compile(r"make (check|validate|render|montage|lint-copy|eval|doctor|baseline|hooks)\b"),
+     "invokes a repository-only make target"),
 )
 SCAN_SUFFIXES = {".md", ".py", ".json", ".sh", ".mjs", ".yaml", ".yml"}
 
@@ -51,6 +56,24 @@ def _strip_repo_only(text: str) -> str:
         if keep:
             out.append(line)
     return "\n".join(out)
+
+
+def _unbalanced_markers(pkg: Path) -> list:
+    """An unclosed marker would silently hide the rest of a file from this check."""
+    findings = []
+    for path in _package_files(pkg):
+        if path.suffix not in SCAN_SUFFIXES:
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        opens, closes = text.count(REPO_ONLY_OPEN), text.count(REPO_ONLY_CLOSE)
+        if opens != closes:
+            findings.append(C.Finding(CHECK, pkg.name + ":unbalanced-repo-only:" + path.name,
+                                      path.name + " has " + str(opens) + " open / " + str(closes)
+                                      + " close repo-only markers", C.rel(path)))
+    return findings
 
 
 def _package_files(pkg: Path) -> list:
@@ -77,6 +100,8 @@ def check_skill(pkg: Path) -> list:
                                       "frontmatter name '" + str(fm_name) + "' != directory '" + name + "'",
                                       C.rel(skill_md)))
 
+    findings.extend(_unbalanced_markers(pkg))
+
     for path in _package_files(pkg):
         if path.suffix not in SCAN_SUFFIXES:
             continue
@@ -84,8 +109,7 @@ def check_skill(pkg: Path) -> list:
             text = path.read_text(encoding="utf-8")
         except (UnicodeDecodeError, OSError):
             continue
-        if REPO_ONLY_OPEN in text:
-            text = _strip_repo_only(text)
+        text = _strip_repo_only(text)
         for pattern, message in REPO_ONLY_PATTERNS:
             match = pattern.search(text)
             if match:

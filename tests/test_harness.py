@@ -222,23 +222,78 @@ class TestInstalledPackageIsStandalone(unittest.TestCase):
             self.assertIn("recommended path:", proc.stdout)
             self.assertIn("order: A -> B2 -> C -> B -> fallback", proc.stdout)
 
-    def test_installability_check_flags_repo_only_reference(self):
+class TestInstallabilityBoundary(unittest.TestCase):
+    """Reference to repository-only tooling breaks the moment the skill is installed.
+
+    The 'allowed' cases matter as much as the caught ones: `make new-task` and
+    `make new-style` scaffold local files and stay valid for a consumer.
+    """
+
+    CAUGHT = [
+        ("AGENTS.md", "see AGENTS.md for the rules"),
+        ("make check", "run make check before committing"),
+        ("make validate", "run make validate PPTX=deck.pptx"),
+        ("make render", "run make render PPTX=deck.pptx"),
+        ("make montage", "run make montage DIR=slides"),
+        ("tools script", "use tools/validate_pptx.py on the deck"),
+        ("schemas file", "see schemas/style.preset.schema.json"),
+        ("parent tools", "see ../../tools/check.sh"),
+        ("parent schemas", "see ../../schemas/x.json"),
+    ]
+    ALLOWED = [
+        ("make new-task", "scaffold with make new-task"),
+        ("make new-style", "scaffold with make new-style ID=x NAME=y"),
+        ("own script", "run scripts/detect_capabilities.py"),
+        ("own reference", "read references/qa/checklist.md"),
+        ("styles index", "read styles/index.json"),
+    ]
+
+    def _check(self, body):
         import importlib
         from tempfile import TemporaryDirectory
 
-        sys.path.insert(0, str(ROOT / "tools"))
+        if "check_installability" not in sys.modules:
+            sys.path.insert(0, str(ROOT / "tools"))
         check = importlib.import_module("check_installability")
 
         with TemporaryDirectory() as tmp:
             pkg = Path(tmp) / "demo-skill"
             pkg.mkdir()
             (pkg / "SKILL.md").write_text(
-                "---\nname: demo-skill\ndescription: d\n---\n\nRun `tools/validate_pptx.py`.\n",
+                "---\nname: demo-skill\ndescription: d\n---\n\n" + body + "\n",
                 encoding="utf-8",
             )
-            findings = check.check_skill(pkg)
-            keys = {f.key for f in findings}
-            self.assertTrue(any("repo-only-dependency" in k for k in keys), keys)
+            return check.check_skill(pkg)
+
+    def test_repository_only_references_are_caught(self):
+        for label, body in self.CAUGHT:
+            with self.subTest(case=label):
+                keys = {f.key for f in self._check(body)}
+                self.assertTrue(any("repo-only" in k for k in keys), (label, keys))
+
+    def test_consumer_valid_commands_are_allowed(self):
+        for label, body in self.ALLOWED:
+            with self.subTest(case=label):
+                keys = {f.key for f in self._check(body)}
+                self.assertFalse(any("repo-only" in k for k in keys), (label, keys))
+
+    def test_unclosed_repo_only_marker_is_caught(self):
+        keys = {f.key for f in self._check("<!-- repo-only -->\nunclosed passage")}
+        self.assertTrue(any("unbalanced" in k for k in keys), keys)
+
+    def test_marked_passage_is_skipped(self):
+        body = "<!-- repo-only -->\nrun make check\n<!-- /repo-only -->"
+        keys = {f.key for f in self._check(body)}
+        self.assertFalse(any("repo-only-dependency" in k for k in keys), keys)
+
+    def test_shipped_skill_passes_the_boundary_check(self):
+        import importlib
+
+        if "check_installability" not in sys.modules:
+            sys.path.insert(0, str(ROOT / "tools"))
+        check = importlib.import_module("check_installability")
+        findings = check.check_skill(ROOT / "skills" / "subaru-slides")
+        self.assertEqual(findings, [], [f.key for f in findings])
 
 
 if __name__ == "__main__":

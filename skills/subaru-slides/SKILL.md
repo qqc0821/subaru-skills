@@ -17,7 +17,10 @@ description: 端到端制作 PPT / 幻灯片 / 演示文稿 / Keynote：内容�
 3. **能力探测优先**：先跑 `scripts/detect_capabilities.py`；缺能力必须明说并降级，禁止静默换路。
 4. **中文优先**：slide 文案中文优先（保留必要英文术语）；代码、路径、JSON key 用英文。
 5. **交付前过检**：逐页渲染 + 目检；并说明哪些检查**没有**做（claim boundary）。
-6. **遵守仓库规范**：改动遵循 `AGENTS.md`；提交前跑 `make check`。
+6. **按所在地的规范交付**：作为独立安装包使用时，遵守该宿主 Agent 的规范与交付约定。
+<!-- repo-only -->
+   > 在开发仓库内改动本 skill 时：遵循 `AGENTS.md`，并跑 `make check` 过闸。
+<!-- /repo-only -->
 
 ## Step 0 · Capability probe
 ```bash
