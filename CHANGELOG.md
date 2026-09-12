@@ -19,10 +19,13 @@
 ### 工程与质量
 
 - Harness 质量门：`validate_skills` / `check_links` / `check_consistency` / `check_assets` /
-  `check_style_system`，由 `make check` 统一入口驱动，本地与 CI 一致。
+  `check_style_system` / `check_installability`，由 `make check` 统一入口驱动，本地与 CI 一致。
 - 机读契约 `schemas/`：skill frontmatter、openai-agent 元数据、style preset 与 index。
 - 回归基准 `evals/`：固定 brief + 结构断言，`make eval` 强制覆盖率闸门。
-- 单元测试 `tests/`：22 个用例覆盖路径路由、渲染器探测与校验器行为。
+- 单元测试 `tests/`：28 个用例覆盖路径路由、渲染器探测、安装边界与校验器行为。
+- 安装边界护栏：`check_installability` 确保发布出去的 skill 包自包含
+  （目录名可安装、frontmatter 与目录一致、不引用 `tools/`、`schemas/`、`AGENTS.md`
+  或仓库专有的 `make` 目标）；CI 另有一条任务用 skills CLI 枚举本仓库，防止结构漂移。
 - `make doctor` 环境自检；`make new-task` / `make new-style` 脚手架。
 - 渲染器探测修复：`soffice` / `pdftoppm` 现在按
   `SOFFICE_BIN`/`PDFTOPPM_BIN` → `PATH` → 常见安装路径 → 运行时 glob 的顺序查找，
