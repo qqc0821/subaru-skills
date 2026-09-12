@@ -9,7 +9,7 @@ Each preset `../styles/<id>.md` carries palette, typography, base style prompt, 
 
 ## 2. Derive a custom style from a reference (e.g. "Ghibli", "Doraemon")
 Treat the reference as **style DNA**, not a request to draw copyrighted characters.
-Extract, then write a preset with `tools/new_style.py`:
+Extract, then write a preset (see "Adding a style" below):
 - shape language: round / angular / geometric / organic
 - line quality: thin uniform / thick varied / sketchy / brushwork
 - palette: specific colors from that aesthetic
@@ -25,8 +25,27 @@ When the user provides brand guidelines, a UI kit, or a design-system folder:
 4. For a deck that must follow a template, use `template-following.md`.
 
 ## Adding a style
-```bash
-python3 tools/new_style.py my-style --name "我的风格" --name-en "My Style" --tier 3 --themes "创意/艺术" --register
+Write the preset by hand: copy an existing `styles/<id>.md`, then register it in
+`styles/index.json` (`styles` array + `count`). Keep both in sync in the same change, so the
+registry stays the single source of truth.
+
+```yaml
+id: my-style
+name: 我的风格
+name_en: My Style
+tier: 3
+themes: [创意/艺术]
+formality: low
+path: A_or_B2
+sample: null
+proven: false          # set true only after a reference sample exists
+palette: { background: "#FFFFFF", text: "#1A1A1A", accent: ["#D4480B"] }
+typography: { heading: "heavy 28pt+", body: "light 10-13pt", ratio: "3:1", cjk_font: "PingFang SC" }
 ```
-Keep the base style prompt short (<=5 lines). Registering updates `styles/index.json` atomically
-(and its `count`), so the registry stays the single source of truth.
+
+Keep the base style prompt short (<=5 lines).
+<!-- repo-only -->
+> In the **subaru-skills development repository** there is a helper for this:
+> `python3 tools/new_style.py my-style --name "我的风格" --register`. It is not part of the
+> installed skill package, so do not call it from an installed copy.
+<!-- /repo-only -->

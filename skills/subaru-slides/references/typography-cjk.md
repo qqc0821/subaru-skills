@@ -13,8 +13,9 @@ Two acceptable strategies:
 Never rely on a font that exists only on the author's machine without saying so.
 
 ## Measurement
-- CJK glyphs are about 1.0 em wide; Latin about 0.5 em. A mixed estimate (0.55 for mostly Latin,
-  1.0 for mostly CJK) is what `tools/validate_pptx.py` uses.
+- CJK glyphs are about 1.0 em wide; Latin about 0.5 em. For mixed text, estimate per character
+  (about 0.55 em for mostly-Latin runs, 1.0 em for mostly-CJK runs) and size every text box from
+  the wrapped line count rather than from a fixed height.
 - Line height about 1.25 for CJK.
 
 ## AI image + Chinese (Path B / B')

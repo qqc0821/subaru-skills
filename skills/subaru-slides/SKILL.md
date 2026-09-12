@@ -59,7 +59,9 @@ python3 scripts/detect_capabilities.py     # 或 --json
 ## Step 6 · Assemble & preview
 逐页渲染 PNG 并目检：`references/qa/render-and-validate.md`。
 contact sheet 只用于整册节奏，**不替代**逐页检查。
-本仓库自带工具：`make validate PPTX=...`、`make render PPTX=...`、`make montage DIR=...`。
+<!-- repo-only -->
+在开发仓库内可用：`make validate PPTX=...`、`make render PPTX=...`、`make montage DIR=...`。
+<!-- /repo-only -->
 
 ## Step 7 · QA & delivery
 `references/qa/checklist.md` → `references/qa/delivery.md`（附 receipt 与 claim boundary）。
