@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help check check-skills check-links check-consistency check-assets check-style-system doctor baseline test eval eval-ci new-task hooks validate render montage lint-copy new-style
+.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-installability doctor baseline test eval eval-ci new-task hooks validate render montage lint-copy new-style
 
 help:
 	@echo "subaru-skills harness"
@@ -31,12 +31,14 @@ check-assets:
 	@$(PYTHON) tools/check_assets.py --baseline tools/baseline.json
 check-style-system:
 	@$(PYTHON) tools/check_style_system.py --baseline tools/baseline.json
+check-installability:
+	@$(PYTHON) tools/check_installability.py --baseline tools/baseline.json
 
 doctor:
 	@$(PYTHON) tools/doctor.py
 
 baseline:
-	@for c in validate_skills check_links check_consistency check_assets check_style_system; do \
+	@for c in validate_skills check_links check_consistency check_assets check_style_system check_installability; do \
 		$(PYTHON) tools/$$c.py --update-baseline --baseline tools/baseline.json; \
 	done
 

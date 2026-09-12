@@ -20,6 +20,7 @@ import pptx_inspect  # noqa: E402
 import run_evals  # noqa: E402
 import validate_pptx  # noqa: E402
 import html_deck_inspect  # noqa: E402
+import renderer_locate  # noqa: E402
 
 DETECT_SPEC = importlib.util.spec_from_file_location(
     "detect_capabilities", ROOT / "skills" / "subaru-slides" / "scripts" / "detect_capabilities.py"
@@ -157,6 +158,87 @@ class TestPathRouting(unittest.TestCase):
     def test_image_only_and_fallback(self):
         self.assertEqual(detect_capabilities.recommend({"imagegen": True})[0], "B")
         self.assertEqual(detect_capabilities.recommend({})[0], "fallback")
+
+
+class TestRendererLocate(unittest.TestCase):
+    def _fake(self, root, relative):
+        path = Path(root) / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("#!/bin/sh\n", encoding="utf-8")
+        path.chmod(0o755)
+        return path
+
+    def test_home_glob_discovers_override_renderer(self):
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            exe = self._fake(tmp, ".cache/codex-runtimes/rt-1/dependencies/bin/override/soffice")
+            self.assertEqual(renderer_locate.find_soffice(home=tmp), str(exe))
+
+    def test_missing_renderer_returns_none(self):
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            self.assertIsNone(
+                renderer_locate.locate(
+                    names=[], home_globs=(".cache/absent/*/soffice",), home=tmp
+                )
+            )
+
+    def test_env_override_wins_over_home_glob(self):
+        import os
+        from tempfile import TemporaryDirectory
+        from unittest import mock
+
+        with TemporaryDirectory() as tmp:
+            override = self._fake(tmp, "custom/soffice")
+            other = self._fake(tmp, ".cache/codex-runtimes/rt-9/dependencies/bin/override/soffice")
+            with mock.patch.dict(os.environ, {"SOFFICE_BIN": str(override)}):
+                self.assertEqual(renderer_locate.find_soffice(home=tmp), str(override))
+            self.assertNotEqual(str(override), str(other))
+
+
+class TestInstalledPackageIsStandalone(unittest.TestCase):
+    """A consumer only receives skills/<name>/ — it must run with no repository around it."""
+
+    def test_capability_probe_runs_from_an_isolated_copy(self):
+        import shutil
+        import subprocess
+        from tempfile import TemporaryDirectory
+
+        pkg = ROOT / "skills" / "subaru-slides"
+        with TemporaryDirectory() as tmp:
+            installed = Path(tmp) / "skills" / pkg.name
+            shutil.copytree(pkg, installed, ignore=shutil.ignore_patterns("__pycache__"))
+
+            # Nothing of the repository is reachable from this copy.
+            self.assertFalse((Path(tmp) / "tools").exists())
+
+            proc = subprocess.run(
+                [sys.executable, str(installed / "scripts" / "detect_capabilities.py")],
+                cwd=tmp, capture_output=True, text=True,
+            )
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            self.assertIn("recommended path:", proc.stdout)
+            self.assertIn("order: A -> B2 -> C -> B -> fallback", proc.stdout)
+
+    def test_installability_check_flags_repo_only_reference(self):
+        import importlib
+        from tempfile import TemporaryDirectory
+
+        sys.path.insert(0, str(ROOT / "tools"))
+        check = importlib.import_module("check_installability")
+
+        with TemporaryDirectory() as tmp:
+            pkg = Path(tmp) / "demo-skill"
+            pkg.mkdir()
+            (pkg / "SKILL.md").write_text(
+                "---\nname: demo-skill\ndescription: d\n---\n\nRun `tools/validate_pptx.py`.\n",
+                encoding="utf-8",
+            )
+            findings = check.check_skill(pkg)
+            keys = {f.key for f in findings}
+            self.assertTrue(any("repo-only-dependency" in k for k in keys), keys)
 
 
 if __name__ == "__main__":
