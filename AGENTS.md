@@ -20,16 +20,18 @@
 subaru-skills/
 ├── AGENTS.md                  # 本文件（单一事实源）
 ├── CLAUDE.md                  # → 指向本文件
-├── README.md
+├── README.md                  # 面向使用者：安装、能力、依赖
+├── PROVENANCE.md              # 上游出处与再分发授权记录
+├── VERSION / CHANGELOG.md     # 发布版本与变更记录
 ├── LICENSE                    # MIT（LesBit）；不自动覆盖第三方内容
-├── optimization-plan.md       # subaru-slides 优化方案（含 Pre-P0–P2）
 ├── skills/
 │   └── subaru-slides/         # 一个 skill 包，见第 3 节
 ├── schemas/                   # (H2) 机读契约：skill frontmatter / openai-agent / styles.*
 ├── tools/                     # (H3) 校验器：validate_skills / check_links / check_consistency / ...
 ├── docs/                      # (H5) definition-of-done / templates / lessons-learned
 ├── evals/                     # (H6) 回归基准：固定 brief + 结构断言
-└── .github/workflows/        # (H4) CI
+├── tests/                     # harness 单元测试
+└── .github/workflows/         # (H4) CI
 ```
 
 > `(Hx)` 标注对应 Pre-P0 Harness 建设项；H2–H6 已落地，状态见第 8.3 节。
@@ -44,7 +46,7 @@ subaru-skills/
 2. **薄入口**：一个 skill 的 `SKILL.md` ≤ **200 行**，超出部分下沉到 `references/`。
 3. **零外部依赖为默认**：需要外部能力时先做**能力探测**，并提供**降级路径**；外部 skill 只能"检测到则增强"，不能设为必需。
 4. **语言**：用户可见文案**中文优先**（保留必要英文术语）；代码、路径、文件名、JSON key、commit message 用**英文**。
-5. **任务留痕**：开始前建/更新 `task_plan.md`；过程中更新 `findings.md` 与 `progress.md`；结束更新验收结论。
+5. **任务留痕**：开任务前用 `make new-task` 生成 `task_plan.md` / `findings.md` / `progress.md` 三件套并边做边更新；**这三个文件不入库**（发布仓库只保留用户可见内容），结项时把结论固化成 `docs/lessons-learned.md` 或代码注释。
 6. **改名即修链**：改路径/重命名后，必须同步检查并修复所有相对链接与交叉引用。
 7. **新依赖先说明**：新增依赖、脚本或二进制资产前，先说明必要性，并记录到本文件或该 skill 的依赖文档。
 
@@ -222,18 +224,19 @@ du -sh skills/*
 ## 9. 任务工作流（AI 协作标准动作）
 
 1. 读本文件 + 目标 skill 的 `SKILL.md` 与相关 `references/`。
-2. 写/更新 `task_plan.md`（目标、阶段、验收、错误日志）。
-3. 小步改动；边做边更新 `progress.md`，发现记入 `findings.md`。
+2. `make new-task` 生成 `task_plan.md`（目标、阶段、验收、错误日志），边做边更新 `progress.md`，发现记入 `findings.md`。
+3. 小步改动，保持三件套与实现同步。
 4. 跑第 8 节质量门，修复所有阻塞项。
 5. 更新验收结论与残余风险。
-6. 按第 6 节约定提交。
+6. 结项：把可复用的结论写入 `docs/lessons-learned.md`，并确认三件套**没有被 `git add`**。
+7. 按第 6 节约定提交。
 
 ---
 
 ## 10. 出处与许可
 
 - `subaru-slides` 派生自上游 `huashu-slides`（审计基线 commit `791450a2594a3506144917517ff5533c344a62b0`）；上游当时**无根 LICENSE**。
-- 再分发前须确认授权，并保留 provenance 记录，见 `task_plan.md` 与 `findings.md`。
+- 再分发前须确认授权；provenance 记录见 `PROVENANCE.md`。
 - 仓库根 MIT LICENSE 覆盖本仓库原创内容，**不自动覆盖**第三方复制内容。
 
 ---

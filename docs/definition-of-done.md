@@ -1,6 +1,6 @@
 # Definition of Done
 
-本文件把 `AGENTS.md` 的硬性规则与 `optimization-plan.md` 第 5 节的验收标准整理成可勾选清单。
+本文件把 `AGENTS.md` 的硬性规则整理成可勾选清单。
 每个任务结束、每个 PR 提交前逐项确认。
 
 ## A. 通用（每个改动）
@@ -9,7 +9,7 @@
 - [ ] 文档与实现一致（无"文档说 A、实现做 B"）
 - [ ] 无 secrets、无 >1MB 二进制、无 `.DS_Store` 与临时产物
 - [ ] 路径/重命名已同步修复所有相对链接（`check_links` 通过）
-- [ ] `task_plan.md` / `progress.md` 已更新；`findings.md` 记录关键发现
+- [ ] 过程三件套（`task_plan.md` / `findings.md` / `progress.md`）**未入库**；可复用结论已写入 `docs/lessons-learned.md`
 
 ## B. skill 变更
 - [ ] `SKILL.md` ≤ 200 行；长文在 `references/`
