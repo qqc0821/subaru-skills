@@ -3,6 +3,7 @@
 快照时间：2026-09-11T16:59:30Z
 基线提交：`788b450abb8fab0778adc5d0cf4eac90bcf89cdb`
 工作区：有未提交改动。建议在继续生成评测产物前，由维护者审阅并提交当前改动作为基线；本次任务不代为提交。
+复验：2026-09-12T03:12:42Z @ `8a98150534e14359b33f4272d9db6c1cc573344d`，修正渲染器探测（见下）。
 
 ## 证据命令
 
@@ -39,6 +40,13 @@ make eval
 | fallback 图片 PPTX | uv + 内置 create_slides.py | **RUNNABLE** | 两者可用，依赖由 PEP 723 声明 | 只能生成图片型 PPTX |
 | PPTX 视觉 QA | soffice + pdftoppm | **RUNNABLE** | 两者均检测到 | 不包含 Chrome 浏览器渲染 |
 
+## 渲染探测（复验修正）
+
+- 之前 `visual_qa=RUNNABLE` 只在 PATH 恰好包含运行时的 `bin/override` 目录时成立；默认 PATH 下 `make doctor` 与 `detect_capabilities.py` 会漏报 soffice/pdftoppm。
+- 现由 `tools/renderer_locate.py` 统一探测，顺序：`SOFFICE_BIN` / `PDFTOPPM_BIN` 环境覆盖 → PATH → 常见绝对路径 → 运行时 glob `$HOME/.cache/codex-runtimes/*/dependencies/bin/override/{soffice,pdftoppm}`。
+- `tools/doctor.py`、`tools/render_preview.py`、`skills/subaru-slides/scripts/detect_capabilities.py` 全部复用它；home 目录在运行时解析，不写死用户名。
+- 复验：`make doctor` 显示 soffice/pdftoppm OK；`make render PPTX=evals/artifacts/fallback-image-pptx.pptx` 产出 3 PNG。
+
 ## 基线结论
 
 - `make check`：PASS。
@@ -67,3 +75,4 @@ CI 使用 `make eval-ci` 重建固定输入 B/fallback 两个 gitignored 产物�
 | P1 | fullscreen 图片对象越界 | `make validate PPTX=evals/artifacts/fallback-image-pptx.pptx` | 3 个 out-of-bounds error，每页 1 个 | 改为画布内对象 + OOXML crop；复验 0 error/0 warning |
 | P1 | 路由实现与 A→B' 顺序冲突 | `python3 -m unittest tests.test_harness.TestPathRouting -v` | native + image 曾返回 B2 | 原生能力优先返回 A，合成决策表单测锁定 |
 | P1 | Path C 浅底白字 | `python3 -m http.server 4312 --directory evals/artifacts` 后打开 `html-deck.html#1` | 修复前标题继承白色；截图不可清晰辨读 | 显式声明 ink 色；inspector 新增规则，浏览器复验 0 console issue |
+| P1 | 渲染器探测漏报 | `make doctor` / `python3 tools/render_preview.py --check` | `soffice: not found`；override 目录内二进制实际可执行 | 新增 `tools/renderer_locate.py` 运行时探测并接入三处；`make render` 复验 3 PNG |

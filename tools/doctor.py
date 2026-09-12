@@ -9,6 +9,7 @@ import shutil
 import sys
 
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import renderer_locate as R  # noqa: E402
 
 
 def has_module(name: str) -> bool:
@@ -26,8 +27,8 @@ def detect():
         "node": shutil.which("node"),
         "npm": shutil.which("npm"),
         "make": shutil.which("make"),
-        "soffice": shutil.which("soffice") or shutil.which("libreoffice"),
-        "pdftoppm": shutil.which("pdftoppm"),
+        "soffice": R.find_soffice(),
+        "pdftoppm": R.find_pdftoppm(),
         "chrome": shutil.which("google-chrome") or shutil.which("chromium") or shutil.which("chromium-browser"),
         "python_pptx": has_module("pptx"),
         "pillow": has_module("PIL.Image"),

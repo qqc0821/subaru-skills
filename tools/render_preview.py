@@ -13,26 +13,16 @@ import sys
 import tempfile
 from pathlib import Path
 
-SOFFICE_CANDIDATES = [
-    "/Applications/LibreOffice.app/Contents/MacOS/soffice",
-    "/usr/bin/soffice",
-    "/usr/bin/libreoffice",
-]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import renderer_locate as R  # noqa: E402
 
 
 def find_soffice():
-    for name in ("soffice", "libreoffice"):
-        p = shutil.which(name)
-        if p:
-            return p
-    for c in SOFFICE_CANDIDATES:
-        if Path(c).is_file():
-            return c
-    return None
+    return R.find_soffice()
 
 
 def find_pdftoppm():
-    return shutil.which("pdftoppm")
+    return R.find_pdftoppm()
 
 
 def main() -> int:

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "captured_at": "2026-09-11T16:59:30Z",
-  "git_sha": "788b450abb8fab0778adc5d0cf4eac90bcf89cdb",
+  "captured_at": "2026-09-12T03:12:42Z",
+  "git_sha": "8a98150534e14359b33f4272d9db6c1cc573344d",
   "working_tree_dirty": true,
   "paths": {
     "A": {
@@ -27,6 +27,6 @@
   },
   "visual_qa": {
     "status": "RUNNABLE",
-    "reason": "soffice and pdftoppm are both available; Chrome is not required for PPTX rendering."
+    "reason": "soffice and pdftoppm are located at runtime (PATH or bundled runtime bin/override); Chrome is not required for PPTX rendering."
   }
 }

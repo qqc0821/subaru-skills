@@ -37,6 +37,16 @@ IMAGEGEN_HINTS = [
     HOME / ".codex" / "skills" / ".system" / "imagegen",
     HOME / ".claude" / "skills" / "imagegen",
 ]
+# Renderer binaries bundled by host runtimes into a bin/override directory.
+# Globs are home-relative and resolved at runtime; nothing is hard-coded to a user.
+SOFFICE_HOME_GLOBS = [
+    ".cache/codex-runtimes/*/dependencies/bin/override/soffice",
+    ".cache/codex-runtimes/*/dependencies/bin/soffice",
+]
+PDFTOPPM_HOME_GLOBS = [
+    ".cache/codex-runtimes/*/dependencies/bin/override/pdftoppm",
+    ".cache/codex-runtimes/*/dependencies/bin/pdftoppm",
+]
 
 
 def which(*names):
@@ -44,6 +54,18 @@ def which(*names):
         p = shutil.which(n)
         if p:
             return p
+    return None
+
+
+def locate_binary(names, home_globs=()):
+    """PATH first, then runtime-probed home cache overrides."""
+    found = which(*names)
+    if found:
+        return found
+    for pattern in home_globs:
+        for candidate in sorted(HOME.glob(pattern)):
+            if candidate.is_file():
+                return str(candidate)
     return None
 
 
@@ -107,8 +129,8 @@ def detect():
         "uv": which("uv"),
         "node": node,
         "npm": which("npm"),
-        "soffice": which("soffice", "libreoffice"),
-        "pdftoppm": which("pdftoppm"),
+        "soffice": locate_binary(("soffice", "libreoffice"), SOFFICE_HOME_GLOBS),
+        "pdftoppm": locate_binary(("pdftoppm",), PDFTOPPM_HOME_GLOBS),
         "chrome": which("google-chrome", "chromium", "chromium-browser"),
         "python_pptx": has_module("pptx"),
         "pillow": has_module("PIL.Image"),
