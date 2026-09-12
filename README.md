@@ -105,11 +105,30 @@ python3 skills/subaru-slides/scripts/detect_capabilities.py
 | PPTX 逐页渲染质检 | LibreOffice（`soffice`）+ poppler（`pdftoppm`） | `brew install --cask libreoffice poppler` |
 | HTML deck 导出 PPTX | Chrome / Chromium | 按系统安装 |
 
-兜底脚本可以直接跑（依赖会自动解析）：
+### 最小可用验证
+
+只装了 skill、没有任何可选依赖时，下面两条都能跑通：
 
 ```bash
-uv run skills/subaru-slides/scripts/create_slides.py slide-01.png slide-02.png --layout fullscreen -o output.pptx
+# 1) 看看这台机器有什么能力、推荐走哪条路径
+python3 .agents/skills/subaru-slides/scripts/detect_capabilities.py
+
+# 2) 把若干张图直接合成 PPTX（首次运行会自动拉取 PEP 723 声明的依赖）
+uv run .agents/skills/subaru-slides/scripts/create_slides.py \
+  slide-01.png slide-02.png slide-03.png \
+  --layout title_below -t "第一页" "第二页" "第三页" \
+  -o output.pptx
 ```
+
+预期输出（实测）：
+
+```
+Presentation saved: .../output.pptx
+  3 images, 3 slides, layout: title_below
+```
+
+> 路径按你的安装位置调整：`npx skills add` 默认装到 `.agents/skills/`，
+> 从仓库内使用时则是 `skills/subaru-slides/scripts/`。
 
 ---
 
