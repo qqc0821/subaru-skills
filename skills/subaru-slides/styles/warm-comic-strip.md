@@ -6,7 +6,7 @@ tier: 1
 themes: [品牌/产品介绍, 教育/培训, 个人IP]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-snoopy.webp
+sample: assets/style-samples/warm-comic-strip.webp
 proven: true
 palette:
   background: "#FFF8E8"
@@ -45,4 +45,4 @@ Do NOT constrain composition, character count, or poses — describe mood only.
 
 ## 样例
 
-`assets/style-samples/slide04-snoopy.webp`
+`assets/style-samples/warm-comic-strip.webp`

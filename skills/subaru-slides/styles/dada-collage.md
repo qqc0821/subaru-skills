@@ -6,7 +6,7 @@ tier: 3
 themes: [创意行业, 广告, 破冰]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-08-达达拼贴-collage.webp
+sample: assets/style-samples/dada-collage.webp
 proven: true
 palette:
   background: "#F5F5F5"
@@ -44,4 +44,4 @@ Torn paper, mixed typefaces, tape and pins, rubber-stamp data.
 
 ## 样例
 
-`assets/style-samples/slide04-08-达达拼贴-collage.webp`
+`assets/style-samples/dada-collage.webp`

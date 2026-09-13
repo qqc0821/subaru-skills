@@ -6,7 +6,7 @@ tier: 1
 themes: [产品说明, 流程解释]
 formality: medium
 path: B_or_B2
-sample: assets/style-samples/slide04-ligne-claire.webp
+sample: assets/style-samples/ligne-claire.webp
 proven: true
 palette:
   background: "#FFFDF7"
@@ -44,4 +44,4 @@ Panel-based sequential reading; each panel advances one idea.
 
 ## 样例
 
-`assets/style-samples/slide04-ligne-claire.webp`
+`assets/style-samples/ligne-claire.webp`

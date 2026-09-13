@@ -6,7 +6,7 @@ tier: 2
 themes: [国风/东方, 文化项目, 高端场合]
 formality: medium
 path: B_or_B2
-sample: assets/style-samples/slide04-10-敦煌壁画-dunhuang.webp
+sample: assets/style-samples/dunhuang-mural.webp
 proven: true
 palette:
   background: "#D4A574"
@@ -44,4 +44,4 @@ Apsaras ribbons carry the eye from left to right; clouds and lotus motifs.
 
 ## 样例
 
-`assets/style-samples/slide04-10-敦煌壁画-dunhuang.webp`
+`assets/style-samples/dunhuang-mural.webp`

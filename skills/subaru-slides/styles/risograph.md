@@ -6,7 +6,7 @@ tier: 3
 themes: [独立品牌, 创意行业, 音乐]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-04-孔版印刷-risograph.webp
+sample: assets/style-samples/risograph.webp
 proven: true
 palette:
   background: "#FAF3E0"
@@ -44,4 +44,4 @@ Rough paper texture, limited two inks.
 
 ## 样例
 
-`assets/style-samples/slide04-04-孔版印刷-risograph.webp`
+`assets/style-samples/risograph.webp`

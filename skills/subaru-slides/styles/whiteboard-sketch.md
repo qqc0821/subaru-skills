@@ -6,7 +6,7 @@ tier: 2
 themes: [技术分享, 极客受众, 课堂]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-xkcd.webp
+sample: assets/style-samples/whiteboard-sketch.webp
 proven: true
 palette:
   background: "#FFFFFF"
@@ -44,4 +44,4 @@ Stick figures, wobbly charts, annotation arrows, hand-written feel.
 
 ## 样例
 
-`assets/style-samples/slide04-xkcd.webp`
+`assets/style-samples/whiteboard-sketch.webp`

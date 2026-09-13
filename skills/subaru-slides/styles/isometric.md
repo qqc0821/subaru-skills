@@ -6,7 +6,7 @@ tier: 3
 themes: [科技产品, SaaS流程]
 formality: medium
 path: B_or_B2
-sample: assets/style-samples/slide04-05-等轴测-isometric.webp
+sample: assets/style-samples/isometric.webp
 proven: true
 palette:
   background: "#DDE1E7"
@@ -44,4 +44,4 @@ COLOR SYSTEM: light gray-blue ground, one pastel color per platform.
 
 ## 样例
 
-`assets/style-samples/slide04-05-等轴测-isometric.webp`
+`assets/style-samples/isometric.webp`

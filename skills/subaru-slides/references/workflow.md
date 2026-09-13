@@ -27,7 +27,7 @@ Read `content-structure.md`. Produce a slide-by-slide outline (title = assertion
 **Checkpoint 1:** show the outline table, ask to approve/adjust.
 
 ## Step 4 - Style selection
-Read `../styles/index.json`. Match the topic against `theme_recommendations`, then `formality` and `path@@.
+Read `../styles/index.json`. Match the topic against `theme_recommendations`, then `formality` and `path`.
 Pick **3 candidates** with different directions (not three of the same family).
 **Checkpoint 2:** show the 3 candidates with their one-liner + sample, ask the user to pick.
 (Optional) If the host can render, generate one cover preview per candidate and show images, not prose.

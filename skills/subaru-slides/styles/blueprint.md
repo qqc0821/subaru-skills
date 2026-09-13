@@ -6,7 +6,7 @@ tier: 3
 themes: [技术架构, 工程方案]
 formality: high
 path: A_or_B2
-sample: assets/style-samples/slide04-06-工程蓝图-blueprint.webp
+sample: assets/style-samples/blueprint.webp
 proven: true
 palette:
   background: "#1B3A5C"
@@ -44,4 +44,4 @@ Grid paper, dimension lines, technical title block.
 
 ## 样例
 
-`assets/style-samples/slide04-06-工程蓝图-blueprint.webp`
+`assets/style-samples/blueprint.webp`

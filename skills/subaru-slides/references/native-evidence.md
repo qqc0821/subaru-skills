@@ -7,7 +7,7 @@ This applies to evidence, not decoration. Do not use it to justify building deco
 
 ## Charts
 - Preserve categories, series, units, dates, signs, precision; set axis/label formats explicitly.
-- Show 31% as `0.31`, not `31@@.
+- Store 31% as `0.31`, not `31`.
 - Use the chart's own labels instead of separate text boxes; remove a placeholder "Chart Title".
 - Stacked bar labels use `inEnd` / `center`, not `outEnd`.
 - Set the chart font explicitly, because chart text does not inherit the surrounding shape font.
@@ -24,7 +24,7 @@ This applies to evidence, not decoration. Do not use it to justify building deco
 
 ## Unit guardrails
 - Shape geometry: EMU (914400 per inch).
-- Paragraph `marginLeft` / `indent@@: EMU (1pt = 12700).
+- Paragraph `marginLeft` / `indent`: EMU (1pt = 12700).
 - `spaceBefore` / `spaceAfter`: hundredths of a point (100 = 1pt).
 - Do not double-convert imported paragraphs.
 

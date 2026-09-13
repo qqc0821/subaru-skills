@@ -6,7 +6,7 @@ No external skill is a hard dependency; any detected capability is an optional e
 ## Capabilities
 | Capability | Detected by | Enables |
 |---|---|---|
-| Native editable builder | `@oai/artifact-tool` / `python-pptx` | Path A / B' |
+| Native editable builder | host-native artifact tool / available `python-pptx` workflow | Path A / B' |
 | Image generation | the host's image-generation capability | Path B / B' |
 | HTML deck runtime | `deck-stage.js` | Path C |
 | HTML→PPTX converter | an html2pptx-style converter | Path C export |
@@ -19,7 +19,7 @@ Run `scripts/detect_capabilities.py` (human or `--json`) to detect all of the ab
 `A 原生可编辑 → B' 混合 → C HTML deck → B 全 AI 视觉 → fallback`
 
 ## Degrade rules
-- **No native builder** → cannot do A/B'; use C or B and state that text will not be editable.
+- **No native builder** → cannot do A/B'; use C or B and state that text will not be editable. `scripts/create_slides.py` remains available only for the image-only PPTX fallback; it does not restore native editability.
 - **No image generation** → skip AI imagery; A/C use native visuals only.
 - **No renderer** → run structural checks only and state that visual verification was not performed.
 - **Optional skills absent** → no action needed; the probe simply reports them as unavailable.

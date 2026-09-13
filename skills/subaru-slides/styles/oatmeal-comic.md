@@ -6,7 +6,7 @@ tier: 2
 themes: [科普, 社交传播, 内部培训]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-oatmeal.webp
+sample: assets/style-samples/oatmeal-comic.webp
 proven: true
 palette:
   background: "#F8F8F8"
@@ -44,4 +44,4 @@ Big-headed characters, thick hand-drawn lines, infographic data panels.
 
 ## 样例
 
-`assets/style-samples/slide04-oatmeal.webp`
+`assets/style-samples/oatmeal-comic.webp`

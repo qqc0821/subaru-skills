@@ -6,7 +6,7 @@ tier: 2
 themes: [日本/东方市场, 跨境品牌]
 formality: medium
 path: B_or_B2
-sample: assets/style-samples/slide04-02-浮世绘-ukiyo-e.webp
+sample: assets/style-samples/ukiyo-e.webp
 proven: true
 palette:
   background: "#F5F0E1"
@@ -44,4 +44,4 @@ Wave metaphor: ripple -> swell -> great wave -> break.
 
 ## 样例
 
-`assets/style-samples/slide04-02-浮世绘-ukiyo-e.webp`
+`assets/style-samples/ukiyo-e.webp`

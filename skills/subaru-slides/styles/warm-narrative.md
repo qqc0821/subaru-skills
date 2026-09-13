@@ -6,7 +6,7 @@ tier: 3
 themes: [用户故事, 品牌故事]
 formality: medium
 path: B_or_B2
-sample: assets/style-samples/slide04-13-温暖叙事-warm-narrative.webp
+sample: assets/style-samples/warm-narrative.webp
 proven: true
 palette:
   background: "#FDF6EC"
@@ -44,4 +44,4 @@ Flat vector illustrations, people-centric, rounded shapes.
 
 ## 样例
 
-`assets/style-samples/slide04-13-温暖叙事-warm-narrative.webp`
+`assets/style-samples/warm-narrative.webp`

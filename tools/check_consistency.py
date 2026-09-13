@@ -24,6 +24,7 @@ FORBIDDEN = [
     ("upstream-identity-huashu", "huashu"),
     ("upstream-identity-alchaincyf", "alchaincyf"),
 ]
+CORRUPT_MARKER = "@@"
 
 
 def skill_markdown_files():
@@ -43,12 +44,31 @@ def iter_lines(path, include_fences=False):
         yield lineno, line
 
 
+def corrupt_marker_findings(files):
+    """Reject visible text-corruption markers while allowing fenced examples."""
+    findings = []
+    for f in files:
+        for lineno, line in iter_lines(f):
+            if CORRUPT_MARKER in line:
+                rel = C.rel(f)
+                findings.append(C.Finding(
+                    CHECK,
+                    "corrupt-marker:" + rel + ":" + str(lineno),
+                    "suspicious @@ marker outside a code fence; repair the Markdown text",
+                    rel,
+                    lineno,
+                ))
+    return findings
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Consistency checks")
     C.add_common_args(parser)
     args = parser.parse_args()
     findings = []
     files = skill_markdown_files()
+
+    findings.extend(corrupt_marker_findings(files))
 
     for f in files:
         seen = set()

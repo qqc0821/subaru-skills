@@ -6,7 +6,7 @@ tier: 3
 themes: [游戏, 年轻群体, gamification]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-09-像素画-pixel-art.webp
+sample: assets/style-samples/pixel-art.webp
 proven: true
 palette:
   background: "#4CAF50"
@@ -44,4 +44,4 @@ Pixel characters in zones, quest progress bar, dialogue box.
 
 ## 样例
 
-`assets/style-samples/slide04-09-像素画-pixel-art.webp`
+`assets/style-samples/pixel-art.webp`

@@ -6,7 +6,7 @@ tier: 1
 themes: [年轻品牌, 社交平台, 活动]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-neo-pop.webp
+sample: assets/style-samples/neo-pop-magazine.webp
 proven: true
 palette:
   background: "#FFF8E7"
@@ -44,4 +44,4 @@ Headlines can occupy up to half the slide; controlled chaos.
 
 ## 样例
 
-`assets/style-samples/slide04-neo-pop.webp`
+`assets/style-samples/neo-pop-magazine.webp`

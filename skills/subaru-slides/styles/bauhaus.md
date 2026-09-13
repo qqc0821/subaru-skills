@@ -6,7 +6,7 @@ tier: 3
 themes: [设计行业, 建筑, 教育]
 formality: medium
 path: A_or_B2
-sample: assets/style-samples/slide04-03-包豪斯-bauhaus.webp
+sample: assets/style-samples/bauhaus.webp
 proven: true
 palette:
   background: "#FAFAFA"
@@ -44,4 +44,4 @@ Circle/triangle/square/star encode steps; geometric and rational.
 
 ## 样例
 
-`assets/style-samples/slide04-03-包豪斯-bauhaus.webp`
+`assets/style-samples/bauhaus.webp`

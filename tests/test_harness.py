@@ -21,6 +21,8 @@ import run_evals  # noqa: E402
 import validate_pptx  # noqa: E402
 import html_deck_inspect  # noqa: E402
 import renderer_locate  # noqa: E402
+import check_consistency  # noqa: E402
+import check_style_system  # noqa: E402
 
 DETECT_SPEC = importlib.util.spec_from_file_location(
     "detect_capabilities", ROOT / "skills" / "subaru-slides" / "scripts" / "detect_capabilities.py"
@@ -64,6 +66,21 @@ class TestStyleSystem(unittest.TestCase):
             if s.get("sample"):
                 self.assertTrue((SKILL / s["sample"]).exists(), s["id"] + " sample missing")
 
+    def test_samples_use_their_style_ids(self):
+        data = json.loads(C.read_text(SKILL / "styles" / "index.json"))
+        for s in data["styles"]:
+            if s.get("sample"):
+                self.assertEqual(Path(s["sample"]).name, s["id"] + ".webp")
+
+    def test_presets_match_registry_samples(self):
+        data = json.loads(C.read_text(SKILL / "styles" / "index.json"))
+        for s in data["styles"]:
+            frontmatter, _ = C.parse_frontmatter(C.read_text(SKILL / s["preset"]))
+            preset_sample = frontmatter.get("sample")
+            if preset_sample == "null":
+                preset_sample = None
+            self.assertEqual(preset_sample, s.get("sample"), s["id"] + " preset sample mismatch")
+
     def test_theme_recommendations_resolve(self):
         data = json.loads(C.read_text(SKILL / "styles" / "index.json"))
         ids = {s["id"] for s in data["styles"]}
@@ -72,6 +89,44 @@ class TestStyleSystem(unittest.TestCase):
                 if rec.get(slot):
                     self.assertIn(rec[slot], ids, "unknown style in " + str(rec.get("theme")))
 
+
+class TestSemanticQualityGuards(unittest.TestCase):
+    def test_corrupt_marker_guard_ignores_fenced_examples(self):
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            path = Path(tmp) / "guide.md"
+            path.write_text("visible @@ marker\n```text\nfenced @@ marker\n```\n", encoding="utf-8")
+            findings = check_consistency.corrupt_marker_findings([path])
+            self.assertEqual(len(findings), 1)
+            self.assertEqual(findings[0].line, 1)
+
+    def test_noncanonical_style_sample_is_rejected(self):
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            skill = Path(tmp) / "demo-skill"
+            samples = skill / "assets" / "style-samples"
+            styles = skill / "styles"
+            samples.mkdir(parents=True)
+            styles.mkdir()
+            (samples / "legacy.webp").write_bytes(b"webp")
+            (styles / "demo.md").write_text(
+                "---\nid: demo\nsample: assets/style-samples/legacy.webp\n---\n",
+                encoding="utf-8",
+            )
+            index = styles / "index.json"
+            index.write_text(json.dumps({
+                "count": 1,
+                "styles": [{
+                    "id": "demo",
+                    "sample": "assets/style-samples/legacy.webp",
+                    "preset": "styles/demo.md",
+                }],
+            }), encoding="utf-8")
+            keys = {f.key for f in check_style_system.validate_index(skill, index)}
+            self.assertIn("noncanonical-sample:demo-skill:demo", keys)
+            self.assertIn("unexpected-sample:demo-skill:legacy.webp", keys)
 
 class TestDeckTools(unittest.TestCase):
     @unittest.skipUnless(DECK.is_file(), "reference deck not present")

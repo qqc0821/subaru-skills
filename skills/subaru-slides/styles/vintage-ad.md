@@ -6,7 +6,7 @@ tier: 3
 themes: [消费品, 零售, 怀旧]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-07-复古广告-vintage-ad.webp
+sample: assets/style-samples/vintage-ad.webp
 proven: true
 palette:
   background: "#FFF8E7"
@@ -44,4 +44,4 @@ Ribbon banners, aspirational everyday scenes.
 
 ## 样例
 
-`assets/style-samples/slide04-07-复古广告-vintage-ad.webp`
+`assets/style-samples/vintage-ad.webp`

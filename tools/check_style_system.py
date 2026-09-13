@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import _common as C
 
 CHECK = "check_style_system"
+SAMPLE_DIR = Path("assets/style-samples")
 
 
 def validate_index(skill: Path, index_path: Path):
@@ -31,6 +32,7 @@ def validate_index(skill: Path, index_path: Path):
         findings.append(C.Finding(CHECK, "count-mismatch:" + skill.name,
                                   "count=" + str(count) + " but styles has " + str(len(styles)) + " entries", rel))
     ids = []
+    expected_samples = set()
     for i, style in enumerate(styles):
         sid = style.get("id")
         if not sid:
@@ -38,9 +40,40 @@ def validate_index(skill: Path, index_path: Path):
             continue
         ids.append(sid)
         sample = style.get("sample")
-        if sample and not (skill / sample).resolve().exists():
-            findings.append(C.Finding(CHECK, "missing-sample:" + skill.name + ":" + sid,
-                                      "sample not found: " + sample, rel))
+        expected_sample = (SAMPLE_DIR / (sid + ".webp")).as_posix()
+        if sample:
+            if sample != expected_sample:
+                findings.append(C.Finding(
+                    CHECK,
+                    "noncanonical-sample:" + skill.name + ":" + sid,
+                    "sample must be " + expected_sample + ", got " + str(sample),
+                    rel,
+                ))
+            else:
+                expected_samples.add(Path(sample).name)
+            if not (skill / sample).resolve().exists():
+                findings.append(C.Finding(CHECK, "missing-sample:" + skill.name + ":" + sid,
+                                          "sample not found: " + sample, rel))
+
+        preset = style.get("preset")
+        if not preset:
+            continue
+        preset_path = skill / preset
+        if not preset_path.is_file():
+            findings.append(C.Finding(CHECK, "missing-preset:" + skill.name + ":" + sid,
+                                      "preset not found: " + str(preset), rel))
+            continue
+        frontmatter, _ = C.parse_frontmatter(C.read_text(preset_path))
+        preset_sample = frontmatter.get("sample")
+        if preset_sample == "null":
+            preset_sample = None
+        if preset_sample != sample:
+            findings.append(C.Finding(
+                CHECK,
+                "preset-sample-mismatch:" + skill.name + ":" + sid,
+                "preset sample must match styles/index.json",
+                C.rel(preset_path),
+            ))
     dupes = {x for x in ids if ids.count(x) > 1}
     for d in sorted(dupes):
         findings.append(C.Finding(CHECK, "duplicate-id:" + skill.name + ":" + d, "duplicate style id: " + d, rel))
@@ -49,7 +82,17 @@ def validate_index(skill: Path, index_path: Path):
             ref = rec.get(slot)
             if ref and ref not in ids:
                 findings.append(C.Finding(CHECK, "unknown-recommendation:" + skill.name + ":" + str(rec.get("theme")) + ":" + slot,
-                                          "theme recommendation references unknown id: " + ref, rel))
+                                      "theme recommendation references unknown id: " + ref, rel))
+    sample_dir = skill / SAMPLE_DIR
+    if sample_dir.is_dir():
+        actual_samples = {f.name for f in sample_dir.iterdir() if f.is_file()}
+        for name in sorted(actual_samples - expected_samples):
+            findings.append(C.Finding(
+                CHECK,
+                "unexpected-sample:" + skill.name + ":" + name,
+                "style sample is not registered as a canonical <style-id>.webp path",
+                C.rel(sample_dir / name),
+            ))
     return findings
 
 
@@ -60,7 +103,7 @@ def main() -> int:
     findings = []
     count = 0
     for skill in C.iter_skill_dirs():
-        samples = skill / "assets" / "style-samples"
+        samples = skill / SAMPLE_DIR
         index = skill / "styles" / "index.json"
         if samples.is_dir() and not index.is_file():
             findings.append(C.Finding(CHECK, "missing-index:" + skill.name,

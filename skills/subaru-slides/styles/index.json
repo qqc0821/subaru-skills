@@ -14,7 +14,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-snoopy.webp",
+      "sample": "assets/style-samples/warm-comic-strip.webp",
       "preset": "styles/warm-comic-strip.md",
       "proven": true
     },
@@ -29,7 +29,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-manga.webp",
+      "sample": "assets/style-samples/manga-educational.webp",
       "preset": "styles/manga-educational.md",
       "proven": true
     },
@@ -44,7 +44,7 @@
       ],
       "formality": "medium",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-ligne-claire.webp",
+      "sample": "assets/style-samples/ligne-claire.webp",
       "preset": "styles/ligne-claire.md",
       "proven": true
     },
@@ -60,7 +60,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-neo-pop.webp",
+      "sample": "assets/style-samples/neo-pop-magazine.webp",
       "preset": "styles/neo-pop-magazine.md",
       "proven": true
     },
@@ -76,7 +76,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-xkcd.webp",
+      "sample": "assets/style-samples/whiteboard-sketch.webp",
       "preset": "styles/whiteboard-sketch.md",
       "proven": true
     },
@@ -92,7 +92,7 @@
       ],
       "formality": "medium",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-01-苏联构成主义-constructivism.webp",
+      "sample": "assets/style-samples/soviet-constructivism.webp",
       "preset": "styles/soviet-constructivism.md",
       "proven": true
     },
@@ -108,7 +108,7 @@
       ],
       "formality": "medium",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-10-敦煌壁画-dunhuang.webp",
+      "sample": "assets/style-samples/dunhuang-mural.webp",
       "preset": "styles/dunhuang-mural.md",
       "proven": true
     },
@@ -123,7 +123,7 @@
       ],
       "formality": "medium",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-02-浮世绘-ukiyo-e.webp",
+      "sample": "assets/style-samples/ukiyo-e.webp",
       "preset": "styles/ukiyo-e.md",
       "proven": true
     },
@@ -139,7 +139,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-oatmeal.webp",
+      "sample": "assets/style-samples/oatmeal-comic.webp",
       "preset": "styles/oatmeal-comic.md",
       "proven": true
     },
@@ -154,7 +154,7 @@
       ],
       "formality": "medium",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-13-温暖叙事-warm-narrative.webp",
+      "sample": "assets/style-samples/warm-narrative.webp",
       "preset": "styles/warm-narrative.md",
       "proven": true
     },
@@ -170,7 +170,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-04-孔版印刷-risograph.webp",
+      "sample": "assets/style-samples/risograph.webp",
       "preset": "styles/risograph.md",
       "proven": true
     },
@@ -185,7 +185,7 @@
       ],
       "formality": "medium",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-05-等轴测-isometric.webp",
+      "sample": "assets/style-samples/isometric.webp",
       "preset": "styles/isometric.md",
       "proven": true
     },
@@ -201,7 +201,7 @@
       ],
       "formality": "medium",
       "path": "A_or_B2",
-      "sample": "assets/style-samples/slide04-03-包豪斯-bauhaus.webp",
+      "sample": "assets/style-samples/bauhaus.webp",
       "preset": "styles/bauhaus.md",
       "proven": true
     },
@@ -216,7 +216,7 @@
       ],
       "formality": "high",
       "path": "A_or_B2",
-      "sample": "assets/style-samples/slide04-06-工程蓝图-blueprint.webp",
+      "sample": "assets/style-samples/blueprint.webp",
       "preset": "styles/blueprint.md",
       "proven": true
     },
@@ -232,7 +232,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-07-复古广告-vintage-ad.webp",
+      "sample": "assets/style-samples/vintage-ad.webp",
       "preset": "styles/vintage-ad.md",
       "proven": true
     },
@@ -248,7 +248,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-08-达达拼贴-collage.webp",
+      "sample": "assets/style-samples/dada-collage.webp",
       "preset": "styles/dada-collage.md",
       "proven": true
     },
@@ -264,7 +264,7 @@
       ],
       "formality": "low",
       "path": "B_or_B2",
-      "sample": "assets/style-samples/slide04-09-像素画-pixel-art.webp",
+      "sample": "assets/style-samples/pixel-art.webp",
       "preset": "styles/pixel-art.md",
       "proven": true
     },

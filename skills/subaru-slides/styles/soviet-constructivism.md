@@ -6,7 +6,7 @@ tier: 2
 themes: [产品发布/keynote, campaign, 品牌宣言]
 formality: medium
 path: B_or_B2
-sample: assets/style-samples/slide04-01-苏联构成主义-constructivism.webp
+sample: assets/style-samples/soviet-constructivism.webp
 proven: true
 palette:
   background: "#F5E6D3"
@@ -44,4 +44,4 @@ Diagonal wedge from bottom-left to top-right; geometry grows small to large; tex
 
 ## 样例
 
-`assets/style-samples/slide04-01-苏联构成主义-constructivism.webp`
+`assets/style-samples/soviet-constructivism.webp`

@@ -6,7 +6,7 @@ tier: 1
 themes: [教程/培训, 知识分享]
 formality: low
 path: B_or_B2
-sample: assets/style-samples/slide04-manga.webp
+sample: assets/style-samples/manga-educational.webp
 proven: true
 palette:
   background: "#FFFFFF"
@@ -44,4 +44,4 @@ Dynamic panels and reaction faces (surprise, eureka) drive the teaching.
 
 ## 样例
 
-`assets/style-samples/slide04-manga.webp`
+`assets/style-samples/manga-educational.webp`
