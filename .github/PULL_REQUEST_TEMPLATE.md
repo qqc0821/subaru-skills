@@ -1,21 +1,9 @@
-## 摘要
-<what and why>
+## 变更
+<!-- 简要说明改了什么、为什么改。 -->
 
-## 类型
-- [ ] feat
-- [ ] fix
-- [ ] docs
-- [ ] chore
-- [ ] refactor
-- [ ] test
-- [ ] ci
-
-## 检查
+## 验证
 - [ ] `make check` 通过
-- [ ] `make test` 通过
-- [ ] 文档与实现同步更新
-- [ ] 已勾选 `docs/definition-of-done.md` 的相关项
-- [ ] 如更新了 baseline，已说明接受的债务与原因
+- [ ] 如涉及代码或脚本，`make test` 通过
 
-## 备注
-<caveats / follow-ups>
+## 备注（可选）
+<!-- 记录已知限制、未完成项或后续计划。 -->
