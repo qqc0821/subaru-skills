@@ -16,9 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
 import _common as C  # noqa: E402
-import pptx_inspect  # noqa: E402
 import run_evals  # noqa: E402
-import validate_pptx  # noqa: E402
 import html_deck_inspect  # noqa: E402
 import renderer_locate  # noqa: E402
 import check_consistency  # noqa: E402
@@ -31,7 +29,6 @@ detect_capabilities = importlib.util.module_from_spec(DETECT_SPEC)
 DETECT_SPEC.loader.exec_module(detect_capabilities)
 
 SKILL = C.ROOT / "skills" / "subaru-slides"
-DECK = C.ROOT / "output" / "subaru-ev-trends.pptx"
 
 
 class TestCommon(unittest.TestCase):
@@ -129,19 +126,6 @@ class TestSemanticQualityGuards(unittest.TestCase):
             self.assertIn("unexpected-sample:demo-skill:legacy.webp", keys)
 
 class TestDeckTools(unittest.TestCase):
-    @unittest.skipUnless(DECK.is_file(), "reference deck not present")
-    def test_inspect(self):
-        m = pptx_inspect.inspect(str(DECK))
-        self.assertGreaterEqual(m["slide_count"], 6)
-        self.assertGreaterEqual(m["chart_count"], 1)
-        self.assertGreater(m["cjk_chars"], 0)
-
-    @unittest.skipUnless(DECK.is_file(), "reference deck not present")
-    def test_validate_has_no_errors(self):
-        findings = validate_pptx.validate(str(DECK))
-        errors = [f.message for f in findings if f.severity == "error"]
-        self.assertEqual(errors, [], "unexpected structural errors: " + str(errors))
-
     def test_html_deck_inspector_rejects_missing_stage(self):
         from tempfile import TemporaryDirectory
 
@@ -228,7 +212,16 @@ class TestRendererLocate(unittest.TestCase):
 
         with TemporaryDirectory() as tmp:
             exe = self._fake(tmp, ".cache/codex-runtimes/rt-1/dependencies/bin/override/soffice")
-            self.assertEqual(renderer_locate.find_soffice(home=tmp), str(exe))
+            self.assertEqual(
+                renderer_locate.locate(
+                    names=[],
+                    env_names=[],
+                    abs_paths=[],
+                    home_globs=renderer_locate.HOME_GLOBS_SOFFICE,
+                    home=tmp,
+                ),
+                str(exe),
+            )
 
     def test_missing_renderer_returns_none(self):
         from tempfile import TemporaryDirectory
