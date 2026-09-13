@@ -210,7 +210,7 @@ du -sh skills/*
 | **H3** | `tools/` 校验器（validate_skills / check_links / check_consistency / check_assets / check_style_system / doctor） | 已完成 |
 | **H4** | `Makefile` + `.github/workflows/ci.yml` | 已完成 |
 | **H5** | 任务模板 `docs/templates/` + Definition of Done + PR 模板 + `make new-task` | 已完成 |
-| **H6** | `evals/` 回归基准（3 个 case + `run_evals` + `pptx_inspect`） | 已完成 |
+| **H6** | `evals/` 回归基准（5 个 case + `run_evals` + `pptx_inspect`） | 已完成 |
 | **H7** | pre-commit（`make hooks`）+ `docs/lessons-learned.md` | 已完成（可选启用） |
 
 ### 8.4 基线（baseline）机制

@@ -49,7 +49,7 @@ test:
 	@$(PYTHON) tools/render_preview.py --check > /dev/null && echo "render_preview: OK"
 	@$(PYTHON) tools/make_montage.py --help > /dev/null && echo "make_montage: OK"
 	@$(PYTHON) tools/prepare_eval_artifacts.py --help > /dev/null && echo "prepare_eval_artifacts: OK"
-	@$(PYTHON) -m unittest discover -s tests 2>&1 | tail -3
+	@$(PYTHON) -m unittest discover -s tests
 
 eval:
 	@$(PYTHON) tools/run_evals.py
