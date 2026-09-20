@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-style-router check-context-budget check-installability doctor baseline test eval eval-clean new-task hooks validate render montage lint-copy new-style style-router
+.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-style-router check-context-budget check-installability doctor baseline test eval eval-clean new-task hooks validate render montage lint-copy pixel-qa new-style style-router
 
 help:
 	@echo "subaru-skills harness"
@@ -16,6 +16,7 @@ help:
 	@echo "  make render    render a deck:    PPTX=... [OUT=dir]"
 	@echo "  make montage   contact sheet:    DIR=slides/ [OUT=file]"
 	@echo "  make lint-copy copy lint:        SRC=deck.pptx|outline.md"
+	@echo "  make pixel-qa  render QA:        DIR=renders/"
 	@echo "  make new-style scaffold a style: ID=x NAME=... [REGISTER=1]"
 	@echo "  make style-router regenerate styles/router.md from styles/index.json"
 
@@ -83,6 +84,10 @@ render:
 lint-copy:
 	@test -n "$(SRC)" || (echo "usage: make lint-copy SRC=deck.pptx|outline.md"; exit 2)
 	@$(PYTHON) tools/lint_copy.py "$(SRC)"
+
+pixel-qa:
+	@test -n "$(DIR)" || (echo "usage: make pixel-qa DIR=renders/"; exit 2)
+	@$(PYTHON) skills/subaru-slides/scripts/detect_pixel_artifacts.py --detail "$(DIR)"
 
 new-style:
 	@test -n "$(ID)" -a -n "$(NAME)" || (echo "usage: make new-style ID=x NAME=\"...\" [REGISTER=1]"; exit 2)

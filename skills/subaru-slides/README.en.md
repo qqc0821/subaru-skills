@@ -34,6 +34,8 @@ Probe host capabilities first, then pick a path in this order: **A native editab
 
 `scripts/detect_capabilities.py` probes the native builder, image generation, the HTML runtime, and renderers. All of them are optional enhancers: when one is missing, execution moves to the next path and says so explicitly — nothing is silently rerouted, and an image-only PPTX is never presented as editable.
 
+`scripts/detect_pixel_artifacts.py` (stdlib-only, read-only, offline) checks each rendered slide PNG for three defects visible only in pixels: an orphaned numeral after a wrapped group, a glyph blown up by shrink-to-fit, and a thin band crossing a colour boundary. Thresholds and build-time prevention: [references/qa/pixel-artifacts.md](references/qa/pixel-artifacts.md).
+
 Minimum fallback when only uv is available:
 
 ~~~bash

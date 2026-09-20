@@ -36,6 +36,7 @@ make doctor     # probe the current machine
 
 make validate PPTX=deck.pptx
 make render   PPTX=deck.pptx OUT=preview/
+make pixel-qa DIR=preview/            # pixel-level render QA: wrapped digits, oversized glyphs, band cuts
 make montage  DIR=preview/ OUT=montage.webp
 ~~~
 

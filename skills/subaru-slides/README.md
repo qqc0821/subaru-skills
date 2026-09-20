@@ -42,6 +42,10 @@ uv run scripts/create_slides.py a.webp b.webp --layout fullscreen --output out.p
 
 支持 fullscreen、title_above、title_below、title_left、center、grid 六种布局；它只做图片装配。
 
+## 渲染图质检
+
+`scripts/detect_pixel_artifacts.py`（零依赖、只读、不联网）对逐页渲染的 PNG 检查三类只在像素里可见的缺陷：数字组换行产生的孤字、被自动缩放撑大的孤字、横穿色块边界的细带。判据、阈值与生成侧预防见 [references/qa/pixel-artifacts.md](references/qa/pixel-artifacts.md)。
+
 ## 风格
 
 `styles/index.json` 是风格数据的唯一事实源（id、中文/英文名称、主题推荐、正式程度、适用路径、样例映射、proven 状态）；`styles/router.md` 是由它生成的选型摘要（Agent 选风格时只读这一张表），每个风格另有 `styles/<id>.md` preset，样例图在 `assets/style-samples/`。
