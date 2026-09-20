@@ -13,6 +13,7 @@
 
 ## B. skill 变更
 - [ ] `SKILL.md` ≤ 200 行；长文在 `references/`
+- [ ] skill 的 `README(.en).md` 只写"是什么 / 怎么用"，未复制 `SKILL.md` 的路径表、能力表或风格计数
 - [ ] frontmatter 的 name 与目录名一致；description 写清触发场景
 - [ ] `agents/openai.yaml` 字段完整
 - [ ] 无外部 skill 硬依赖；能力均有探测与降级路径

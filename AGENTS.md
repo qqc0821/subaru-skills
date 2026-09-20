@@ -66,13 +66,18 @@ subaru-skills/
 
 ```
 skills/<name>/
-├── SKILL.md               # 薄入口：路由 + 铁律 + 流程 + 检查点（≤200 行）
+├── SKILL.md               # 薄入口（Agent 视角）：路由 + 铁律 + 流程 + 检查点（≤200 行）
+├── README.md / .en.md     # 使用者视角：能力、调用方式、编辑性边界（中文优先 + 英文镜像）
 ├── agents/openai.yaml     # UI 元数据（见 3.5）
 ├── references/            # 按需加载的长文（设计原则、路径细节、QA 清单…）
 ├── scripts/               # 可执行辅助脚本（见 3.4）
 ├── assets/                # 样例图等静态资产（见 3.6）
 └── styles/                # （可选）机读风格系统（见第 4 节）
 ```
+
+文档分层：skill 的 `README` 只写"是什么 / 怎么用"，`SKILL.md` 是运行时规则的**唯一事实源**。
+路径表、能力降级表、风格计数等只允许维护一处，其余文档引用它。skill 的 `README` 会随包发布，
+因此不得引用仓库专有路径（`tools/`、`schemas/`、`AGENTS.md`、`make` 目标）。
 
 ### 3.2 `SKILL.md` frontmatter
 
