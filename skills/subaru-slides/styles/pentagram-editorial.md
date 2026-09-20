@@ -13,10 +13,9 @@ palette:
   text: "#1A1A1A"
   accent: ["#D4480B"]
 typography:
-  heading: "heavy 28pt+"
-  body: "light 10-13pt"
-  ratio: "3:1"
-  cjk_font: "PingFang SC"
+  heading: "heavy editorial sans"
+  body: "regular; use foundation profile"
+  cjk_tone: "neutral sans"
 ---
 
 # 编辑杂志风 (Pentagram Editorial)
@@ -28,7 +27,7 @@ typography:
 ```
 DESIGN SYSTEM: Pentagram / Michael Bierut editorial — typography is language, grid is thought.
 COLOR: cream white background, near-black text, ONE accent color.
-TYPE: heavy headlines 28pt+, light body 10-13pt, English section labels as design elements.
+TYPE: heavy headlines, legible regular body from the selected foundation profile, English section labels as design elements.
 COMPOSITION: Swiss grid, 2px black-bordered cards, precise horizontal rules, embedded data viz.
 Path A only: build native editable objects, do not render as AI image.
 ```

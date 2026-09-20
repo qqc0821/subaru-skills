@@ -14,9 +14,8 @@ palette:
   accent: ["#8B9D77"]
 typography:
   heading: "rounded sans 36pt+"
-  body: "14pt, line-height 1.8"
-  ratio: "2.5:1"
-  cjk_font: "PingFang SC"
+  body: "regular; use foundation profile"
+  cjk_tone: "rounded sans"
 ---
 
 # 日式思辨风 (Takram Speculative)
@@ -28,7 +27,7 @@ typography:
 ```
 DESIGN SYSTEM: Takram — technology as a medium for thinking.
 COLOR: warm gray background, dark gray text, sage green accent.
-TYPE: rounded sans, large non-bold titles 36pt+, warm 14pt body, 1.8 line height.
+TYPE: rounded sans, large non-bold titles 36pt+, legible regular body from the selected foundation profile, restrained line height.
 COMPOSITION: soft shadows, 16px+ radii, concept diagrams as the core visual.
 Path A (配图可 AI 辅助).
 ```

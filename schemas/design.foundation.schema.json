@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://subaru-skills/schemas/design.foundation.schema.json",
+  "title": "styles/foundation.json",
+  "type": "object",
+  "required": ["schema_version", "default_profile", "profiles", "cjk", "layout", "accessibility", "autofit"],
+  "properties": {
+    "schema_version": { "type": "integer", "minimum": 1 },
+    "default_profile": { "type": "string", "minLength": 1 },
+    "profiles": { "type": "object", "minProperties": 1 },
+    "cjk": { "type": "object" },
+    "layout": { "type": "object" },
+    "accessibility": { "type": "object" },
+    "autofit": { "type": "object" }
+  }
+}

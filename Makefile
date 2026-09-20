@@ -46,6 +46,7 @@ test:
 	@$(PYTHON) -m compileall -q tools && echo "compileall: OK"
 	@$(PYTHON) tools/doctor.py --json > /dev/null && echo "doctor: OK"
 	@$(PYTHON) tools/validate_pptx.py --help > /dev/null && echo "validate_pptx: OK"
+	@$(PYTHON) skills/subaru-slides/scripts/detect_fonts.py --doctor > /dev/null && echo "detect_fonts: OK"
 	@$(PYTHON) tools/render_preview.py --check > /dev/null && echo "render_preview: OK"
 	@$(PYTHON) tools/make_montage.py --help > /dev/null && echo "make_montage: OK"
 	@$(PYTHON) tools/prepare_eval_artifacts.py --help > /dev/null && echo "prepare_eval_artifacts: OK"

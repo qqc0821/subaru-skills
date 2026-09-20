@@ -29,8 +29,7 @@ palette:
 typography:
   heading: "bold"
   body: "regular"
-  ratio: "3:1"
-  cjk_font: "PingFang SC"
+  cjk_tone: "neutral sans"
 ---
 
 # {name} ({name_en})

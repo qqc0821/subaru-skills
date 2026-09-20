@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "count": 23,
+  "foundation": "styles/foundation.json",
   "styles": [
     {
       "id": "warm-comic-strip",

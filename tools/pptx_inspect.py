@@ -38,6 +38,29 @@ def _is_cjk(ch: str) -> bool:
     return (0x4E00 <= o <= 0x9FFF) or (0x3400 <= o <= 0x4DBF) or (0x3000 <= o <= 0x303F) or (0xFF00 <= o <= 0xFFEF)
 
 
+def _shape_text(el):
+    return "".join(node.text or "" for node in el.iter() if _local(node.tag) == "t")
+
+
+def _shape_has_east_asian_font(el) -> bool:
+    return any(_local(node.tag) == "ea" and node.get("typeface") for node in el.iter())
+
+
+def _shape_has_language(el) -> bool:
+    return any(_local(node.tag) == "rPr" and node.get("lang") for node in el.iter())
+
+
+def _shape_font_sizes(el) -> list[float]:
+    sizes = []
+    for node in el.iter():
+        if _local(node.tag) == "rPr" and node.get("sz"):
+            try:
+                sizes.append(int(node.get("sz")) / 100.0)
+            except ValueError:
+                pass
+    return sizes
+
+
 def inspect(path: str) -> dict:
     metrics = {
         "file": path,
@@ -52,6 +75,13 @@ def inspect(path: str) -> dict:
         "text_chars": 0,
         "cjk_chars": 0,
         "font_families": [],
+        "font_size_run_count": 0,
+        "min_font_size_pt": None,
+        "max_font_size_pt": None,
+        "cjk_text_shape_count": 0,
+        "cjk_shapes_with_east_asian_font_count": 0,
+        "cjk_shapes_with_language_tag_count": 0,
+        "autofit_shrink_shape_count": 0,
         "placeholders": [],
         "notes_slide_count": 0,
     }
@@ -62,6 +92,7 @@ def inspect(path: str) -> dict:
             metrics["slide_count"] = sum(1 for el in presentation.iter() if _local(el.tag) == "sldId")
         slide_names = sorted((n for n in names if re.match(r"ppt/slides/slide\d+\.xml$", n)), key=_slide_key)
         fonts = set()
+        font_sizes = []
         texts = []
         for name in slide_names:
             root = _read_xml(zf, name)
@@ -83,10 +114,26 @@ def inspect(path: str) -> dict:
                     tf = el.get("typeface")
                     if tf:
                         fonts.add(tf)
+            for shape in (el for el in root.iter() if _local(el.tag) == "sp"):
+                text = _shape_text(shape)
+                if any(_is_cjk(ch) for ch in text):
+                    metrics["cjk_text_shape_count"] += 1
+                    if _shape_has_east_asian_font(shape):
+                        metrics["cjk_shapes_with_east_asian_font_count"] += 1
+                    if _shape_has_language(shape):
+                        metrics["cjk_shapes_with_language_tag_count"] += 1
+                sizes = _shape_font_sizes(shape)
+                font_sizes.extend(sizes)
+                if any(_local(node.tag) == "normAutofit" for node in shape.iter()):
+                    metrics["autofit_shrink_shape_count"] += 1
         full_text = "\n".join(texts)
         metrics["text_chars"] = len(full_text)
         metrics["cjk_chars"] = sum(1 for ch in full_text if _is_cjk(ch))
         metrics["font_families"] = sorted(fonts)
+        metrics["font_size_run_count"] = len(font_sizes)
+        if font_sizes:
+            metrics["min_font_size_pt"] = min(font_sizes)
+            metrics["max_font_size_pt"] = max(font_sizes)
         low = full_text.lower()
         metrics["placeholders"] = sorted({p for p in PLACEHOLDER_PATTERNS if p in low})
         metrics["chart_count"] = sum(1 for n in names if re.search(r"charts?/chart\d+\.xml$", n))

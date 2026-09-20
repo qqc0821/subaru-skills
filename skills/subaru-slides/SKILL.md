@@ -14,7 +14,7 @@ description: 端到端制作 PPT / 幻灯片 / 演示文稿 / Keynote：内容�
 ## The 6 rules
 1. **可编辑是默认**：会被修改的文字/表格/图表必须原生；只有装饰视觉可以是位图。
 2. **风格是数据**：计数、命名、推荐、样例只在 `styles/index.json`；其他文件不得重复维护。
-3. **能力探测优先**：先跑 `scripts/detect_capabilities.py`；缺能力必须明说并降级，禁止静默换路。
+3. **能力探测优先**：先跑 `scripts/detect_capabilities.py`；中文/跨平台交付再跑 `scripts/detect_fonts.py`；缺能力必须明说并降级，禁止静默换路。
 4. **中文优先**：slide 文案中文优先（保留必要英文术语）；代码、路径、JSON key 用英文。
 5. **交付前过检**：逐页渲染 + 目检；并说明哪些检查**没有**做（claim boundary）。
 6. **按所在地的规范交付**：作为独立安装包使用时，遵守该宿主 Agent 的规范与交付约定。
@@ -50,6 +50,7 @@ python3 scripts/detect_capabilities.py     # 或 --json
 ## Step 4 · Choose a style
 读 `styles/index.json`，按 `theme_recommendations` → `formality` → `path` 匹配，
 选 **3 个方向不同**的候选；每个给出：一句话 + 调色板 + 样例图。
+先读 `styles/foundation.json` 选择字号 profile、中文字体策略与版式护栏；preset 不得降低基础字号。
 **Checkpoint 2**：请用户选一个。若宿主能渲染，直接给 3 张封面预览而不是文字描述。
 细节：`references/design-movements.md`、`references/design-principles.md`。
 
@@ -57,6 +58,7 @@ python3 scripts/detect_capabilities.py     # 或 --json
 按选定路径执行：
 - AI 配图/出图：读 `references/illustrations.md`，并使用该风格 preset（`styles/<id>.md`）的 **Base Style Prompt**。
 - 原生对象与单位护栏：`references/paths/path-a-native.md`。
+- 流程图/重复模块：读 `references/layout-grammar.md`，同角色等尺寸、默认正交连接。
 **Checkpoint 3**：展示 2-3 张关键页（Collaborative 模式逐页），请用户确认。
 
 ## Step 6 · Assemble & preview
@@ -77,7 +79,7 @@ contact sheet 只用于整册节奏，**不替代**逐页检查。
 
 ## Quick reference
 - 5/5/5：≤5 词/行，≤5 要点/页，文字密集页不超过连续 5 页。
-- 标题:正文 ≈ 3:1；配色 60-30-10；每页至少一个视觉元素。
+- 按 foundation 的文字角色与字号区间排版；配色 60-30-10；每页至少一个视觉元素。
 - 一个观点，一分钟一页。
 - 中文出图：标题 ≤8 字，正文每行 ≤30 字，避免生僻字。
 
@@ -94,6 +96,7 @@ contact sheet 只用于整册节奏，**不替代**逐页检查。
 | `references/native-evidence.md` | 原生表格/图表/bullet 与单位护栏 |
 | `references/writing-quality.md` | 中文反 AI 文风负例库 |
 | `references/typography-cjk.md` | 中文字体/度量/跨机保真 |
+| `references/layout-grammar.md` | 流程图、重复模块、连接与强调语义 |
 | `references/speaker-notes.md` | 演讲备注与动画 |
 | `references/design-system.md` | 设计系统与自定义风格 |
 | `references/harnesses.md` | 跨 harness 工具映射 |
@@ -103,7 +106,7 @@ contact sheet 只用于整册节奏，**不替代**逐页检查。
 | `references/proven-styles-gallery.md` | 风格选择策略（数据以 `styles/index.json` 为准） |
 | `references/proven-styles-snoopy.md` | Snoopy 风格实战经验 |
 | `references/prompt-templates.md` | 内容与出图 prompt 模板 |
-| `styles/index.json` + `styles/<id>.md` | 风格注册表与 23 个 preset |
+| `styles/index.json` + `styles/foundation.json` + `styles/<id>.md` | 风格注册表、基础契约与 preset |
 | `scripts/detect_capabilities.py` | 能力探测与路径推荐 |
 | `scripts/create_slides.py` | 图片→PPTX 兜底 |
 

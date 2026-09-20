@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "default_profile": "meeting-room",
+  "profiles": {
+    "meeting-room": {
+      "description": "默认会议室汇报；适合常规显示器和中小会议室投屏。",
+      "text_roles": {
+        "cover-title": { "min_pt": 48, "max_pt": 60 },
+        "section-title": { "min_pt": 40, "max_pt": 48 },
+        "slide-title": { "min_pt": 34, "max_pt": 42 },
+        "key-message": { "min_pt": 24, "max_pt": 30 },
+        "module-title": { "min_pt": 21, "max_pt": 24 },
+        "body": { "min_pt": 20, "max_pt": 24, "hard_min_pt": 18 },
+        "diagram-node": { "min_pt": 18, "max_pt": 22, "hard_min_pt": 18 },
+        "data-label": { "min_pt": 16, "max_pt": 18, "warning_below_pt": 18 },
+        "footnote": { "min_pt": 10, "max_pt": 12 }
+      }
+    },
+    "large-room": {
+      "description": "礼堂或远距离投影；在 meeting-room 基础上放大主体文字。",
+      "text_roles": {
+        "slide-title": { "min_pt": 40, "max_pt": 48 },
+        "body": { "min_pt": 24, "max_pt": 28, "hard_min_pt": 20 },
+        "diagram-node": { "min_pt": 20, "max_pt": 24, "hard_min_pt": 18 },
+        "data-label": { "min_pt": 18, "max_pt": 20, "warning_below_pt": 18 },
+        "footnote": { "min_pt": 10, "max_pt": 12 }
+      }
+    },
+    "screen-reading": {
+      "description": "主要在个人屏幕阅读；仍保留内容文字的可读性下限。",
+      "text_roles": {
+        "slide-title": { "min_pt": 30, "max_pt": 36 },
+        "body": { "min_pt": 18, "max_pt": 22, "hard_min_pt": 18 },
+        "diagram-node": { "min_pt": 18, "max_pt": 20, "hard_min_pt": 18 },
+        "data-label": { "min_pt": 16, "max_pt": 18, "warning_below_pt": 18 },
+        "footnote": { "min_pt": 10, "max_pt": 12 }
+      }
+    }
+  },
+  "cjk": {
+    "default_locale": "zh-CN",
+    "line_height": { "min": 1.15, "max": 1.3 },
+    "font_resolution": {
+      "portable": ["Source Han Sans SC", "Noto Sans CJK SC", "Noto Sans SC"],
+      "windows": ["Microsoft YaHei", "Microsoft YaHei UI"],
+      "macos": ["PingFang SC"],
+      "linux": ["Noto Sans CJK SC", "Source Han Sans SC"]
+    },
+    "ooxml": {
+      "require_east_asian_font": true,
+      "require_language_tag": true
+    }
+  },
+  "layout": {
+    "base_unit_pt": 8,
+    "safe_margin_pt": 36,
+    "connector": {
+      "default": "orthogonal",
+      "diagonal_requires_opt_in": true,
+      "anchor_tolerance_pt": 1
+    },
+    "repeated_node_tolerance_pt": 1
+  },
+  "accessibility": {
+    "normal_text_contrast_ratio": 4.5,
+    "large_text_contrast_ratio": 3.0,
+    "color_is_never_the_only_signal": true
+  },
+  "autofit": {
+    "content_roles_may_shrink": false,
+    "allowed_roles": ["footnote", "source", "page-number"]
+  }
+}

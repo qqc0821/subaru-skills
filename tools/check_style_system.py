@@ -12,17 +12,56 @@ import _common as C
 
 CHECK = "check_style_system"
 SAMPLE_DIR = Path("assets/style-samples")
+FOUNDATION_PATH = Path("styles/foundation.json")
+
+
+def validate_foundation(skill: Path, foundation_path: Path):
+    findings = []
+    rel = C.rel(foundation_path)
+    try:
+        data = json.loads(C.read_text(foundation_path))
+    except json.JSONDecodeError as exc:
+        return [C.Finding(CHECK, "bad-foundation-json:" + skill.name,
+                          "styles/foundation.json is invalid JSON: " + str(exc), rel)]
+    for key in ("schema_version", "default_profile", "profiles", "cjk", "layout", "accessibility", "autofit"):
+        if key not in data:
+            findings.append(C.Finding(CHECK, "foundation-missing:" + skill.name + ":" + key,
+                                      "styles/foundation.json is missing " + key, rel))
+    profiles = data.get("profiles")
+    default = data.get("default_profile")
+    if isinstance(profiles, dict) and default and default not in profiles:
+        findings.append(C.Finding(CHECK, "foundation-default-profile:" + skill.name,
+                                  "default_profile is not declared in profiles", rel))
+    if isinstance(profiles, dict):
+        for name, profile in profiles.items():
+            roles = profile.get("text_roles", {}) if isinstance(profile, dict) else {}
+            for role in ("slide-title", "body", "diagram-node", "footnote"):
+                if role not in roles:
+                    findings.append(C.Finding(CHECK, "foundation-role:" + skill.name + ":" + name + ":" + role,
+                                              "profile " + name + " is missing text role " + role, rel))
+    return findings
 
 
 def validate_index(skill: Path, index_path: Path):
     findings = []
+    rel = C.rel(index_path)
     try:
         data = json.loads(C.read_text(index_path))
     except json.JSONDecodeError as exc:
         findings.append(C.Finding(CHECK, "bad-json:" + skill.name,
                                   "styles/index.json is invalid JSON: " + str(exc), C.rel(index_path)))
         return findings
-    rel = C.rel(index_path)
+    foundation = data.get("foundation")
+    if foundation != FOUNDATION_PATH.as_posix():
+        findings.append(C.Finding(CHECK, "foundation-path:" + skill.name,
+                                  "foundation must be " + FOUNDATION_PATH.as_posix(), rel))
+    else:
+        foundation_path = skill / foundation
+        if not foundation_path.is_file():
+            findings.append(C.Finding(CHECK, "missing-foundation:" + skill.name,
+                                      "foundation not found: " + foundation, rel))
+        else:
+            findings.extend(validate_foundation(skill, foundation_path))
     styles = data.get("styles")
     if not isinstance(styles, list):
         findings.append(C.Finding(CHECK, "styles-not-list:" + skill.name, "styles must be an array", rel))

@@ -21,12 +21,20 @@ import html_deck_inspect  # noqa: E402
 import renderer_locate  # noqa: E402
 import check_consistency  # noqa: E402
 import check_style_system  # noqa: E402
+import pptx_inspect  # noqa: E402
+import validate_pptx  # noqa: E402
 
 DETECT_SPEC = importlib.util.spec_from_file_location(
     "detect_capabilities", ROOT / "skills" / "subaru-slides" / "scripts" / "detect_capabilities.py"
 )
 detect_capabilities = importlib.util.module_from_spec(DETECT_SPEC)
 DETECT_SPEC.loader.exec_module(detect_capabilities)
+
+FONT_SPEC = importlib.util.spec_from_file_location(
+    "detect_fonts", ROOT / "skills" / "subaru-slides" / "scripts" / "detect_fonts.py"
+)
+detect_fonts = importlib.util.module_from_spec(FONT_SPEC)
+FONT_SPEC.loader.exec_module(detect_fonts)
 
 SKILL = C.ROOT / "skills" / "subaru-slides"
 
@@ -56,6 +64,8 @@ class TestCommon(unittest.TestCase):
 class TestStyleSystem(unittest.TestCase):
     def test_index_matches_count_and_samples(self):
         data = json.loads(C.read_text(SKILL / "styles" / "index.json"))
+        self.assertEqual(data["foundation"], "styles/foundation.json")
+        self.assertTrue((SKILL / data["foundation"]).is_file())
         self.assertEqual(data["count"], len(data["styles"]))
         ids = [s["id"] for s in data["styles"]]
         self.assertEqual(len(ids), len(set(ids)))
@@ -107,6 +117,14 @@ class TestSemanticQualityGuards(unittest.TestCase):
             styles = skill / "styles"
             samples.mkdir(parents=True)
             styles.mkdir()
+            (styles / "foundation.json").write_text(json.dumps({
+                "schema_version": 1,
+                "default_profile": "default",
+                "profiles": {"default": {"text_roles": {
+                    "slide-title": {}, "body": {}, "diagram-node": {}, "footnote": {},
+                }}},
+                "cjk": {}, "layout": {}, "accessibility": {}, "autofit": {},
+            }), encoding="utf-8")
             (samples / "legacy.webp").write_bytes(b"webp")
             (styles / "demo.md").write_text(
                 "---\nid: demo\nsample: assets/style-samples/legacy.webp\n---\n",
@@ -115,6 +133,7 @@ class TestSemanticQualityGuards(unittest.TestCase):
             index = styles / "index.json"
             index.write_text(json.dumps({
                 "count": 1,
+                "foundation": "styles/foundation.json",
                 "styles": [{
                     "id": "demo",
                     "sample": "assets/style-samples/legacy.webp",
@@ -126,6 +145,67 @@ class TestSemanticQualityGuards(unittest.TestCase):
             self.assertIn("unexpected-sample:demo-skill:legacy.webp", keys)
 
 class TestDeckTools(unittest.TestCase):
+    def test_shape_metadata_is_parsed_for_quality_rules(self):
+        self.assertEqual(
+            validate_pptx.parse_shape_metadata("role=node;group=journey;index=01"),
+            {"role": "node", "group": "journey", "index": "01"},
+        )
+        self.assertEqual(validate_pptx.parse_shape_metadata("not metadata"), {})
+
+    def test_cjk_probe_uses_foundation_candidates(self):
+        result = detect_fonts.probe("zh-CN", "linux")
+        self.assertEqual(result["foundation"], "styles/foundation.json")
+        self.assertTrue(result["candidates"])
+
+    def test_inspector_reports_new_quality_metrics_for_a_minimal_deck(self):
+        from tempfile import TemporaryDirectory
+        import zipfile
+
+        with TemporaryDirectory() as tmp:
+            pptx = Path(tmp) / "deck.pptx"
+            with zipfile.ZipFile(pptx, "w") as zf:
+                zf.writestr("ppt/presentation.xml", "<p:presentation xmlns:p='p'><p:sldIdLst><p:sldId/></p:sldIdLst></p:presentation>")
+                zf.writestr("ppt/slides/slide1.xml", """
+                    <p:sld xmlns:p='p' xmlns:a='a'><p:spTree><p:sp>
+                    <p:txBody><a:p><a:r><a:rPr sz='2000' lang='zh-CN'><a:ea typeface='Noto Sans CJK SC'/></a:rPr><a:t>中文</a:t></a:r></a:p></p:txBody>
+                    </p:sp></p:spTree></p:sld>""")
+            metrics = pptx_inspect.inspect(str(pptx))
+            self.assertEqual(metrics["cjk_text_shape_count"], 1)
+            self.assertEqual(metrics["cjk_shapes_with_east_asian_font_count"], 1)
+            self.assertEqual(metrics["min_font_size_pt"], 20.0)
+
+    def test_validator_flags_cjk_without_east_asian_font_metadata(self):
+        from tempfile import TemporaryDirectory
+        import zipfile
+
+        with TemporaryDirectory() as tmp:
+            pptx = Path(tmp) / "deck.pptx"
+            with zipfile.ZipFile(pptx, "w") as zf:
+                zf.writestr("ppt/presentation.xml", "<p:presentation xmlns:p='p'/>")
+                zf.writestr("ppt/slides/slide1.xml", """
+                    <p:sld xmlns:p='p' xmlns:a='a'><p:spTree><p:sp>
+                    <p:txBody><a:p><a:r><a:rPr sz='1800'/><a:t>中文</a:t></a:r></a:p></p:txBody>
+                    </p:sp></p:spTree></p:sld>""")
+            keys = {finding.key for finding in validate_pptx.validate(str(pptx))}
+            self.assertIn("cjk-missing-ea-font:1:0", keys)
+            self.assertIn("cjk-missing-language:1:0", keys)
+
+    def test_validator_flags_small_content_text_but_not_a_footnote(self):
+        from tempfile import TemporaryDirectory
+        import zipfile
+
+        with TemporaryDirectory() as tmp:
+            pptx = Path(tmp) / "deck.pptx"
+            with zipfile.ZipFile(pptx, "w") as zf:
+                zf.writestr("ppt/presentation.xml", "<p:presentation xmlns:p='p'/>")
+                zf.writestr("ppt/slides/slide1.xml", """
+                    <p:sld xmlns:p='p' xmlns:a='a'><p:spTree>
+                    <p:sp><p:nvSpPr><p:cNvPr name='role=body'/></p:nvSpPr><p:txBody><a:p><a:r><a:rPr sz='1400'/><a:t>Too small</a:t></a:r></a:p></p:txBody></p:sp>
+                    <p:sp><p:nvSpPr><p:cNvPr name='role=footnote'/></p:nvSpPr><p:txBody><a:p><a:r><a:rPr sz='1000'/><a:t>Source</a:t></a:r></a:p></p:txBody></p:sp>
+                    </p:spTree></p:sld>""")
+            keys = {finding.key for finding in validate_pptx.validate(str(pptx))}
+            self.assertIn("font-below-minimum:1:0", keys)
+            self.assertNotIn("font-below-minimum:1:1", keys)
     def test_html_deck_inspector_rejects_missing_stage(self):
         from tempfile import TemporaryDirectory
 
@@ -269,6 +349,13 @@ class TestInstalledPackageIsStandalone(unittest.TestCase):
             self.assertEqual(proc.returncode, 0, proc.stderr)
             self.assertIn("recommended path:", proc.stdout)
             self.assertIn("order: A -> B2 -> C -> B -> fallback", proc.stdout)
+
+            fonts = subprocess.run(
+                [sys.executable, str(installed / "scripts" / "detect_fonts.py"), "--doctor"],
+                cwd=tmp, capture_output=True, text=True,
+            )
+            self.assertEqual(fonts.returncode, 0, fonts.stderr)
+            self.assertIn("detect_fonts doctor", fonts.stdout)
 
 class TestInstallabilityBoundary(unittest.TestCase):
     """Reference to repository-only tooling breaks the moment the skill is installed.

@@ -14,9 +14,8 @@ palette:
   accent: ["#B08D57"]
 typography:
   heading: "light 48pt+"
-  body: "12pt regular"
-  ratio: "4:1"
-  cjk_font: "PingFang SC"
+  body: "regular; use foundation profile"
+  cjk_tone: "neutral sans"
 ---
 
 # 奢侈极简风 (Build Luxury Minimal)
@@ -28,7 +27,7 @@ typography:
 ```
 DESIGN SYSTEM: Build Studio — refined simplicity is harder than complexity.
 COLOR: pure white background, dark gray text, ONE brand accent used extremely sparingly.
-TYPE: subtle weights 200-600, huge 48pt+ light headlines, small 12pt body, generous letter-spacing.
+TYPE: subtle weights 200-600, huge 48pt+ light headlines, legible regular body from the selected foundation profile, generous letter-spacing.
 COMPOSITION: golden-ratio framing, one idea per page, 75% whitespace.
 Path A.
 ```

@@ -14,6 +14,8 @@ No external skill is a hard dependency; any detected capability is an optional e
 | Bundled fallback | `scripts/create_slides.py` (PEP 723) | image-only PPTX |
 
 Run `scripts/detect_capabilities.py` (human or `--json`) to detect all of the above.
+For Chinese or cross-platform delivery, also run `scripts/detect_fonts.py --locale zh-CN`.
+It has no external Python dependency; without Fontconfig it reports the font result as unverified.
 
 ## Selection order
 `A 原生可编辑 → B' 混合 → C HTML deck → B 全 AI 视觉 → fallback`

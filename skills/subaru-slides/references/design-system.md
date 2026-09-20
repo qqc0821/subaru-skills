@@ -4,8 +4,10 @@ A style is not just a color palette: it is a visual philosophy - typography rati
 and emotional intent. There are three ways to get one.
 
 ## 1. Pick a proven preset (default)
-Read `../styles/index.json`, match `theme_recommendations`, then `formality` and `path`.
-Each preset `../styles/<id>.md` carries palette, typography, base style prompt, layout blocks, and pitfalls.
+Read `../styles/index.json`, then `../styles/foundation.json`, and match `theme_recommendations`,
+`formality` and `path`. `foundation.json` is the single source for readable type scales,
+CJK font resolution, spacing and diagram grammar. Each preset carries palette, visual character,
+base style prompt, layout blocks and pitfalls; it must not lower the foundation's content-text floor.
 
 ## 2. Derive a custom style from a reference (e.g. "Ghibli", "Doraemon")
 Treat the reference as **style DNA**, not a request to draw copyrighted characters.
@@ -40,7 +42,7 @@ path: A_or_B2
 sample: null
 proven: false          # set true only after a reference sample exists
 palette: { background: "#FFFFFF", text: "#1A1A1A", accent: ["#D4480B"] }
-typography: { heading: "heavy 28pt+", body: "light 10-13pt", ratio: "3:1", cjk_font: "PingFang SC" }
+typography: { heading: "heavy sans", body: "regular sans", cjk_tone: "neutral sans" }
 ```
 
 Keep the base style prompt short (<=5 lines).

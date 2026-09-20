@@ -24,7 +24,6 @@ npx skills add qqc0821/subaru-skills --skill subaru-slides
 
 # 查看可安装项
 npx skills add qqc0821/subaru-skills --list
-~~~
 
 安装后可以显式调用 $subaru-slides；涉及 PPT、幻灯片、演示文稿、Keynote、路演、汇报或课件时，宿主 Agent 也可以自动选中它。
 

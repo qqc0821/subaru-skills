@@ -6,6 +6,7 @@
   "required": [
     "schema_version",
     "count",
+    "foundation",
     "styles"
   ],
   "properties": {
@@ -16,6 +17,10 @@
     "count": {
       "type": "integer",
       "minimum": 0
+    },
+    "foundation": {
+      "type": "string",
+      "const": "styles/foundation.json"
     },
     "styles": {
       "type": "array",

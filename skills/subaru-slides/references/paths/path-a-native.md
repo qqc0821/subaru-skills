@@ -10,7 +10,8 @@
 Any text/table/chart that may be edited must be native. Only decorative visuals may be bitmaps.
 
 ## How to build
-1. Resolve a font available on the host; if none, fall back to a web-safe family and say so.
+1. Resolve a font available on the host with `scripts/detect_fonts.py --locale zh-CN`; record the
+   target platform, fallback and embedding decision. If no CJK candidate exists, disclose the risk.
 2. Declare slide size in EMU (16:9 = `12192000 x 6858000`).
 3. Use the builder API to add native objects:
 ```
@@ -23,6 +24,14 @@ slide.speakerNotes.textFrame.setText("...")
 ```
 4. A reference implementation of the whole flow (cover, chart, cards, footer, notes, export,
    finalize with validators) lives in the project history: `.codex-build/ev-trends/build.mjs`.
+
+## Typography and diagram guardrails
+
+- Read `../typography-cjk.md`, `../layout-grammar.md` and `../../styles/foundation.json` before build.
+- Use a declared text role for every native text box. Content roles may not rely on unbounded auto-fit.
+- When the builder exposes a shape name, use `role=<role>;group=<id>;index=<n>` for repeated nodes
+  and `role=connector;group=<id>` for their connections. This enables post-export geometry checks.
+- Set `a:latin`, `a:ea` and a CJK language tag. Do not set only the Latin font for Chinese text.
 
 ## Native evidence guardrails
 See `../native-evidence.md` (P1 - being expanded). Until then:
