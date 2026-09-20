@@ -36,6 +36,7 @@ make doctor     # 当前机器能力自检
 
 make validate PPTX=deck.pptx
 make render   PPTX=deck.pptx OUT=preview/
+make pixel-qa DIR=preview/            # 渲染图像素缺陷：换行孤字、超大字号、色带切割
 make montage  DIR=preview/ OUT=montage.webp
 ~~~
 

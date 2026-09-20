@@ -180,6 +180,7 @@ make validate PPTX=deck.pptx      # 结构错误 + 启发式警告
 make render   PPTX=deck.pptx OUT=d # 逐页 PNG/PDF
 make montage  DIR=slides/ OUT=m.webp
 make lint-copy SRC=deck.pptx      # 文案反 AI 味初筛
+make pixel-qa DIR=renders/       # 渲染图像素缺陷检查
 make new-style ID=x NAME=...       # 新建风格 preset（可选 REGISTER=1）
 ```
 

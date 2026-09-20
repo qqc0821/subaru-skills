@@ -69,6 +69,8 @@ python3 scripts/detect_capabilities.py     # 或 --json
 
 ## Step 6 · Assemble & preview
 逐页渲染 PNG 并目检：`references/qa/render-and-validate.md`。
+再对渲染图跑一遍像素缺陷检查（换行孤字、超大字号、色带切割）：
+`python3 scripts/detect_pixel_artifacts.py <renders>/ --detail`，按 `references/qa/pixel-artifacts.md` 判定。
 contact sheet 只用于整册节奏，**不替代**逐页检查。
 <!-- repo-only -->
 在开发仓库内可用：`make validate PPTX=...`、`make render PPTX=...`、`make montage DIR=...`。
@@ -97,7 +99,7 @@ contact sheet 只用于整册节奏，**不替代**逐页检查。
 | `references/illustrations.md` | AI 出图方法论与 custom style |
 | `references/dependencies.md` | 能力矩阵与降级策略 |
 | `references/paths/*.md` | 四条执行路径 + fallback |
-| `references/qa/*.md` | 目检、渲染、交付 |
+| `references/qa/*.md` | 目检、渲染、像素缺陷库、交付 |
 | `references/template-following.md` | 模板/品牌跟随 |
 | `references/native-evidence.md` | 原生表格/图表/bullet 与单位护栏 |
 | `references/writing-quality.md` | 中文反 AI 文风负例库 |
@@ -115,6 +117,7 @@ contact sheet 只用于整册节奏，**不替代**逐页检查。
 | `styles/router.md` | 风格选型表（由 `styles/index.json` 自动生成的摘要） |
 | `styles/index.json` + `styles/foundation.json` + `styles/<id>.md` | 风格注册表（校验用）、基础契约与 preset |
 | `scripts/detect_capabilities.py` | 能力探测与路径推荐 |
+| `scripts/detect_pixel_artifacts.py` | 渲染图像素缺陷检查（零依赖） |
 | `scripts/create_slides.py` | 图片→PPTX 兜底 |
 
 ## Output

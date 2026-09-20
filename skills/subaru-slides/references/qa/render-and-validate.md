@@ -23,6 +23,11 @@ npx playwright screenshot "file:///abs/path/slide.html" preview.png --viewport-s
 ```
 
 ## Validate
+- Pixels: run the skill's own detector over the renders -
+  `python3 scripts/detect_pixel_artifacts.py <renders>/ --detail`.
+  It flags wrapped numeric groups, oversized shrink-to-fit glyphs and thin bands
+  crossing a colour boundary. See `pixel-artifacts.md` for thresholds and fixes,
+  and for the defects it deliberately does **not** claim to detect.
 - Structural: report slides, charts, tables, images, text, fonts and placeholders from the
   built file itself (the host's own inspection capability, when available).
 - Layout heuristics: if the host provides a layout validator, run it and fix blocking findings.

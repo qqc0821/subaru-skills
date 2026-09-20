@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+### 新增
+
+- `subaru-slides` 增加渲染图像素质检：随 skill 分发的 `scripts/detect_pixel_artifacts.py`
+  （零依赖、只读、不联网）对逐页渲染的 PNG 检查三类"乱样式"——
+  数字组换行产生的孤字（`wrapped-numbers`）、被 autofit 撑大的孤字（`oversized-glyph`）、
+  横穿色块边界的细带（`band-cut`）。
+- 新增 `references/qa/pixel-artifacts.md`：缺陷判据与阈值、生成侧预防动作、逐页人眼清单，
+  以及检测器**故意不做**的部分（z-order、斜率/基线、语义）。
+- 新增 `make pixel-qa DIR=renders/`，对渲染目录直接跑检查。
+
 ### 变更
 
 - 降低 `subaru-slides` 的上下文成本：选风格时改读自动生成的 `styles/router.md`（约 1 137 token），
