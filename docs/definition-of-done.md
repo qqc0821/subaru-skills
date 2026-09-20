@@ -28,4 +28,4 @@
 ## D. Harness 变更
 - [ ] 新增检查有明确 check id 与退出码
 - [ ] 需要接受的历史问题已通过 `make baseline` 记录，而非静默忽略
-- [ ] CI 与本地使用同一入口（`make check`）
+- [ ] 质量门入口一致：`make check` 通过（本地、Agent 与自建 CI 使用同一入口）

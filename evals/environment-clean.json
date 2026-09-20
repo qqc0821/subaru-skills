@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "captured_at": "runtime-clean",
+  "git_sha": "runtime-clean",
+  "working_tree_dirty": false,
+  "paths": {
+    "A": {
+      "status": "BLOCKED",
+      "reason": "The clean checkout does not install or configure a native editable deck builder."
+    },
+    "B2": {
+      "status": "BLOCKED",
+      "reason": "The clean checkout has neither an image-generation service nor a native editable deck builder."
+    },
+    "C": {
+      "status": "BLOCKED",
+      "reason": "deck-stage and html2pptx are external optional capabilities and are not installed in the clean checkout."
+    },
+    "B": {
+      "status": "RUNNABLE",
+      "reason": "The clean checkout reuses fixed repository image fixtures to test deterministic Path B assembly; it does not claim fresh image generation."
+    },
+    "fallback": {
+      "status": "RUNNABLE",
+      "reason": "uv resolves the PEP 723 dependencies for the bundled create_slides.py helper."
+    }
+  },
+  "visual_qa": {
+    "status": "BLOCKED",
+    "reason": "The clean checkout does not install soffice/pdftoppm; it validates PPTX structure only."
+  }
+}

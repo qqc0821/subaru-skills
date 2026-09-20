@@ -174,7 +174,7 @@ make check       # frontmatter / 链接 / 一致性 / 资产 / 风格系统 / �
 make test        # 工具 smoke test 与 Harness 单元测试
 make doctor      # 当前机器能力探测
 make eval        # 本机固定案例与覆盖率闸门
-make eval-ci     # 重建 CI 固定 fixture 后运行独立闸门
+make eval-clean  # 在干净检出上重建固定 fixture 后运行独立闸门
 make new-task    # 生成任务过程三件套
 make help        # 查看全部命令
 ~~~
@@ -189,7 +189,7 @@ make lint-copy SRC=outline.md
 make new-style ID=my-style NAME="我的风格"
 ~~~
 
-make check 是本地和 CI 共用的质量门；make eval 的 PASS / FAIL / SKIP / BLOCKED 由评测策略和当前环境共同决定，未执行不等于通过。CI 只声明确定性 fixture 的结构回归，不声明外部图片模型、HTML runtime 或 Office 渲染器的质量。
+make check 是唯一的必过质量门；仓库当前不附带 CI workflow，本地、Agent 或你自建的 CI 都调用同一入口。make eval 的 PASS / FAIL / SKIP / BLOCKED 由评测策略和当前环境共同决定，未执行不等于通过；make eval-clean 只声明确定性 fixture 的结构回归，不声明外部图片模型、HTML runtime 或 Office 渲染器的质量。
 
 ## 许可与来源
 

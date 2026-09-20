@@ -157,7 +157,7 @@ subaru-skills/
 ├── evals/                          # Fixed briefs, assertions, and environment matrix
 ├── tests/                          # Harness unit tests
 ├── docs/                           # DoD, templates, and lessons learned
-├── Makefile                        # Shared local and CI command entrypoint
+├── Makefile                        # Shared command entrypoint (local, agent, or self-hosted CI)
 ├── AGENTS.md                       # Single source of engineering rules
 └── PROVENANCE.md                   # Upstream and licensing boundary
 ~~~
@@ -175,7 +175,7 @@ make check       # frontmatter / links / consistency / assets / styles / install
 make test        # tool smoke tests and Harness unit tests
 make doctor      # probe the current machine
 make eval        # local fixed cases and coverage gate
-make eval-ci     # rebuild CI fixtures and run the independent gate
+make eval-clean  # rebuild fixtures on a clean checkout and run the independent gate
 make new-task    # create the three task-tracking files
 make help        # list all commands
 ~~~
@@ -190,7 +190,7 @@ make lint-copy SRC=outline.md
 make new-style ID=my-style NAME="My Style"
 ~~~
 
-make check is the shared local/CI quality gate. make eval classifies results as PASS / FAIL / SKIP / BLOCKED based on both policy and environment; an unexecuted case is not a pass. CI claims deterministic fixture structure only, not external image-model quality, HTML runtime behavior, or Office rendering quality.
+make check is the only mandatory quality gate. The repository ships no CI workflow; local runs, agents, and any self-hosted CI call the same entrypoint. make eval classifies results as PASS / FAIL / SKIP / BLOCKED based on both policy and environment; an unexecuted case is not a pass. make eval-clean claims deterministic fixture structure only, not external image-model quality, HTML runtime behavior, or Office rendering quality.
 
 ## License and provenance
 

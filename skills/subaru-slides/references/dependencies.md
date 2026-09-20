@@ -30,7 +30,7 @@ It has no external Python dependency; without Fontconfig it reports the font res
 `scripts/create_slides.py`: Python 3.10+, PEP 723 dependencies `python-pptx>=1.0.0` and `Pillow>=10.0.0`.
 Run with `uv run`. Layouts: `fullscreen` / `title_above` / `title_below` / `title_left` / `center` / `grid`.
 
-仓库 CI 通过 `astral-sh/setup-uv@v6` 临时提供 uv，用于重建固定输入 eval 产物。它属于测试 Harness 依赖，不是 skill 端到端运行的必需能力；缺少 uv 时应把 fallback 标为 BLOCKED，而不是静默通过。
+在干净检出上重建固定输入的 eval 产物需要 `uv`，用于解析 `create_slides.py` 已声明的 PEP 723 依赖。它属于测试 Harness 依赖，不是 skill 端到端运行的必需能力；缺少 uv 时应把 fallback 标为 BLOCKED，而不是静默通过。
 
 ## Local resources
 - `../styles/index.json` - style registry (single source of truth).

@@ -1,15 +1,15 @@
 PYTHON ?= python3
 
-.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-installability doctor baseline test eval eval-ci new-task hooks validate render montage lint-copy new-style
+.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-installability doctor baseline test eval eval-clean new-task hooks validate render montage lint-copy new-style
 
 help:
 	@echo "subaru-skills harness"
-	@echo "  make check     run all harness checks (same entry as CI)"
+	@echo "  make check     run all harness checks (shared quality-gate entry)"
 	@echo "  make doctor    environment capability probe"
 	@echo "  make baseline  record current findings as known baseline"
 	@echo "  make test      compile tools and smoke-test doctor"
 	@echo "  make eval      run the eval harness and enforce coverage policy"
-	@echo "  make eval-ci   rebuild deterministic CI fixtures, then enforce the CI coverage policy"
+	@echo "  make eval-clean rebuild deterministic fixtures on a clean checkout, then enforce the clean policy"
 	@echo "  make new-task  scaffold task_plan/findings/progress from docs/templates/"
 	@echo "  make hooks     install the make check pre-commit hook"
 	@echo "  make validate  validate a deck:  PPTX=path/to/deck.pptx"
@@ -55,9 +55,9 @@ test:
 eval:
 	@$(PYTHON) tools/run_evals.py
 
-eval-ci:
-	@$(PYTHON) tools/prepare_eval_artifacts.py --artifacts-dir evals/results/ci-artifacts
-	@$(PYTHON) tools/run_evals.py --artifacts-dir evals/results/ci-artifacts --policy evals/policy-ci.json --environment evals/environment-ci.json
+eval-clean:
+	@$(PYTHON) tools/prepare_eval_artifacts.py --artifacts-dir evals/results/clean-artifacts
+	@$(PYTHON) tools/run_evals.py --artifacts-dir evals/results/clean-artifacts --policy evals/policy-clean.json --environment evals/environment-clean.json
 
 new-task:
 	@sh tools/new_task.sh
