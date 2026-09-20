@@ -4,8 +4,10 @@ A style is not just a color palette: it is a visual philosophy - typography rati
 and emotional intent. There are three ways to get one.
 
 ## 1. Pick a proven preset (default)
-Read `../styles/index.json`, then `../styles/foundation.json`, and match `theme_recommendations`,
-`formality` and `path`. `foundation.json` is the single source for readable type scales,
+Read `../styles/router.md` (the generated selection table), then `../styles/foundation.json`, and match
+`主题推荐`, `formality` and `path`. `../styles/index.json` is the machine-readable registry behind the
+router and is meant for `new_style`/validation, not for reading at selection time.
+`foundation.json` is the single source for readable type scales,
 CJK font resolution, spacing and diagram grammar. Each preset carries palette, visual character,
 base style prompt, layout blocks and pitfalls; it must not lower the foundation's content-text floor.
 

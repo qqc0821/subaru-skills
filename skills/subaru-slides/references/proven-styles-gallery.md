@@ -16,7 +16,7 @@ and come out empty and flat.
 - **Path A editorial systems:** `pentagram-editorial`, `fathom-data`, `muller-brockmann-grid`, `build-luxury-minimal`, `takram-speculative`
 
 ## How to choose
-1. Read `../styles/index.json` and match `theme_recommendations`.
+1. Read `../styles/router.md` (generated from `../styles/index.json`) and match the theme recommendations.
 2. Filter by `formality` and the `path` allowed by the capability probe.
 3. Offer 3 candidates that differ in direction; show each `../styles/<id>.md` one-liner + sample.
 4. 17 styles have sample images; the 6 Path A styles have `sample: null` (to be added).
