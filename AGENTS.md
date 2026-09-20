@@ -12,7 +12,7 @@
 
 - `subaru-skills` 是一个**项目级 Agent Skill 仓库**，当前包含 `skills/subaru-slides/`（从内容到成品 PPTX 的演示文稿制作）。
 - 每个 `skills/<name>/` 子目录是一个可被 Agent 直接加载的 skill 包。
-- 仓库同时维护一套 **Harness**（校验器、CI、模板、回归基准），用于约束 AI 辅助开发，见第 8 节。
+- 仓库同时维护一套 **Harness**（校验器、模板、回归基准），用于约束 AI 辅助开发，见第 8 节。
 
 当前 / 目标目录结构：
 
@@ -31,7 +31,6 @@ subaru-skills/
 ├── docs/                      # (H5) definition-of-done / templates / lessons-learned
 ├── evals/                     # (H6) 回归基准：固定 brief + 结构断言
 ├── tests/                     # harness 单元测试
-└── .github/workflows/         # (H4) CI
 ```
 
 > `(Hx)` 标注对应 Pre-P0 Harness 建设项；H2–H6 已落地，状态见第 8.3 节。
@@ -42,7 +41,7 @@ subaru-skills/
 
 ### Must（必须）
 
-1. **过闸**：任何 skill 改动提交前必须通过 `make check`；CI 使用同一入口。
+1. **过闸**：任何 skill 改动提交前必须通过 `make check`；本地、Agent 与自建 CI 共用这一入口。
 2. **薄入口**：一个 skill 的 `SKILL.md` ≤ **200 行**，超出部分下沉到 `references/`。
 3. **零外部依赖为默认**：需要外部能力时先做**能力探测**，并提供**降级路径**；外部 skill 只能"检测到则增强"，不能设为必需。
 4. **语言**：用户可见文案**中文优先**（保留必要英文术语）；代码、路径、文件名、JSON key、commit message 用**英文**。
@@ -67,13 +66,18 @@ subaru-skills/
 
 ```
 skills/<name>/
-├── SKILL.md               # 薄入口：路由 + 铁律 + 流程 + 检查点（≤200 行）
+├── SKILL.md               # 薄入口（Agent 视角）：路由 + 铁律 + 流程 + 检查点（≤200 行）
+├── README.md / .en.md     # 使用者视角：能力、调用方式、编辑性边界（中文优先 + 英文镜像）
 ├── agents/openai.yaml     # UI 元数据（见 3.5）
 ├── references/            # 按需加载的长文（设计原则、路径细节、QA 清单…）
 ├── scripts/               # 可执行辅助脚本（见 3.4）
 ├── assets/                # 样例图等静态资产（见 3.6）
 └── styles/                # （可选）机读风格系统（见第 4 节）
 ```
+
+文档分层：skill 的 `README` 只写"是什么 / 怎么用"，`SKILL.md` 是运行时规则的**唯一事实源**。
+路径表、能力降级表、风格计数等只允许维护一处，其余文档引用它。skill 的 `README` 会随包发布，
+因此不得引用仓库专有路径（`tools/`、`schemas/`、`AGENTS.md`、`make` 目标）。
 
 ### 3.2 `SKILL.md` frontmatter
 
@@ -160,11 +164,11 @@ policy:
 ### 8.1 统一入口（已落地）
 
 ```
-make check     # = validate_skills + check_links + check_consistency + check_assets + check_style_system
+make check     # = validate_skills + check_links + check_consistency + check_assets + check_style_system + check_installability
 make test      # 脚本冒烟 / 单元测试
 make doctor    # 环境能力自检
 make eval      # 本机 eval 覆盖率闸门（PASS / FAIL / SKIP / BLOCKED）
-make eval-ci   # CI 重建固定输入产物后执行独立覆盖率闸门
+make eval-clean # 干净检出重建固定输入产物后执行独立覆盖率闸门
 make new-task  # 从 docs/templates/ 生成任务三件套
 make baseline  # 把当前 findings 记为已知债务（仅在有意接受时使用）
 ```
@@ -179,9 +183,9 @@ make lint-copy SRC=deck.pptx      # 文案反 AI 味初筛
 make new-style ID=x NAME=...       # 新建风格 preset（可选 REGISTER=1）
 ```
 
-本地、Agent、CI 使用**同一个入口**，避免"我本地过了"。
+本地、Agent 与自建 CI 使用**同一个入口**，避免"我本地过了"。
 
-CI 的 `make eval-ci` 使用 `astral-sh/setup-uv@v6`，只为解析内置 `create_slides.py` 已声明的 PEP 723 依赖并重建不入库的固定测试产物；这不把 uv、图片生成或其他外部 skill 变成 `subaru-slides` 的强制运行时依赖。
+仓库当前**不附带 CI workflow**（`.github/workflows/` 已移除）；`make eval-clean` 供本地、Agent 或自建 CI 在干净检出上重建不入库的固定测试产物，用 `uv` 解析内置 `create_slides.py` 已声明的 PEP 723 依赖。这不把 uv、图片生成或其他外部 skill 变成 `subaru-slides` 的强制运行时依赖。
 
 ### 8.2 辅助手动检查（可选；已被 `make check` 覆盖）
 
@@ -207,8 +211,8 @@ du -sh skills/*
 |---|---|---|
 | **H1** | `AGENTS.md` + `CLAUDE.md` | 已完成 |
 | **H2** | `schemas/` 机读契约（4 个 schema） | 已完成 |
-| **H3** | `tools/` 校验器（validate_skills / check_links / check_consistency / check_assets / check_style_system / doctor） | 已完成 |
-| **H4** | `Makefile` + `.github/workflows/ci.yml` | 已完成 |
+| **H3** | `tools/` 校验器（validate_skills / check_links / check_consistency / check_assets / check_style_system / check_installability / doctor） | 已完成 |
+| **H4** | `Makefile` 质量门统一入口（CI workflow 已移除） | 已完成 |
 | **H5** | 任务模板 `docs/templates/` + Definition of Done + PR 模板 + `make new-task` | 已完成 |
 | **H6** | `evals/` 回归基准（5 个 case + `run_evals` + `pptx_inspect`） | 已完成 |
 | **H7** | pre-commit（`make hooks`）+ `docs/lessons-learned.md` | 已完成（可选启用） |

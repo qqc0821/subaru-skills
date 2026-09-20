@@ -20,7 +20,7 @@ evals/
 3. 没有产物的 case 根据 `environment.json` 分为 SKIP 或 BLOCKED；状态本身不直接决定退出码，最终由 `policy.json` 的覆盖率闸门决定。
 4. 直接校验某个文件：`python3 tools/run_evals.py --case cn-industry-analysis --pptx path/to/deck.pptx`。
 5. 与上次结果对比：`python3 tools/run_evals.py --compare`。
-6. 干净检出的 CI 运行 `make eval-ci`：先在隔离的 gitignored 目录重建两个仓库固定输入案例，再使用 `policy-ci.json` 与 `environment-ci.json` 判定，避免本机残留产物扩大 CI 声明范围。
+6. `make eval-clean` 模拟干净检出：先在隔离的 gitignored 目录重建两个仓库固定输入案例，再使用 `policy-clean.json` 与 `environment-clean.json` 判定，避免本机残留产物扩大声明范围。仓库不附带 CI workflow，该 target 由本地、Agent 或自建 CI 显式调用。
 
 ## 状态与覆盖率闸门
 
@@ -33,7 +33,7 @@ evals/
 
 当前环境证据与 claim boundary 见 `environment-matrix.md`；供工具读取的对应状态在 `environment.json`。
 
-CI 通过 `astral-sh/setup-uv` 提供 `uv`，仅用于解析 `create_slides.py` 已声明的 PEP 723 依赖并重建 gitignored 产物。CI 不安装 deck-stage、html2pptx、图片生成服务或 Office 渲染器，因此只要求固定输入的 B/fallback 两例 PASS，其余路径必须按 `environment-ci.json` 明确报告 BLOCKED；这不是对相应能力的通过声明。
+`make eval-clean` 假定运行环境只具备 `uv`（用于解析 `create_slides.py` 已声明的 PEP 723 依赖）并重建 gitignored 产物，不假定 deck-stage、html2pptx、图片生成服务或 Office 渲染器可用，因此只要求固定输入的 B/fallback 两例 PASS，其余路径必须按 `environment-clean.json` 明确报告 BLOCKED；这不是对相应能力的通过声明。
 
 ## 断言键
 

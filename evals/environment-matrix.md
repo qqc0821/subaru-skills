@@ -27,7 +27,7 @@ make eval
 | 触发与路由 | 自动 | 可执行 | frontmatter 触发词静态断言 + A/C/B/fallback 路径决策表单测 |
 | 执行与降级 | 自动/半自动 | A、B' BLOCKED；B、C、fallback 可执行 | 能力矩阵 + 固定 brief + 同名 `.run.json` |
 | 产物结构 | 自动 | 可执行 | `pptx_inspect`、`validate_pptx`、`html_deck_inspect` 与 `expect.json` |
-| 渲染与可读性 | 自动渲染 + 人工逐页 | 本机可执行；干净 CI BLOCKED | soffice/pdftoppm 渲染、浏览器翻页/控制台检查、逐页视觉复核 |
+| 渲染与可读性 | 自动渲染 + 人工逐页 | 本机可执行；干净检出 BLOCKED | soffice/pdftoppm 渲染、浏览器翻页/控制台检查、逐页视觉复核 |
 
 ## 路径矩阵
 
@@ -62,9 +62,9 @@ make eval
 - fallback 与固定输入 B 均已通过 PPTX 结构校验和本机渲染；AI 图片模型的实时生成质量不在固定输入案例的声明范围内。
 - 暂不新增通用 Path A 构建器：`python-pptx` 依赖可由 uv 临时解析，但仓库尚无 Path A 内容 schema、布局器与原生对象生成契约；仅安装包不能把图片装配 helper 变成可维护的原生构建路径。A/B' 保持 BLOCKED，后续应作为独立能力建设任务。
 
-## 干净 CI 矩阵
+## 干净检出矩阵
 
-CI 使用 `make eval-ci` 重建固定输入 B/fallback 两个 gitignored 产物，闸门要求至少 2 PASS、0 FAIL、0 SKIP。A、B'、C 和视觉 QA 按 `environment-ci.json` 明确 BLOCKED；CI 因此只声明确定性装配与结构回归，不声明外部运行时、实时图片生成或渲染质量。
+`make eval-clean` 在干净检出上重建固定输入 B/fallback 两个 gitignored 产物，闸门要求至少 2 PASS、0 FAIL、0 SKIP。A、B'、C 和视觉 QA 按 `environment-clean.json` 明确 BLOCKED；它因此只声明确定性装配与结构回归，不声明外部运行时、实时图片生成或渲染质量。仓库不附带 CI workflow，该闸门由本地、Agent 或自建 CI 显式调用。
 
 ## 已确认问题与最小复现
 

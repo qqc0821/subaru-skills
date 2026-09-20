@@ -2,6 +2,16 @@
 
 本文件记录 `subaru-skills` 的版本变更。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## Unreleased
+
+### 变更
+
+- 移除 CI：仓库不再附带 `.github/workflows/ci.yml`，质量门由 `make check` 承担，本地、Agent
+  或使用者自建的 CI 都调用同一入口。
+- `make eval-ci` 更名为 `make eval-clean`，`evals/policy-ci.json` / `evals/environment-ci.json`
+  相应更名为 `policy-clean.json` / `environment-clean.json`，避免名字继续暗示一个已不存在的
+  CI 环境；闸门语义不变（在干净检出上重建固定输入产物，要求至少 2 PASS、0 FAIL、0 SKIP）。
+
 ## 0.1.0 - 2026-09-12
 
 首个发布版本。仓库可作为 Agent Skill 被安装使用。
