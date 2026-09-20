@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-installability doctor baseline test eval eval-clean new-task hooks validate render montage lint-copy new-style
+.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-style-router check-context-budget check-installability doctor baseline test eval eval-clean new-task hooks validate render montage lint-copy new-style style-router
 
 help:
 	@echo "subaru-skills harness"
@@ -17,6 +17,7 @@ help:
 	@echo "  make montage   contact sheet:    DIR=slides/ [OUT=file]"
 	@echo "  make lint-copy copy lint:        SRC=deck.pptx|outline.md"
 	@echo "  make new-style scaffold a style: ID=x NAME=... [REGISTER=1]"
+	@echo "  make style-router regenerate styles/router.md from styles/index.json"
 
 check:
 	@PYTHON="$(PYTHON)" sh tools/check.sh
@@ -31,6 +32,10 @@ check-assets:
 	@$(PYTHON) tools/check_assets.py --baseline tools/baseline.json
 check-style-system:
 	@$(PYTHON) tools/check_style_system.py --baseline tools/baseline.json
+check-style-router:
+	@$(PYTHON) tools/gen_style_router.py --baseline tools/baseline.json
+check-context-budget:
+	@$(PYTHON) tools/check_context_budget.py --baseline tools/baseline.json
 check-installability:
 	@$(PYTHON) tools/check_installability.py --baseline tools/baseline.json
 
@@ -41,6 +46,8 @@ baseline:
 	@for c in validate_skills check_links check_consistency check_assets check_style_system check_installability; do \
 		$(PYTHON) tools/$$c.py --update-baseline --baseline tools/baseline.json; \
 	done
+	@$(PYTHON) tools/gen_style_router.py --update-baseline --baseline tools/baseline.json
+	@$(PYTHON) tools/check_context_budget.py --update-baseline --baseline tools/baseline.json
 
 test:
 	@$(PYTHON) -m compileall -q tools && echo "compileall: OK"
@@ -80,6 +87,9 @@ lint-copy:
 new-style:
 	@test -n "$(ID)" -a -n "$(NAME)" || (echo "usage: make new-style ID=x NAME=\"...\" [REGISTER=1]"; exit 2)
 	@$(PYTHON) tools/new_style.py "$(ID)" --name "$(NAME)" $(if $(REGISTER),--register)
+
+style-router:
+	@$(PYTHON) tools/gen_style_router.py --write
 
 montage:
 	@test -n "$(DIR)" || (echo "usage: make montage DIR=slides/ [OUT=file]"; exit 2)

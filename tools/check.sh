@@ -8,7 +8,7 @@ if [ -z "$PY" ]; then
   PY=python3
 fi
 BASELINE="tools/baseline.json"
-CHECKS="validate_skills check_links check_consistency check_assets check_style_system check_installability"
+CHECKS="validate_skills check_links check_consistency check_assets check_style_system gen_style_router check_context_budget check_installability"
 status=0
 
 echo "== subaru-skills harness =="

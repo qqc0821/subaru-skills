@@ -152,7 +152,7 @@ policy:
 ## 7. 常见任务的正确做法
 
 - **改某个 skill 的文档/脚本**：先读该 skill 的 `SKILL.md` 与其 `references/`，再改；改完跑第 8 节质量门。
-- **加一个新风格**：在 `styles/index.json` 与 `styles/<id>.md` 同步登记；补样例图；不要只改 SKILL.md 的描述。
+- **加一个新风格**：在 `styles/index.json` 与 `styles/<id>.md` 同步登记；补样例图；重新生成 `styles/router.md`（`make style-router`，Agent 选型只读它）；不要只改 SKILL.md 的描述。
 - **改路径 / 重命名**：全库搜索旧路径与引用，修完再校验。
 - **引入新能力**：走"能力探测 + 降级"，不要新增硬依赖。
 - **开新任务**：运行 `make new-task` 从 `docs/templates/` 生成三件套（已存在时跳过，`--force` 覆盖）。
@@ -164,7 +164,7 @@ policy:
 ### 8.1 统一入口（已落地）
 
 ```
-make check     # = validate_skills + check_links + check_consistency + check_assets + check_style_system + check_installability
+make check     # = validate_skills + check_links + check_consistency + check_assets + check_style_system + gen_style_router + check_context_budget + check_installability
 make test      # 脚本冒烟 / 单元测试
 make doctor    # 环境能力自检
 make eval      # 本机 eval 覆盖率闸门（PASS / FAIL / SKIP / BLOCKED）
@@ -181,6 +181,13 @@ make render   PPTX=deck.pptx OUT=d # 逐页 PNG/PDF
 make montage  DIR=slides/ OUT=m.webp
 make lint-copy SRC=deck.pptx      # 文案反 AI 味初筛
 make new-style ID=x NAME=...       # 新建风格 preset（可选 REGISTER=1）
+```
+
+上下文成本核算（只读，用于复核优化幅度）：
+
+```
+python3 tools/context_savings.py [--baseline HEAD]  # 必读路径 / 可选设计参考的前后对比
+python3 tools/check_context_budget.py --report      # 当前必读 + 可选 + 全量合计
 ```
 
 本地、Agent 与自建 CI 使用**同一个入口**，避免"我本地过了"。
@@ -211,11 +218,12 @@ du -sh skills/*
 |---|---|---|
 | **H1** | `AGENTS.md` + `CLAUDE.md` | 已完成 |
 | **H2** | `schemas/` 机读契约（4 个 schema） | 已完成 |
-| **H3** | `tools/` 校验器（validate_skills / check_links / check_consistency / check_assets / check_style_system / check_installability / doctor） | 已完成 |
+| **H3** | `tools/` 校验器（validate_skills / check_links / check_consistency / check_assets / check_style_system / gen_style_router / check_context_budget / check_installability / doctor） | 已完成 |
 | **H4** | `Makefile` 质量门统一入口（CI workflow 已移除） | 已完成 |
 | **H5** | 任务模板 `docs/templates/` + Definition of Done + PR 模板 + `make new-task` | 已完成 |
 | **H6** | `evals/` 回归基准（5 个 case + `run_evals` + `pptx_inspect`） | 已完成 |
 | **H7** | pre-commit（`make hooks`）+ `docs/lessons-learned.md` | 已完成（可选启用） |
+| **H8** | 上下文成本护栏：`styles/router.md` 选型摘要 + `check_context_budget`（必读路径预算与按需读取纪律） | 已完成 |
 
 ### 8.4 基线（baseline）机制
 

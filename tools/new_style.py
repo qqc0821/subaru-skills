@@ -105,8 +105,16 @@ def main() -> int:
         data["count"] = len(data["styles"])
         index_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print("registered " + args.id + " (count=" + str(data["count"]) + ")")
+        try:
+            import gen_style_router
+            router = skill / "styles" / gen_style_router.ROUTER_NAME
+            router.write_text(gen_style_router.render(skill), encoding="utf-8")
+            print("regenerated " + str(router))
+        except Exception as exc:  # never fail registration because the digest could not refresh
+            print("new_style: could not refresh styles/router.md (" + str(exc)
+                  + "); run 'make style-router'", file=sys.stderr)
     else:
-        print("next: add an entry to styles/index.json (or rerun with --register)")
+        print("next: add an entry to styles/index.json (or rerun with --register), then run 'make style-router'")
     return 0
 
 

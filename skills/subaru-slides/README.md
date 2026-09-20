@@ -44,7 +44,7 @@ uv run scripts/create_slides.py a.webp b.webp --layout fullscreen --output out.p
 
 ## 风格
 
-`styles/index.json` 是风格数据的唯一事实源（id、中文/英文名称、主题推荐、正式程度、适用路径、样例映射、proven 状态）；每个风格另有 `styles/<id>.md` preset，样例图在 `assets/style-samples/`。
+`styles/index.json` 是风格数据的唯一事实源（id、中文/英文名称、主题推荐、正式程度、适用路径、样例映射、proven 状态）；`styles/router.md` 是由它生成的选型摘要（Agent 选风格时只读这一张表），每个风格另有 `styles/<id>.md` preset，样例图在 `assets/style-samples/`。
 
 ## 更多
 

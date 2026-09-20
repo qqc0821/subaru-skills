@@ -6,6 +6,12 @@
 
 ### 变更
 
+- 降低 `subaru-slides` 的上下文成本：选风格时改读自动生成的 `styles/router.md`（约 1 137 token），
+  不再读整个 `styles/index.json`（约 2 947 token）；入口明确"只读选中的 1 个 preset"、
+  `references/design-movements.md` 降为按需读取。
+- 瘦身 `references/design-principles.md`（2 209 → 537 token）与 `references/design-movements.md`
+  （2 016 → 793 token）：删除与本 skill 风格系统重复的通用色板与 2026 趋势、全库零引用的
+  Viral Deck 框架，以及与 `styles/foundation.json` 冲突的"正文 ≥24pt"规则。
 - 移除 CI：仓库不再附带 `.github/workflows/ci.yml`，质量门由 `make check` 承担，本地、Agent
   或使用者自建的 CI 都调用同一入口。
 - `make eval-ci` 更名为 `make eval-clean`，`evals/policy-ci.json` / `evals/environment-ci.json`
@@ -29,7 +35,8 @@
 ### 工程与质量
 
 - Harness 质量门：`validate_skills` / `check_links` / `check_consistency` / `check_assets` /
-  `check_style_system` / `check_installability`，由 `make check` 统一入口驱动，本地与 CI 一致。
+  `check_style_system` / `gen_style_router` / `check_context_budget` / `check_installability`，
+  由 `make check` 统一入口驱动，本地与 CI 一致。
 - 机读契约 `schemas/`：skill frontmatter、openai-agent 元数据、style preset 与 index。
 - 回归基准 `evals/`：固定 brief + 结构断言，`make eval` 强制覆盖率闸门。
 - 单元测试 `tests/`：28 个用例覆盖路径路由、渲染器探测、安装边界与校验器行为。

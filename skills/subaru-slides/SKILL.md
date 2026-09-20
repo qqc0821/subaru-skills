@@ -5,7 +5,7 @@ description: 端到端制作 PPT / 幻灯片 / 演示文稿 / Keynote：内容�
 
 # subaru-slides · Presentation Router
 
-> 薄入口：本文件只做路由与铁律。流程细节在 `references/`；风格数据在 `styles/index.json`。
+> 薄入口：本文件只做路由与铁律。流程细节在 `references/`；风格选型表在 `styles/router.md`。
 
 ## When to use / not use
 - **用**：从主题或文档做演示文稿；需要可编辑 PPTX；需要 AI 视觉风格；需要 HTML deck。
@@ -13,7 +13,11 @@ description: 端到端制作 PPT / 幻灯片 / 演示文稿 / Keynote：内容�
 
 ## The 6 rules
 1. **可编辑是默认**：会被修改的文字/表格/图表必须原生；只有装饰视觉可以是位图。
-2. **风格是数据**：计数、命名、推荐、样例只在 `styles/index.json`；其他文件不得重复维护。
+2. **风格是数据**：`styles/index.json` 是唯一事实源，`styles/router.md` 是它自动生成的选型摘要；
+   选风格只读 router，改风格只改 index，其他文件不得重复维护。
+<!-- repo-only -->
+   > 开发仓库内重生成 router：`make style-router`；`make check` 会因两者漂移而失败。
+<!-- /repo-only -->
 3. **能力探测优先**：先跑 `scripts/detect_capabilities.py`；中文/跨平台交付再跑 `scripts/detect_fonts.py`；缺能力必须明说并降级，禁止静默换路。
 4. **中文优先**：slide 文案中文优先（保留必要英文术语）；代码、路径、JSON key 用英文。
 5. **交付前过检**：逐页渲染 + 目检；并说明哪些检查**没有**做（claim boundary）。
@@ -48,15 +52,17 @@ python3 scripts/detect_capabilities.py     # 或 --json
 **Checkpoint 1**：展示大纲表，请用户确认或调整。
 
 ## Step 4 · Choose a style
-读 `styles/index.json`，按 `theme_recommendations` → `formality` → `path` 匹配，
+读 `styles/router.md`（唯一需要读的风格文件，约一张表），按 `主题推荐` → `formality` → `path` 匹配，
 选 **3 个方向不同**的候选；每个给出：一句话 + 调色板 + 样例图。
+**只读选中的那 1 个 preset**（`styles/<id>.md`）取 Base Style Prompt；不要预读另外两个，也不读 `styles/index.json`。
 先读 `styles/foundation.json` 选择字号 profile、中文字体策略与版式护栏；preset 不得降低基础字号。
 **Checkpoint 2**：请用户选一个。若宿主能渲染，直接给 3 张封面预览而不是文字描述。
-细节：`references/design-movements.md`、`references/design-principles.md`。
+仅在用户点名设计运动/流派时才读 `references/design-movements.md`。
 
 ## Step 5 · Build
 按选定路径执行：
 - AI 配图/出图：读 `references/illustrations.md`，并使用该风格 preset（`styles/<id>.md`）的 **Base Style Prompt**。
+  参考文档按需读：与当前页无关的 reference 不要为了"求全"而预读。
 - 原生对象与单位护栏：`references/paths/path-a-native.md`。
 - 流程图/重复模块：读 `references/layout-grammar.md`，同角色等尺寸、默认正交连接。
 **Checkpoint 3**：展示 2-3 张关键页（Collaborative 模式逐页），请用户确认。
@@ -101,12 +107,13 @@ contact sheet 只用于整册节奏，**不替代**逐页检查。
 | `references/design-system.md` | 设计系统与自定义风格 |
 | `references/harnesses.md` | 跨 harness 工具映射 |
 | `references/integrations.md` | 可选增强集成 |
-| `references/design-principles.md` | 十规则、色板、字体、版式 |
-| `references/design-movements.md` | 设计运动 → 风格对照 |
+| `references/design-principles.md` | 十规则与断言-证据框架（按需） |
+| `references/design-movements.md` | 设计运动 → 既有风格对照（按需；用户点名流派时） |
 | `references/proven-styles-gallery.md` | 风格选择策略（数据以 `styles/index.json` 为准） |
 | `references/proven-styles-snoopy.md` | Snoopy 风格实战经验 |
-| `references/prompt-templates.md` | 内容与出图 prompt 模板 |
-| `styles/index.json` + `styles/foundation.json` + `styles/<id>.md` | 风格注册表、基础契约与 preset |
+| `references/prompt-templates.md` | 内容与出图 prompt 模板（按需） |
+| `styles/router.md` | 风格选型表（由 `styles/index.json` 自动生成的摘要） |
+| `styles/index.json` + `styles/foundation.json` + `styles/<id>.md` | 风格注册表（校验用）、基础契约与 preset |
 | `scripts/detect_capabilities.py` | 能力探测与路径推荐 |
 | `scripts/create_slides.py` | 图片→PPTX 兜底 |
 

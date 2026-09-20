@@ -11,6 +11,7 @@ import sys
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
@@ -95,6 +96,90 @@ class TestStyleSystem(unittest.TestCase):
             for slot in ("first", "second", "third"):
                 if rec.get(slot):
                     self.assertIn(rec[slot], ids, "unknown style in " + str(rec.get("theme")))
+
+
+class TestStyleRouter(unittest.TestCase):
+    """styles/router.md is the generated, context-optimized digest of index.json."""
+
+    def test_router_is_in_sync_with_registry(self):
+        import gen_style_router
+
+        router = SKILL / "styles" / gen_style_router.ROUTER_NAME
+        self.assertTrue(router.is_file(), "styles/router.md is missing; run 'make style-router'")
+        self.assertEqual(C.read_text(router), gen_style_router.render(SKILL),
+                         "styles/router.md is stale; run 'make style-router'")
+
+    def test_router_lists_every_registered_style(self):
+        data = json.loads(C.read_text(SKILL / "styles" / "index.json"))
+        text = C.read_text(SKILL / "styles" / "router.md")
+        for style in data["styles"]:
+            self.assertIn("| " + style["id"] + " |", text, style["id"] + " missing from router")
+
+    def test_router_tells_the_agent_to_load_one_preset_only(self):
+        text = C.read_text(SKILL / "styles" / "router.md")
+        self.assertIn("只读选中的那 1 个", text)
+
+    def test_skill_md_selects_styles_from_the_router(self):
+        text = C.read_text(SKILL / "SKILL.md")
+        self.assertIn("styles/router.md", text)
+
+
+class TestContextBudget(unittest.TestCase):
+    """The declared required path must stay cheap; detail belongs in conditional files."""
+
+    def test_required_path_stays_inside_its_budget(self):
+        import check_context_budget
+
+        findings, total, _ = check_context_budget.check_skill(SKILL, verbose=False)
+        blocking = [f for f in findings if f.severity == "error"]
+        self.assertEqual([], [f.render() for f in blocking])
+        self.assertLessEqual(total, check_context_budget.REQUIRED_BUDGET)
+
+    def test_worst_case_preset_also_fits(self):
+        import check_context_budget
+
+        _, total, costs = check_context_budget.check_skill(SKILL, verbose=False)
+        worst = max(check_context_budget.cost(SKILL, p)
+                    for p in ("styles/warm-comic-strip.md", "styles/pentagram-editorial.md"))
+        self.assertLessEqual(total - costs["styles/warm-comic-strip.md"] + worst,
+                             check_context_budget.REQUIRED_BUDGET)
+
+    def test_oversized_required_file_is_rejected(self):
+        import check_context_budget
+
+        with TemporaryDirectory() as tmp:
+            pkg = Path(tmp) / "demo-skill"
+            (pkg / "styles").mkdir(parents=True)
+            (pkg / "references").mkdir()
+            (pkg / "SKILL.md").write_text("---\nname: demo-skill\n---\n" + "x " * 9000, encoding="utf-8")
+            for rel in check_context_budget.REQUIRED_PATH:
+                if rel == "SKILL.md":
+                    continue
+                target = pkg / rel
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("small\n", encoding="utf-8")
+            findings, _, _ = check_context_budget.check_skill(pkg, verbose=False)
+            keys = {f.key for f in findings}
+            self.assertIn("required-file-too-large:SKILL.md", keys)
+
+    def test_conditional_files_must_stay_tagged(self):
+        import check_context_budget
+
+        with TemporaryDirectory() as tmp:
+            pkg = Path(tmp) / "demo-skill"
+            (pkg / "styles").mkdir(parents=True)
+            (pkg / "references").mkdir()
+            (pkg / "SKILL.md").write_text("---\nname: demo-skill\n---\nsee references/design-principles.md\n",
+                                          encoding="utf-8")
+            for rel in check_context_budget.REQUIRED_PATH:
+                if rel == "SKILL.md":
+                    continue
+                target = pkg / rel
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("small\n", encoding="utf-8")
+            findings, _, _ = check_context_budget.check_skill(pkg, verbose=False)
+            keys = {f.key for f in findings}
+            self.assertIn("conditional-file-not-tagged:design-principles.md", keys)
 
 
 class TestSemanticQualityGuards(unittest.TestCase):

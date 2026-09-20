@@ -44,7 +44,7 @@ Supported layouts: fullscreen, title_above, title_below, title_left, center, and
 
 ## Styles
 
-`styles/index.json` is the single source of truth for style data (IDs, Chinese/English names, theme recommendations, formality, allowed paths, sample mappings, proven status); each style also has a `styles/<id>.md` preset, and sample images live in `assets/style-samples/`.
+`styles/index.json` is the single source of truth for style data (IDs, Chinese/English names, theme recommendations, formality, allowed paths, sample mappings, proven status); `styles/router.md` is a generated selection digest of it (the only style file an agent reads when picking a direction); each style also has a `styles/<id>.md` preset, and sample images live in `assets/style-samples/`.
 
 ## More
 
