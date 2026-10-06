@@ -7,7 +7,7 @@ No external skill is a hard dependency; any detected capability is an optional e
 | Capability | Detected by | Enables |
 |---|---|---|
 | Native editable builder | host-native artifact tool / available `python-pptx` workflow | Path A / B' |
-| Image generation | the host's image-generation capability | Path B / B' |
+| Image generation | host tools + successful first asset; installed skill is a hint | optional assets in A / B' / C; Path B |
 | HTML deck runtime | `deck-stage.js` | Path C |
 | HTML→PPTX converter | an html2pptx-style converter | Path C export |
 | Renderer | `soffice` + `pdftoppm` | visual QA |
@@ -17,6 +17,9 @@ Run `scripts/detect_capabilities.py` (human or `--json`) to detect all of the ab
 The script may miss a host-provided builder/tool. Check the host's exposed capabilities and run
 a small import/asset probe before deciding the path; record script results separately from actual
 execution. An installed image skill is only a hint, not proof that generation or alpha output works.
+The JSON `image_generation` field reports local hints with `status: unknown`; it cannot enumerate
+session tools or verify credentials. Agent execution records callable/generated/output properties
+separately. A local hint alone must not select Path B. See `illustrations.md` for provider selection.
 For Chinese or cross-platform delivery, also run `scripts/detect_fonts.py --locale zh-CN`.
 Legacy family probing has no external Python dependency; without Fontconfig it reports unverified.
 The optional `--profile` file/weight/glyph probe uses fontTools when already available; without it

@@ -34,6 +34,7 @@ python3 scripts/detect_capabilities.py     # 或 --json
 ```
 推荐顺序：`A 原生可编辑 → B' 混合 → C HTML deck → B 全 AI 视觉 → fallback`。
 缺能力时明确告知用户，再走下一档。
+插图独立探测：目录仅是线索，检查宿主工具；选择与验证见 `references/illustrations.md`。
 
 ## Step 1 · Pick a path
 | Path | Product | Requires | Details |
@@ -45,28 +46,27 @@ python3 scripts/detect_capabilities.py     # 或 --json
 | fallback | 图片 PPTX（最低兜底） | python-pptx + Pillow | `references/paths/path-b-visual.md` |
 
 ## Step 2 · Confirm settings
-问用户两件事（未说明则默认）：**合作模式**（Full Auto / Guided / Collaborative，默认 Guided）
-与**输出形态**（可编辑 PPTX / 视觉 PPTX / HTML deck）。详见 `references/workflow.md`。
+确认合作模式与输出形态；已有授权沿用，默认 Guided。选项见 `references/workflow.md`。
 
 ## Step 3 · Structure the content
 标题按页意选择：介绍页用主题，发现页用有证据的结论；每页 1 个主要信息。
 读 `references/content-structure.md`，产出逐页大纲。
+逐页选择视觉来源：场景/概念主动评估生图，数据/流程优先原生；需要资产时读 `references/illustrations.md`。
 **Checkpoint 1**：展示大纲表，请用户确认或调整。
 
 ## Step 4 · Choose a style
-读 `styles/router.md`（唯一需要读的风格文件，约一张表），按 `主题推荐` → `formality` → `path` 匹配，
-选 **3 个方向不同**的候选；每个给出：一句话 + 调色板 + 样例图。
-**只读选中的那 1 个 preset**（`styles/<id>.md`）取 Base Style Prompt；不要预读另外两个，也不读 `styles/index.json`。
+读 `styles/router.md`，按主题 → formality → path 选 **3 个不同方向**，附一句话、调色板与样例。
+只读选中的 `styles/<id>.md` 取 Base Style Prompt；不预读其他 preset 或 index。
 先读 `styles/foundation.json` 选择字号 profile 与版式护栏；preset 不得降低基础字号。
 商业稿或“高级感/排版”重做，按需读 `references/business-design.md` 与 `references/business-references.md`，拆解真实内容页；先记录用户已认可的设计基线。
 中文排版按需读 `references/typography-cjk.md`；改字体时按需读 `references/typography-system.md`，解析字款后做原生对照。
-**Checkpoint 2**：请用户选一个。若宿主能渲染，直接给 3 张封面预览而不是文字描述。
+**Checkpoint 2**：选方向；能渲染时展示 3 张封面预览。
 仅在用户点名设计运动/流派时才读 `references/design-movements.md`。
 
 ## Step 5 · Build
 按选定路径执行：
-- 配图/出图：按需读 `references/illustrations.md`，先在大纲中补视觉计划，再按用途制作局部插图或背景；共用已选 preset 的 **Base Style Prompt** 或用户认可的视觉基线。
-  参考文档按需读：与当前页无关的 reference 不要为了"求全"而预读。
+- 配图：A/B'/C 均可使用生成资产；按 `references/illustrations.md` 制作、上版检查与延展，失败时说明并重排。
+  仅按当前页需要读 reference。
 - 原生对象与单位护栏：`references/paths/path-a-native.md`。
 - 流程图/重复模块：读 `references/layout-grammar.md`，同角色等尺寸、默认正交连接。
 **Checkpoint 3**：展示 2-3 张关键页（Collaborative 模式逐页），请用户确认。

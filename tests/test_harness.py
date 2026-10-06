@@ -360,7 +360,14 @@ class TestPathRouting(unittest.TestCase):
         self.assertEqual(path, "C")
 
     def test_image_only_and_fallback(self):
-        self.assertEqual(detect_capabilities.recommend({"imagegen": True})[0], "B")
+        self.assertEqual(detect_capabilities.recommend({"imagegen": True})[0], "fallback")
+        for status in ("callable", "generated"):
+            self.assertEqual(detect_capabilities.recommend({
+                "image_generation": {"status": status}
+            })[0], "B")
+        self.assertEqual(detect_capabilities.recommend({
+            "image_generation": {"status": "unknown"}
+        })[0], "fallback")
         self.assertEqual(detect_capabilities.recommend({})[0], "fallback")
 
 
