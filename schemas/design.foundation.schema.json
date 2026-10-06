@@ -7,10 +7,32 @@
   "properties": {
     "schema_version": { "type": "integer", "minimum": 1 },
     "default_profile": { "type": "string", "minLength": 1 },
-    "profiles": { "type": "object", "minProperties": 1 },
+    "profiles": {
+      "type": "object", "minProperties": 1,
+      "additionalProperties": {
+        "type": "object", "required": ["text_roles"],
+        "properties": {
+          "description": { "type": "string" },
+          "inherits": { "type": "string", "minLength": 1 },
+          "text_roles": { "type": "object", "additionalProperties": { "$ref": "#/$defs/sizeRole" } }
+        }
+      }
+    },
     "cjk": { "type": "object" },
     "layout": { "type": "object" },
     "accessibility": { "type": "object" },
-    "autofit": { "type": "object" }
+    "autofit": { "type": "object" },
+    "role_aliases": { "type": "object", "additionalProperties": { "type": "string", "minLength": 1 } }
+  },
+  "$defs": {
+    "sizeRole": {
+      "type": "object", "required": ["min_pt", "max_pt"], "additionalProperties": false,
+      "properties": {
+        "min_pt": { "type": "number", "exclusiveMinimum": 0 },
+        "max_pt": { "type": "number", "exclusiveMinimum": 0 },
+        "hard_min_pt": { "type": "number", "exclusiveMinimum": 0 },
+        "warning_below_pt": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    }
   }
 }

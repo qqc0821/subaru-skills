@@ -1,9 +1,10 @@
 {
   "schema_version": 1,
   "default_profile": "meeting-room",
+  "role_aliases": {"display-title": "cover-title", "metric-value": "cover-title", "metric-unit": "body"},
   "profiles": {
     "meeting-room": {
-      "description": "默认会议室汇报；适合常规显示器和中小会议室投屏。",
+      "description": "默认会议室投屏。",
       "text_roles": {
         "cover-title": { "min_pt": 48, "max_pt": 60 },
         "section-title": { "min_pt": 40, "max_pt": 48 },
@@ -17,7 +18,8 @@
       }
     },
     "large-room": {
-      "description": "礼堂或远距离投影；在 meeting-room 基础上放大主体文字。",
+      "inherits": "meeting-room",
+      "description": "远距离投影。",
       "text_roles": {
         "slide-title": { "min_pt": 40, "max_pt": 48 },
         "body": { "min_pt": 24, "max_pt": 28, "hard_min_pt": 20 },
@@ -27,7 +29,8 @@
       }
     },
     "screen-reading": {
-      "description": "主要在个人屏幕阅读；仍保留内容文字的可读性下限。",
+      "inherits": "meeting-room",
+      "description": "个人屏幕阅读。",
       "text_roles": {
         "slide-title": { "min_pt": 30, "max_pt": 36 },
         "body": { "min_pt": 18, "max_pt": 22, "hard_min_pt": 18 },

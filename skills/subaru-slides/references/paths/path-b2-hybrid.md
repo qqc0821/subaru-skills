@@ -1,25 +1,20 @@
-# Path B' - Hybrid (recommended default)
+# Path B' - Hybrid
 
-**Product:** AI-generated, text-free visual bases with native editable text and charts on top.
-**Use when:** you want maximum visual quality **and** editable text - most real decks.
-**Requires:** image generation **and** a native builder. If the builder is missing, fall back to Path B or C.
+**Product:** native editable content with AI assets.
+**Use when:** imagery helps explain a scene/concept or establish the brand.
+**Requires:** image generation and a native builder; otherwise follow `../dependencies.md`.
 
-## Why this is the default
-Path B looks great but bakes text into pixels (not editable, Chinese may misrender).
-Path A is editable but visually plain. Path B' takes the visual richness of B and the editability of A.
+## Build
 
-## Method
-1. For each slide, generate a **text-free** visual base: "no text in image", 2048x1152, base style appended.
-   Describe scene + mood only (see `../illustrations.md`).
-2. Build the PPTX with the native builder (Path A mechanics):
-   - add the AI image as the background (cover/contain),
-   - add native title/body/chart/table on top, choosing a readable zone of the image.
-3. If a slide's base image leaves no clean text area, add a scrim (semi-transparent solid/gradient rectangle)
-   behind the native text, then re-check contrast.
-4. Export, render, and inspect every slide.
+1. Plan assets under `../illustrations.md`: cutout, framed scene or text-free background.
+   Typography/data/product pages may need no AI image.
+2. Place a representative asset before extending the series; reuse accepted visual references.
+3. Build with Path A mechanics. Keep required text, values, precise relationships and product labels native.
+   Preserve image aspect, alpha and essential details when fitting assets.
+4. Choose a readable text area; recompose or use a restrained scrim if contrast fails.
+5. Export, re-import the final PPTX, render and inspect every slide.
 
-## Checks specific to B'
-- No text rendered inside the AI image (otherwise editability is lost).
-- Native text contrast over the image is sufficient.
-- One shared style block so the imagery stays consistent across slides.
-- Charts/tables remain native, not baked into the image.
+## Check
+
+Verify meaning, crop, cutout edges, contrast and cover/content continuity. Do not repeat decorative
+compositions on every page. Record sources and distinguish native layers from raster assets at delivery.

@@ -1,40 +1,65 @@
-# Chinese Typography
+# 中文字体与排版
 
-Read `../styles/foundation.json` before choosing a type scale. The profile, not a
-style preset, controls minimum sizes. Default to `meeting-room`; choose `large-room`
-for distant projection and `screen-reading` only when the deck is not presented at distance.
+先读 `../styles/foundation.json`，按观看方式选 profile；字号范围只在 foundation 维护。
+改字体/中英搭配时按需读 `typography-system.md` 与 `../typography/profiles.json`，探测实际字款后再扩展全稿。
+默认会议室；远距离投影选 large-room；个人屏幕阅读才选 screen-reading。
 
-## Type and fit
+## 字体选择：验证到字重
 
-- Treat 18pt as the hard floor for body and diagram-node text. Data labels may use 16–17pt
-  only when the rendered slide remains readable; footnotes/source text are the only 10–12pt roles.
-- Do not use automatic shrink-to-fit for content roles. Shorten, split or recompose the copy first.
-- Use one CJK sans family for most decks, with at most one deliberate display or serif exception.
-  Avoid Thin/Light weights for text below 20pt.
-- Chinese glyphs are roughly 1em wide and Latin glyphs about 0.55em. Estimate mixed text by
-  wrapped lines, not a fixed text-box height. Keep CJK line height within the foundation range.
+1. 有品牌规范时优先用已授权且可用的品牌字体。
+2. 跨平台优先探测 foundation 的 portable 候选；否则探测目标系统候选。
+3. 同时验证**构建器与实际渲染器**识别的 family、字重和简体中文字形。
+   磁盘上有 TTC、系统字体册可见、字体名称写入 PPTX，都不等于渲染器已加载正确字重。
+4. `scripts/detect_fonts.py --locale zh-CN` 基于 fontconfig；返回 unverified 时，
+   用宿主字体 API/文件元数据补充探测，不解释成字体不存在，也不把回退字体当匹配成功。
+5. 字重由页面任务、品牌与参考决定：可试 Regular 正文搭配 Medium/Semibold 或真实 Bold 标题。
+   产品发布的大字与研究报告的小标题不能共用字重预设；不要给所有中文标题套相同的超大粗体。
+   小字不用 Thin/Light；少量大字的细体封面是有意选择，不扩展到正文。
+6. 字体文件缺少目标字重时，不用 `bold=true` 冒充已验证的 Medium/Semibold。
+   用真实字款名称解析，记录实际权重值；Regular/Bold 不一定等于 400/700。
+   某些构建器仅支持普通/粗体，可选择已验证的具名字重 family，或改用有真实 Regular/Bold 的家族。
+7. 保留字体许可及来源；字体按任务加载，不硬编码系统路径，不把大字体包变成 skill 必需依赖。
 
-## Font resolution and delivery
+## 字号、字重与空间一起确定
 
-1. Use the user's template or brand font when it is available and licensed for the requested output.
-2. For a portable deck, probe the foundation's portable CJK candidates first.
-3. Otherwise choose the target-platform candidate: Windows, macOS or Linux. Never assume PingFang
-   exists outside macOS, or Microsoft YaHei outside Windows.
-4. Report the resolved family and fallback. For a view-only deck, subset embedding is acceptable;
-   for an editable handoff, embed all characters when the font licence permits it.
-5. If no CJK candidate is available, stop the native-font claim and disclose the substitution risk.
+- 从 foundation 选定少数固定角色值，整册复用；继承 profile 的未覆盖角色。
+  `display-title`、`metric-value`、`metric-unit` 通过角色别名取字号，不在字体 profile 再维护数值。
+- 同一页标题应明显高于正文，但不要靠极端字号差把正文压成注释。
+  中文标题结合构图、真实字重和行长试排，不默认压到所选 profile 的下半区间。
+- 章节页、封面、普通内容页分别用对应角色。数据大字是证据，不自动变成标题字号。
+- 中文与英文同 pt 的视觉大小可能不同。中英混排先比基线、数字高度和标点，
+  有意分工时声明 CJK / Latin 组合；一套 CJK 字体也可以覆盖中文、英文和数字。
+  指标数字与单位成组，避免拆行；表格等宽数字须实际验证后才使用，不默认用空格凑齐。
+- 中文标题按短语换行，避免末行只剩一两个字；不要为凑齐行宽插空格或拉伸字距。
+- 正文按语义缩句、控制文本框宽度；中文约 1em、拉丁字母约 0.55em 仅作预估。
+  英文“每行五词”不机械套用到中文。
+- 行距按 foundation 范围试排；段间距与组间距大于行内间距。不要用空行撑开布局。
+- 内容文字不用自动缩小适配；先删冗余、拆页或重排。数据标签不能冒充正文以绕过字号下限。
+- 显式换算单位：PPT pt 与构建器 CSS px 不同；96 DPI 时 `px = pt × 4 / 3`。
+  渲染图宽 1600px 不意味着页面比 1280px 拥有更大的物理字号。
 
-## Native PPTX requirements
+## 中文样张：在扩展全稿前做
 
-- Text must remain native in Path A/B'.
-- Set the East Asian typeface (`a:ea`) and language tag (for example `zh-CN`) in addition to the
-  Latin typeface. Set East Asian major/minor theme fonts when the builder supports themes.
-- Run `scripts/detect_fonts.py --locale zh-CN` before build when target availability matters.
-- Verify the exported PPTX has `a:ea` on CJK text and render every slide. Font presence and a clean
-  local render do not prove a recipient has the same font.
+当用户质疑字体、换字体家族或渲染字重不确定时，用原生文本做一页对照：
 
-## AI image + Chinese
+- **第一组只变字体/字重**：相同中文标题、正文、数字、相同 pt 与文本框；确认真实轮廓差异。
+- **第二组只变层级**：固定候选字体，比较标题/正文比例、两行标题、行距和正文长度。
+- 文本包含中文标点、中英文、日期、金额和百分比，例如 `客户跟进安排 / FlowDesk / 199 元 / 23.5%`。
+- 在实际构建器渲染样张，检查 missing glyph、字体回退、伪粗体、行末孤字与基线。
+- 以目标观看尺寸复看；缩略图能看层级，全尺寸能看字形。两者都不能替代跨机验证。
+- 保存最终选择、实际加载字重和未验证项；不要把设计偏好写成字体优劣的普遍结论。
 
-- Keep titles <= 8 characters and body lines <= 30 characters.
-- Avoid rare characters; keep text away from busy visual areas.
-- Verify every rendered slide; regenerate with shorter text if wrong.
+## 原生 PPTX 与交付
+
+- Path A/B' 的文字保持原生可编辑。
+- 同时设置 Latin、East Asian typeface 与语言标记（如 `a:ea`、`zh-CN`）；
+  支持主题时同步 East Asian major/minor 字体。混用字体时按各文本实际 family 写入，不全局覆盖。
+- 导出后检查字体声明，重新导入最终 PPTX 渲染；构建时预览不能代替最终文件检查。
+- 记录 family、字重、目标平台和回退。仅看图可在许可允许时做子集嵌入；
+  可编辑交付应按许可考虑完整字符嵌入。不支持嵌入时说明，不以本机加载冒充嵌入。
+- 字体存在与本地渲染通过，不证明收件人的 PowerPoint、Keynote 或 Google Slides 显示一致。
+
+## AI 图片中的中文
+
+装饰图优先无字，中文标题与正文用原生层。确需中文出图时缩短文案、避开复杂背景，
+逐页核对；错字时重生成，不将错误文字作为可编辑交付。

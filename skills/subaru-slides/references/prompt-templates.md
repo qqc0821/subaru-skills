@@ -72,11 +72,11 @@ the claim obvious. Remove repeated context and keep the close focused on one act
 ```text
 Turn the supplied document into a [X]-slide presentation.
 Extract only claims that support the audience's decision. Give each slide a concise
-assertion title, up to four points, and a suggested visual. Preserve important numbers,
+purpose-appropriate title, up to four points, and a suggested visual. Preserve important numbers,
 qualifiers and source references; omit filler and repeated background.
 ```
 
-## 2. Slide image prompts (Path B / B')
+## 2. Full-slide image prompts (Path B)
 
 The selected style preset is the canonical source for palette, typography and base
 style. Do not copy a second palette into this template.
@@ -95,11 +95,12 @@ TEXT TO RENDER:
 - [Optional label or body]: "[exact text]"
 
 VISUAL NARRATIVE: [One or two sentences describing the subject, action, atmosphere
-and meaning. Let the model decide composition; do not prescribe coordinates or a grid.]
+and meaning. Include framing or reading-order conditions when they affect comprehension.]
 ```
 
-For Path B', add `no text in image` because text is overlaid as native objects. For
-Path B, include all visible text verbatim and verify it after generation.
+For Path B, include all visible text verbatim and verify it after generation. Path A/B' local assets
+and text-free backgrounds use the separate asset brief in `illustrations.md`; do not send
+TEXT TO RENDER to that workflow.
 
 ### Cover prompt
 
@@ -111,7 +112,7 @@ Create a [style] cover slide for [topic].
 DESIGN INTENT: The opening should feel [curious / confident / urgent / welcoming].
 
 TEXT TO RENDER:
-- Title: "[short assertion]"
+- Title: "[purpose-appropriate short title]"
 - Subtitle: "[one-line context]"
 
 VISUAL NARRATIVE: A scene or metaphor that makes the topic immediately recognizable
@@ -149,10 +150,10 @@ For Chinese text rendered inside an AI image:
 
 Before generating, verify:
 
-- [ ] The slide has one claim and a clear audience outcome.
+- [ ] The slide has one primary message and a clear audience outcome.
 - [ ] The visual narrative explains meaning, not coordinates.
 - [ ] The chosen preset supplies the base style; no competing palette is introduced.
-- [ ] Path B' explicitly keeps text out of the base image.
+- [ ] Path A/B' uses the asset brief and keeps required text in native layers.
 - [ ] Text is short enough to verify and render reliably.
 - [ ] A chart, table or diagram is native when it carries editable evidence.
 - [ ] The final image will be inspected before delivery.

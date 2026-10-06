@@ -3,22 +3,23 @@
 Turn raw material into a slide-by-slide outline.
 
 ## Per slide, define
-- **Title** - a complete assertion sentence, not a topic word.
+- **Title** - a concise subject for setup/overview pages, or an evidence-backed takeaway for findings.
 - **Key points** - 3-4 maximum.
 - **Visual type** - illustration / chart / diagram / icon / quote.
-- **Path A/B':** illustration needed? If yes, a one-line description.
-- **Path B/B':** visual scene description (one paragraph: layout + imagery + mood).
+- **Path A/B':** visual plan: audience takeaway, asset type, subject/relationship, placement and native editable layers; for illustration work see `illustrations.md`.
+- **Path B:** visual scene description (one paragraph: layout + imagery + mood).
 
-## Assertion-Evidence rule
-| Bad title | Good title |
+## Titles follow the page purpose
+| Page purpose | Suitable title |
 |---|---|
-| Q3 Sales | Q3 sales grew 23%, driven by new users |
-| Methodology | We validated this hypothesis with a double-blind experiment |
+| Finding with supporting data | Q3 sales grew 23%, driven by new users |
+| Method overview | Study design and sample |
 
 ## Density
-- <=5 words per line, <=4 bullets per slide, no more than 5 text-heavy slides in a row.
+- Fit density to viewing distance; keep one primary message and a clear evidence hierarchy.
+- Break Chinese at phrase boundaries; do not apply an English word-count rule mechanically.
 - One idea per slide; ~1 minute per slide.
-- Every slide should have a visual element.
+- Use visuals when they explain or substantiate the message; a typographic page can stand alone.
 
 ## Language
 - Slide content is Chinese-first; keep only necessary English terms (names, brands, technical terms).
@@ -28,15 +29,15 @@ Turn raw material into a slide-by-slide outline.
 ## Outline tables
 **Path A / B':**
 ```
-| # | Title (assertion) | Key Points | Visual Type | Illustration? |
+| # | Title | Key Points | Visual Type | Illustration? |
 |---|-------------------|------------|-------------|---------------|
-| 1 | Cover: ... | - | Decorative | Yes: ... |
+| 1 | Cover: ... | - | Typography or brand visual | Optional: ... |
 | 2 | ... | 1. ... 2. ... | Chart | No |
 ```
 
-**Path B / B':**
+**Path B:**
 ```
-| # | Title (assertion) | Key Points | Visual Scene Description |
+| # | Title | Key Points | Visual Scene Description |
 |---|-------------------|------------|--------------------------|
 | 1 | Cover: ... | - | Dark gradient bg, large title centered, abstract network nodes |
 | 2 | ... | 1. ... 2. ... | Split layout: text left, bar chart right, clean white bg |

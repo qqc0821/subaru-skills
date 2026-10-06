@@ -18,6 +18,9 @@
 | [ADR-003](003-context-budget.md) | 已采纳 | 安装体积与上下文成本 |
 | [ADR-004](004-layered-deck-validation.md) | 已采纳 | 分层质检与检测边界 |
 | [ADR-005](005-portable-brainstorm-sessions.md) | 已采纳；效果待验证 | 对话调度、可携带会话与行为证据 |
+| [ADR-006](006-reference-led-business-design.md) | 已采纳；效果待审阅 | 商业参考拆解与中文字体样张 |
+| [ADR-007](007-content-led-illustration-assets.md) | 已采纳；效果待审阅 | 已认可设计基线与内容插图组合 |
+| [ADR-008](008-role-based-typography.md) | 已采纳；效果待审阅 | 角色与脚本字款解析、声明校验 |
 
 ## 历史条目迁移核对
 
@@ -26,7 +29,7 @@
 
 | 历史编号 | 处理结果与依据 |
 |---|---|
-| L-01 | 提示词效果归入 [V-01](../verification-gaps.md#v-01-提示词约束与视觉多样性)，操作指南保持现状 |
+| L-01 | 提示词效果归入 [V-01](../verification-gaps.md#v-01-提示词约束与视觉多样性)，资产简报方法见 ADR-007 |
 | L-02 | 提示词约束由 [工程规范](../engineering.md#2-风格系统约定) 与 [一致性规则](../../tools/consistency-rules.json) 维护；规则覆盖范围见 V-01 |
 | L-03 | 分辨率分别由 [配图指南](../../skills/subaru-slides/references/illustrations.md) 和 [Path C](../../skills/subaru-slides/references/paths/path-c-html.md) 维护；一致性规则只扫描匹配的声明，非通用分辨率验证 |
 | L-04 | 合并到 ADR-002；注册表与摘要各自职责明确 |

@@ -7,7 +7,9 @@
 **Not:** screenshots of slides, or a single image per page.
 
 ## Rule: editable by default, raster by exception
-Any text/table/chart that may be edited must be native. Only decorative visuals may be bitmaps.
+Any text/table/chart/relationship diagram that may be edited must be native. Scene illustrations,
+photos and material assets may be bitmaps; disclose their editing boundary. AI asset composition
+belongs in `../illustrations.md` and Path B'.
 
 ## How to build
 1. Resolve a font available on the host with `scripts/detect_fonts.py --locale zh-CN`; record the

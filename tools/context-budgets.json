@@ -21,12 +21,22 @@
       "references/prompt-templates.md",
       "references/design-principles.md",
       "references/design-movements.md",
-      "references/paths/path-a-native.md"
+      "references/paths/path-a-native.md",
+      "references/business-design.md",
+      "references/business-references.md",
+      "references/typography-cjk.md",
+      "references/illustrations.md",
+      "references/typography-system.md"
     ],
     "conditional": [
       "references/design-principles.md",
       "references/design-movements.md",
-      "references/prompt-templates.md"
+      "references/prompt-templates.md",
+      "references/business-design.md",
+      "references/business-references.md",
+      "references/typography-cjk.md",
+      "references/illustrations.md",
+      "references/typography-system.md"
     ],
     "preset_glob": "styles/*.md",
     "preset_exclude": [

@@ -23,6 +23,7 @@ make render   PPTX=deck.pptx OUT=d # 逐页 PNG/PDF
 make montage  DIR=slides/ OUT=m.webp
 make lint-copy SRC=deck.pptx      # 文案反 AI 味初筛
 make pixel-qa DIR=renders/       # 渲染图像素缺陷检查
+python3 tools/validate_pptx.py deck.pptx --font-policy typography-receipt.json --viewing-profile meeting-room # 角色/脚本字体声明与继承字号
 make new-style ID=x NAME=...       # 新建风格 preset（可选 REGISTER=1）
 ```
 

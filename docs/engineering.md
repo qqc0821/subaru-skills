@@ -67,7 +67,8 @@ policy:
 - 若 skill 提供多风格，`styles/index.json` 是**风格数量、命名、主题推荐、样例映射的唯一事实源**。
 - `SKILL.md`、gallery 文档、样例目录**不得各自维护**一份可能漂移的计数；只引用 index。
 - 每个风格一个 `styles/<id>.md` preset（字段定义见 [style.preset.schema.json](../schemas/style.preset.schema.json)）。
-- 风格 base prompt 保持**简短**（≤5 行），描述情绪与世界观；不微操构图、不写 NOT 约束。
+- 风格 base prompt 保持**简短**（≤5 行），描述整册视觉语言，不写逐页坐标或无关 NOT 约束。
+  逐页资产简报可指定为内容准确性、留白、裁切与透明背景所需的主体、关系和构图条件；不把逐页要求复制进 preset。
 
 ## 3. 机读契约
 
@@ -76,6 +77,7 @@ policy:
 - [风格注册表](../schemas/styles.index.schema.json)
 - [风格 preset](../schemas/style.preset.schema.json)
 - [设计基础](../schemas/design.foundation.schema.json)
+- [字体配置](../schemas/typography.profiles.schema.json)：脚本字款与回退；字号仍由 foundation 维护
 
 修改契约时同步检查校验器与相关测试。
 

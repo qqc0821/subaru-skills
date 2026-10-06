@@ -14,8 +14,14 @@ No external skill is a hard dependency; any detected capability is an optional e
 | Bundled fallback | `scripts/create_slides.py` (PEP 723) | image-only PPTX |
 
 Run `scripts/detect_capabilities.py` (human or `--json`) to detect all of the above.
+The script may miss a host-provided builder/tool. Check the host's exposed capabilities and run
+a small import/asset probe before deciding the path; record script results separately from actual
+execution. An installed image skill is only a hint, not proof that generation or alpha output works.
 For Chinese or cross-platform delivery, also run `scripts/detect_fonts.py --locale zh-CN`.
-It has no external Python dependency; without Fontconfig it reports the font result as unverified.
+Legacy family probing has no external Python dependency; without Fontconfig it reports unverified.
+The optional `--profile` file/weight/glyph probe uses fontTools when already available; without it
+these checks stay unverified. It reads system/user-supplied font files, never downloads or installs
+fonts. No font packages are distributed with the skill. See `typography-system.md`.
 
 ## Selection order
 `A 原生可编辑 → B' 混合 → C HTML deck → B 全 AI 视觉 → fallback`
@@ -23,6 +29,9 @@ It has no external Python dependency; without Fontconfig it reports the font res
 ## Degrade rules
 - **No native builder** → cannot do A/B'; use C or B and state that text will not be editable. `scripts/create_slides.py` remains available only for the image-only PPTX fallback; it does not restore native editability.
 - **No image generation** → skip AI imagery; A/C use native visuals only.
+- **No transparent output** → use a framed scene matching the slide background; disclose that a
+  requested cutout was not achieved. Local images and full backgrounds use the same B' builder;
+  this introduces no new runtime dependency. See `illustrations.md`.
 - **No renderer** → run structural checks only and state that visual verification was not performed.
 - **Optional skills absent** → no action needed; the probe simply reports them as unavailable.
 
