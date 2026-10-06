@@ -1,0 +1,35 @@
+{
+  "file": "deck.pptx",
+  "sha256": "f64f66293192d459eaf381059d442c727771da85db9a0e042f2277e242c3f222",
+  "bytes": 55728,
+  "slides": 6,
+  "native_tables": 1,
+  "native_charts": 1,
+  "native_text_shapes": 48,
+  "notes": 6,
+  "font": "PingFang SC",
+  "font_embedded": false,
+  "builder": "python-pptx",
+  "authoring": "Codex single worked run using local subaru-slides guidance",
+  "data_boundary": "所有业务数据为原创虚构演示数据；不是客户案例，不支持投资或业务效果结论。",
+  "verified": [
+    "export and re-import",
+    "native object counts",
+    "LibreOffice final PPTX to PDF and six PNGs",
+    "Full-size visual review of all six final pages",
+    "validate_pptx: 0 errors / 0 warnings"
+  ],
+  "not_verified": [
+    "PowerPoint",
+    "Keynote",
+    "Google Slides",
+    "recipient fonts",
+    "independent design review"
+  ],
+  "rendered_slides": 6,
+  "rendering_boundary": "Local fontconfig required explicit system font directories and writable cache. Fonts remain unembedded.",
+  "pixel_qa": {
+    "status": "heuristic warnings manually reviewed",
+    "boundary": "Detector flagged intentional separate text lines and table fills; no unintended clipping, numeric wrapping or overlap observed in full-size review."
+  }
+}

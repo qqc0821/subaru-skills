@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T17:35:44.507908+00:00",
+  "title": "Design System: subaru-skills public documentation",
+  "extensions": {
+    "colorMeta": {
+      "blue": {
+        "role": "primary",
+        "displayName": "Link Blue",
+        "tonalRamp": [
+          "oklch(15% 0.17 260)",
+          "oklch(27% 0.17 260)",
+          "oklch(39% 0.17 260)",
+          "oklch(51% 0.17 260)",
+          "oklch(63% 0.17 260)",
+          "oklch(75% 0.17 260)",
+          "oklch(87% 0.17 260)",
+          "oklch(95% 0.17 260)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Slate Ink",
+        "tonalRamp": [
+          "oklch(15% 0.035 240)",
+          "oklch(27% 0.035 240)",
+          "oklch(39% 0.035 240)",
+          "oklch(51% 0.035 240)",
+          "oklch(63% 0.035 240)",
+          "oklch(75% 0.035 240)",
+          "oklch(87% 0.035 240)",
+          "oklch(95% 0.035 240)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Quiet Slate",
+        "tonalRamp": [
+          "oklch(15% 0.025 240)",
+          "oklch(27% 0.025 240)",
+          "oklch(39% 0.025 240)",
+          "oklch(51% 0.025 240)",
+          "oklch(63% 0.025 240)",
+          "oklch(75% 0.025 240)",
+          "oklch(87% 0.025 240)",
+          "oklch(95% 0.025 240)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Desk Edge",
+        "tonalRamp": [
+          "oklch(15% 0.015 240)",
+          "oklch(27% 0.015 240)",
+          "oklch(39% 0.015 240)",
+          "oklch(51% 0.015 240)",
+          "oklch(63% 0.015 240)",
+          "oklch(75% 0.015 240)",
+          "oklch(87% 0.015 240)",
+          "oklch(95% 0.015 240)"
+        ]
+      },
+      "rail": {
+        "role": "neutral",
+        "displayName": "Slate Rail",
+        "tonalRamp": [
+          "oklch(15% 0.008 240)",
+          "oklch(27% 0.008 240)",
+          "oklch(39% 0.008 240)",
+          "oklch(51% 0.008 240)",
+          "oklch(63% 0.008 240)",
+          "oklch(75% 0.008 240)",
+          "oklch(87% 0.008 240)",
+          "oklch(95% 0.008 240)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Reading Paper",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(39% 0 0)",
+          "oklch(51% 0 0)",
+          "oklch(63% 0 0)",
+          "oklch(75% 0 0)",
+          "oklch(87% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "页面标题",
+        "purpose": "文档一级标题；Read 模式共享系统字体。"
+      },
+      "body": {
+        "displayName": "正文",
+        "purpose": "限制行长的中文及英文连续阅读。"
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "primary-background",
+        "value": "background .16s ease-out",
+        "purpose": "仅在 prefers-reduced-motion:no-preference 时应用到主要动作。"
+      },
+      {
+        "name": "page-scroll",
+        "value": "smooth",
+        "purpose": "仅在 prefers-reduced-motion:no-preference 时启用。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "reading-single-column",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "action-primary",
+      "description": "开始使用或下载产物的链接动作。",
+      "html": "<a class=\"ds-primary\" href=\"#example\">开始使用</a>",
+      "css": ".ds-primary{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Noto Sans CJK SC\",sans-serif;font-size:17px;line-height:1.8;background:var(--blue);color:var(--paper);text-decoration:none;padding:10px 18px;border-radius:5px}.ds-primary:hover{background:#114895}.ds-primary:focus-visible{outline:3px solid var(--blue);outline-offset:5px}@media(prefers-reduced-motion:no-preference){.ds-primary{transition:background .16s ease-out}}"
+    },
+    {
+      "name": "Copy button",
+      "kind": "button",
+      "refersTo": "copy-button",
+      "description": "命令旁的复制动作，交互逻辑由网站脚本提供。",
+      "html": "<button class=\"ds-copy\" type=\"button\">复制</button>",
+      "css": ".ds-copy{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Noto Sans CJK SC\",sans-serif;font-size:13px;line-height:1.8;cursor:pointer;color:var(--blue);background:var(--paper);border:1px solid var(--line);padding:5px 10px;border-radius:4px}.ds-copy:hover{border-color:var(--blue)}.ds-copy:focus-visible{outline:3px solid var(--blue);outline-offset:5px}"
+    },
+    {
+      "name": "Documentation navigation",
+      "kind": "nav",
+      "refersTo": "navigation-item",
+      "description": "默认链接与当前页在灰蓝轨道内保持位置感。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"文档导航\"><a href=\"#home\" aria-current=\"page\">首页</a><a href=\"#install\">安装与兼容性</a></nav>",
+      "css": ".ds-nav{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Noto Sans CJK SC\",sans-serif;line-height:1.8;padding:14px 24px;background:var(--rail)}.ds-nav a{display:block;padding:9px 10px;font-size:15px;color:var(--ink);text-decoration:none;text-underline-offset:.22em}.ds-nav a[aria-current]{color:var(--blue);font-weight:700;background:var(--paper)}.ds-nav a:hover{text-decoration-thickness:2px}.ds-nav a:focus-visible{outline:3px solid var(--blue);outline-offset:5px}@media(max-width:760px){.ds-nav{display:flex;gap:5px;flex-wrap:wrap;padding:12px 20px}.ds-nav a{font-size:13px;padding:6px 9px}}"
+    },
+    {
+      "name": "Command panel",
+      "kind": "custom",
+      "refersTo": "command-panel",
+      "description": "可手动复制的安装命令阅读面。",
+      "html": "<div class=\"ds-command\"><pre><code>npx skills add qqc0821/subaru-skills --skill subaru-brainstorm</code></pre></div>",
+      "css": ".ds-command{background:var(--rail);color:var(--ink);padding:20px;margin:24px 0}.ds-command pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:14px;line-height:1.8}"
+    },
+    {
+      "name": "Reading table",
+      "kind": "custom",
+      "description": "对比与验证范围的表格，不使用卡片代替行列关系。",
+      "html": "<div class=\"ds-table-wrap\"><table class=\"ds-table\"><tr><th>范围</th><th>已验证</th></tr><tr><td>案例编写</td><td>文件检查</td></tr></table></div>",
+      "css": ".ds-table-wrap{overflow-x:auto;margin:22px 0}.ds-table{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Noto Sans CJK SC\",sans-serif;line-height:1.8;color:var(--ink);border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}.ds-table th,.ds-table td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line)}.ds-table th{background:var(--rail);font-weight:600}@media(max-width:760px){.ds-table th,.ds-table td{padding:10px;min-width:130px}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Reading Desk",
+    "overview": "以“阅读桌”为共同隐喻：白色正文供连续阅读，灰蓝导航轨道保持位置感，蓝色链接提供下一步。页面密度服务文档阅读与案例检查，中文优先，英文沿用同一套结构。\n\n本系统仅覆盖公开文档网站，不覆盖 skill 风格、示例演示文稿或仓库工具。原生系统字体是已确认的 Read 模式选择；页面不加载外部字体。",
+    "keyCharacteristics": [
+      "白色阅读面与灰蓝导航轨道。",
+      "蓝色承担链接、主要动作与键盘焦点。",
+      "正文限制行长，标题依靠字号与留白建立层级。",
+      "真实演示文稿预览配说明和可检查的下载入口。"
+    ],
+    "rules": [
+      {
+        "name": "The Reading Desk Rule",
+        "body": "正文保持白色阅读面；灰蓝底色用于导航、代码、引用和表头。",
+        "section": "colors"
+      },
+      {
+        "name": "The Read Mode Rule",
+        "body": "网站标题和正文共享系统字体栈；等宽字体仅用于命令和代码。",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "用底色、细边线和间距区分内容，不给文档容器添加悬浮阴影。",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do 沿用白色正文、灰蓝辅助面和蓝色链接的角色分配。",
+      "Do 为实际预览保留宽高、替代文本、图注与检查产物的入口。",
+      "Do 保留键盘焦点、跳到正文入口以及无 JavaScript 时仍可阅读和手动复制的命令。",
+      "Do 在窄屏将导航移入正常文档流，并让表格在自己的容器内滚动。"
+    ],
+    "donts": [
+      "Don't 把本站视觉规则扩展到演示文稿内页或 skill 风格库。",
+      "Don't 用装饰性图片代替实际案例预览。",
+      "Don't 给文档容器增加目前不存在的阴影、渐变或大面积强调色。",
+      "Don't 把未验证的微小字号或一次性浏览器装饰推广为公共组件规范。"
+    ]
+  }
+}
