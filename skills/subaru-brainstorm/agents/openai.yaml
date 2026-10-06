@@ -1,0 +1,7 @@
+interface:
+  display_name: "Subaru Brainstorm"
+  short_description: "探索问题与创意，切换思考方式、保留分支，并通过续谈摘要接续讨论"
+  brand_color: "#397D78"
+  default_prompt: "Use $subaru-brainstorm to explore this question from different angles, defer evaluation, and develop the directions I want to continue."
+policy:
+  allow_implicit_invocation: true

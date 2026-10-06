@@ -1,6 +1,6 @@
 # subaru-skills
 
-中文优先的 [Agent Skills](https://agentskills.io/) 仓库，当前提供演示文稿制作能力。
+中文优先的 [Agent Skills](https://agentskills.io/) 仓库，提供演示文稿制作与头脑风暴能力。
 
 [English](README.en.md) · [变更记录](CHANGELOG.md) · [来源与许可](PROVENANCE.md)
 
@@ -9,6 +9,7 @@
 | Skill | 能力 | 文档 |
 |---|---|---|
 | `subaru-slides` | 从主题、资料或已有文档到可编辑 PPTX / HTML deck：内容结构化、风格选择、构建与交付质检 | [使用说明](skills/subaru-slides/README.md) · [SKILL.md](skills/subaru-slides/SKILL.md) |
+| `subaru-brainstorm` | 探索问题与创意、切换思考方式、保留分支，通过摘要续谈并整理成方案或实验 | [使用说明](skills/subaru-brainstorm/README.md) · [SKILL.md](skills/subaru-brainstorm/SKILL.md) |
 
 使用 [skills CLI](https://github.com/vercel-labs/skills) 安装：
 
@@ -16,6 +17,7 @@
 npx skills add qqc0821/subaru-skills                          # 装到当前项目
 npx skills add qqc0821/subaru-skills --global                 # 装到用户级 skill 目录
 npx skills add qqc0821/subaru-skills --skill subaru-slides    # 只装 subaru-slides
+npx skills add qqc0821/subaru-skills --skill subaru-brainstorm # 只装 subaru-brainstorm
 ~~~
 
 装好后直接交给宿主 Agent，例如：`用 $subaru-slides 把这份市场分析做成 10 页管理层汇报 PPT。`
@@ -33,6 +35,7 @@ npx skills add qqc0821/subaru-skills --skill subaru-slides    # 只装 subaru-sl
 make check      # 链接 / 一致性 / 资产 / 风格系统 / 可安装性（唯一必过门）
 make test       # 工具 smoke test 与单元测试
 make doctor     # 当前机器能力自检
+make eval-brainstorm # 对话证据与语义审阅闸门；缺少真实运行记录不会通过
 
 make validate PPTX=deck.pptx
 make render   PPTX=deck.pptx OUT=preview/

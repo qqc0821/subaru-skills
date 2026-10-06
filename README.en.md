@@ -1,6 +1,6 @@
 # subaru-skills
 
-A Chinese-first [Agent Skills](https://agentskills.io/) repository that currently provides presentation-building capability.
+A Chinese-first [Agent Skills](https://agentskills.io/) repository for presentation building and brainstorming.
 
 [中文](README.md) · [Changelog](CHANGELOG.md) · [Provenance and licensing](PROVENANCE.md)
 
@@ -9,6 +9,7 @@ A Chinese-first [Agent Skills](https://agentskills.io/) repository that currentl
 | Skill | Capability | Docs |
 |---|---|---|
 | `subaru-slides` | From a topic, source material, or existing document to an editable PPTX / HTML deck: content structuring, style selection, construction, and delivery QA | [Guide](skills/subaru-slides/README.en.md) · [SKILL.md](skills/subaru-slides/SKILL.md) |
+| `subaru-brainstorm` | Reframe questions, switch thinking methods, retain branches, resume from summaries, and develop proposals or experiments | [Guide](skills/subaru-brainstorm/README.en.md) · [SKILL.md](skills/subaru-brainstorm/SKILL.md) |
 
 Install with the [skills CLI](https://github.com/vercel-labs/skills):
 
@@ -16,6 +17,7 @@ Install with the [skills CLI](https://github.com/vercel-labs/skills):
 npx skills add qqc0821/subaru-skills                          # into the current project
 npx skills add qqc0821/subaru-skills --global                 # into the user-level skill directory
 npx skills add qqc0821/subaru-skills --skill subaru-slides    # only subaru-slides
+npx skills add qqc0821/subaru-skills --skill subaru-brainstorm # only subaru-brainstorm
 ~~~
 
 Then hand the task to your host Agent, for example: `Use $subaru-slides to turn this market analysis into a 10-slide executive presentation.`
@@ -33,6 +35,7 @@ Without the CLI, copy `skills/<name>/` into your Agent's skill directory.
 make check      # links / consistency / assets / style system / installability (the only mandatory gate)
 make test       # tool smoke tests and unit tests
 make doctor     # probe the current machine
+make eval-brainstorm # conversation evidence and semantic review gate; missing real runs cannot pass
 
 make validate PPTX=deck.pptx
 make render   PPTX=deck.pptx OUT=preview/

@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-style-router check-context-budget check-installability doctor baseline test eval eval-clean new-task hooks validate render montage lint-copy pixel-qa new-style style-router
+.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-style-router check-context-budget check-installability doctor baseline test eval eval-brainstorm eval-clean new-task hooks validate render montage lint-copy pixel-qa new-style style-router
 
 help:
 	@echo "subaru-skills harness"
@@ -9,6 +9,7 @@ help:
 	@echo "  make baseline  record current findings as known baseline"
 	@echo "  make test      compile tools and smoke-test doctor"
 	@echo "  make eval      run the eval harness and enforce coverage policy"
+	@echo "  make eval-brainstorm validate paired conversation evidence and semantic reviews"
 	@echo "  make eval-clean rebuild deterministic fixtures on a clean checkout, then enforce the clean policy"
 	@echo "  make new-task  scaffold task_plan/findings/progress from docs/templates/"
 	@echo "  make hooks     install the make check pre-commit hook"
@@ -62,6 +63,9 @@ test:
 
 eval:
 	@$(PYTHON) tools/run_evals.py
+
+eval-brainstorm:
+	@$(PYTHON) tools/check_brainstorm_evals.py
 
 eval-clean:
 	@$(PYTHON) tools/prepare_eval_artifacts.py --artifacts-dir evals/results/clean-artifacts

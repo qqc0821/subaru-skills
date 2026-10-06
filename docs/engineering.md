@@ -78,3 +78,16 @@ policy:
 - [设计基础](../schemas/design.foundation.schema.json)
 
 修改契约时同步检查校验器与相关测试。
+
+## 4. 对话 skill 与上下文预算
+
+`subaru-brainstorm` 基础运行仅需宿主对话能力；文件、搜索、图示等按任务探测并降级。
+当前不引入运行时脚本或第三方依赖，能力及会话协议在其 `SKILL.md` 与 references 维护。
+
+每个 skill 的典型读取路径和预算声明在 `tools/context-budgets.json`，由
+`check_context_budget.py` 在统一质量门中检查。新增 skill 必须声明预算；
+按需参考文件须在入口标明读取条件。slides 还保留其 preset、派生 router 的专项护栏。
+计量是字符估算，不代表宿主实际 tokenizer 用量；不把包总量当作每次必读成本。
+
+对话的行为效果使用真实 transcript 与语义审阅验证；包结构通过不代表创意效果通过。
+评测工具仅用 Python 标准库，依赖及记录契约见 [对话评测](../evals/brainstorm/README.md)。

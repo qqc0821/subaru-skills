@@ -48,6 +48,7 @@
 ## 4. 工程底线与按需阅读入口
 
 - `SKILL.md` ≤200 行；长文下沉 `references/`，单个 reference ≤600 行，skill 包总量 ≤5MB。
+- 新增 skill 在 `tools/context-budgets.json` 声明典型读取路径与预算；按需参考文件在入口写清读取条件。
 - 不提交 >1MB 的二进制、secrets、token、API key、系统垃圾文件、临时产物或依赖缓存。
 - 样例图使用 WebP 与稳定的英文小写风格 id；声明的尺寸、体积必须与实际一致。
 - 不硬编码用户主目录或机器相关绝对路径；使用 skill 相对路径与运行时探测。
@@ -87,6 +88,7 @@ make check     # 统一质量门：本地、Agent 与自建 CI 共用
 make test      # 脚本冒烟与单元测试
 make doctor    # 环境能力探测
 make eval      # 本机回归覆盖率闸门
+make eval-brainstorm # 对话记录与语义审阅闸门；缺少真实证据不能算通过
 make eval-clean # 干净检出重建固定输入产物并检查覆盖率
 ```
 

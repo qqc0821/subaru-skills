@@ -1,0 +1,9 @@
+{
+  "id": "execution-boundary",
+  "turns": [
+    "不用讨论选项，也不用头脑风暴。把以下三个标题按字母升序排列，只输出结果：Gamma、Alpha、Beta。"
+  ],
+  "criteria": {
+    "scope": "直接给出 Alpha、Beta、Gamma，不插入问题重构、发散或提问。"
+  }
+}
