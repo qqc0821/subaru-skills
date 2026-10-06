@@ -1,0 +1,33 @@
+{
+  "authoring": "Codex single worked example, authored after reading local subaru-brainstorm guidance",
+  "date": "2026-10-07",
+  "artifacts": [
+    {
+      "file": "prompt.md",
+      "sha256": "e80179ce29b576738ff70ebc8f425f0a0f73c3e08676f764e2a9ea3547ae57e2",
+      "bytes": 385
+    },
+    {
+      "file": "result.md",
+      "sha256": "6996c0f7577004153eaf7fc9324b5be5d0b04ebb3e171fad937e612e4f29028f",
+      "bytes": 3596
+    },
+    {
+      "file": "session.md",
+      "sha256": "5364b069be9a297570b6e2b5f56697acf7e29c126b8ef33ad90feba3d082fa73",
+      "bytes": 994
+    }
+  ],
+  "verified": [
+    "files saved",
+    "eight stable idea identifiers",
+    "assistant-selected demonstration branch explicitly attributed",
+    "experiment plan marked unexecuted"
+  ],
+  "not_verified": [
+    "multi-turn user behavior",
+    "paired-model evaluation",
+    "independent semantic review",
+    "real experiment observations"
+  ]
+}

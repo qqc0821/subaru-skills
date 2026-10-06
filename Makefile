@@ -1,8 +1,9 @@
 PYTHON ?= python3
 
-.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-style-router check-context-budget check-installability doctor baseline test eval eval-brainstorm eval-clean new-task hooks validate render montage lint-copy pixel-qa new-style style-router
+.PHONY: help check check-skills check-links check-consistency check-assets check-style-system check-style-router check-context-budget check-installability doctor baseline test eval eval-brainstorm eval-clean new-task hooks validate render montage lint-copy pixel-qa new-style style-router site check-site
 
 help:
+	@echo "  make site      build public static documentation to output/site/"
 	@echo "subaru-skills harness"
 	@echo "  make check     run all harness checks (shared quality-gate entry)"
 	@echo "  make doctor    environment capability probe"
@@ -103,3 +104,9 @@ style-router:
 montage:
 	@test -n "$(DIR)" || (echo "usage: make montage DIR=slides/ [OUT=file]"; exit 2)
 	@if command -v uv >/dev/null 2>&1; then uv run --quiet tools/make_montage.py --input-dir "$(DIR)" $(if $(OUT),--out "$(OUT)") || $(PYTHON) tools/make_montage.py --input-dir "$(DIR)" $(if $(OUT),--out "$(OUT)"); else $(PYTHON) tools/make_montage.py --input-dir "$(DIR)" $(if $(OUT),--out "$(OUT)"); fi
+
+site:
+	@$(PYTHON) tools/build_site.py
+
+check-site:
+	@$(PYTHON) tools/check_site.py --baseline tools/baseline.json

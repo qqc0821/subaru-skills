@@ -89,3 +89,9 @@ subaru-skills/
 案例、运行格式、重复次数与人工/模型/自评边界见 [brainstorm eval](../evals/brainstorm/README.md)。
 检查器不调用模型。缺真实运行或缺审阅时闸门失败，不以 synthetic 单元 fixture 补覆盖率。
 生成结果统一存入已有忽略目录 `evals/results/brainstorm/`，不得进入 skill 安装包或暂存区。
+
+## Public documentation site
+
+`make site` 使用 Python 标准库把 `site/content.json` 与样式、交互构建到忽略目录 `output/site/`。构建只复制原创公开案例，不依赖前端包、网络或宿主工具。`make check-site` 已接入统一 `make check`，在临时目录核对生成页面的本地链接、锚点、元信息、sitemap 与下载 hash；`make test` 包含缺资产、坏锚点、损坏下载与元信息的负向回归。它不检查搜索效果、外部链接或远端部署。
+
+案例的确定性重建在 `examples/build_decks.py`，使用 PEP 723 声明 `python-pptx>=1.0.0`（现有原生构建能力，不成为 skill 硬依赖）。两份成品与 WebP 预览各小于 1MB，作为有意维护的公开样例入库；原始渲染与构建站点留在 `output/`。重建后需重新渲染并更新 receipt 与预览，不能沿用旧视觉证据。

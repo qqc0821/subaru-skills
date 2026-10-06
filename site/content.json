@@ -1,0 +1,146 @@
+[
+  {
+    "id": "index",
+    "path": "index.html",
+    "lang": "zh-CN",
+    "title": "用 AI 做演示文稿，打开创意思路",
+    "description": "中文优先的 Agent Skills：制作可编辑 PPTX、探索产品创意。查看原创案例、安装步骤与能力边界。",
+    "body": "<p class=\"lead\">subaru-slides 把主题与资料整理成演示文稿；subaru-brainstorm 帮你展开不同方向，并将想法变成候选方案或实验。</p><p>先检查案例，再把同样的方法用到自己的材料上。</p><div class=\"command\"><pre><code>npx skills add qqc0821/subaru-skills --skill subaru-brainstorm</code></pre><button type=\"button\" data-copy aria-live=\"polite\">复制</button></div>\n<p class=\"muted\">先试无需第三方运行依赖的 brainstorm。slides 的第三方再分发授权尚待确认，请先查看<a href=\"license.html\">许可与发布状态</a>。</p>\n<div class=\"actions\"><a class=\"primary\" href=\"install.html\">开始使用</a><a href=\"cases.html\">查看三个完整案例</a></div>\n<figure><a href=\"cases.html#management-report\"><img class=\"preview\" src=\"{{assets}}management-report/preview.webp\" width=\"1280\" height=\"720\" alt=\"原创管理层汇报封面：先验证能否找到答案，再扩大知识库投入\"></a><figcaption>实际导出的 6 页 PPTX：原生文字、图表、表格与流程图。业务数据明确标为虚构。</figcaption></figure>\n<h2>从你的问题开始</h2><ul class=\"question-list\"><li><a href=\"editable-ppt.html\">怎样把资料做成可编辑中文 PPT？</a></li><li><a href=\"without-imagegen.html\">没有图片生成工具，还能做演示文稿吗？</a></li><li><a href=\"brainstorm.html\">AI 点子总是相似，怎样换一个思考入口？</a></li><li><a href=\"resume.html\">怎样保存一次讨论，下次从原来的分支继续？</a></li></ul>\n<h2>先完成一次小任务</h2><p>安装后用 5 条已知事实做 6 页汇报，或提出一个你还没想清楚的问题。检查 Agent 是否读到了 skill，再检查结果是否保留你的限制。</p><p>本页不承诺任意宿主、任意工具组合都已验证。<a href=\"install.html#compatibility\">查看本次实际运行环境</a>。</p>",
+    "nav": "首页"
+  },
+  {
+    "id": "index",
+    "path": "en/index.html",
+    "lang": "en",
+    "title": "Build presentations. Develop ideas.",
+    "description": "Chinese-first agent skills for editable PPTX and brainstorming. Inspect original cases, install a skill and understand its limits.",
+    "body": "<p class=\"lead\">subaru-slides turns topics and materials into presentations. subaru-brainstorm explores distinct directions and develops proposals or experiments.</p><p>Inspect the examples, then try the method with your own material.</p><div class=\"command\"><pre><code>npx skills add qqc0821/subaru-skills --skill subaru-brainstorm</code></pre><button type=\"button\" data-copy aria-live=\"polite\">Copy</button></div>\n<p class=\"muted\">Start with brainstorm, which needs no third-party runtime. Third-party redistribution permission for slides remains unresolved; read the <a href=\"license.html\">license and release status</a>.</p>\n<div class=\"actions\"><a class=\"primary\" href=\"install.html\">Get started</a><a href=\"cases.html\">Inspect three worked examples</a></div>\n<figure><a href=\"cases.html#management-report\"><img class=\"preview\" src=\"{{assets}}management-report/preview.webp\" width=\"1280\" height=\"720\" alt=\"Chinese management presentation cover proposing a small knowledge-library pilot\"></a><figcaption>An exported six-slide PPTX with native text, chart, table and diagram. Business data is explicitly fictional.</figcaption></figure>\n<h2>Start with your question</h2><ul class=\"question-list\"><li><a href=\"editable-ppt.html\">How do I turn material into an editable Chinese PPT?</a></li><li><a href=\"without-imagegen.html\">Can I make presentations without image generation?</a></li><li><a href=\"brainstorm.html\">How can I move beyond repetitive AI ideas?</a></li><li><a href=\"resume.html\">How do I save a discussion and resume the same branch?</a></li></ul>\n<h2>Complete one small task</h2><p>Try a six-slide presentation from five known facts, or bring one unresolved question. Check that the agent has loaded the skill and retained your constraints.</p><p>We do not claim all hosts or tool combinations have been tested. <a href=\"install.html#compatibility\">See the actual authoring environment</a>.</p>",
+    "nav": "Home"
+  },
+  {
+    "id": "install",
+    "path": "install.html",
+    "lang": "zh-CN",
+    "title": "怎样安装并完成第一次使用？",
+    "description": "subaru-skills 安装命令、自然语言调用、实际验证环境、更新方式与安装问题排查。",
+    "body": "<p>选择一个 skill，安装后让宿主加载它；不必一次安装整个仓库。</p><h2>安装 brainstorm</h2><div class=\"command\"><pre><code>npx skills add qqc0821/subaru-skills --skill subaru-brainstorm</code></pre><button type=\"button\" data-copy aria-live=\"polite\">复制</button></div>\n<blockquote>用 $subaru-brainstorm 探索团队知识库还能有哪些用途。先给 8 个不同机制的方向，暂时不要排名。</blockquote>\n<h2>使用 slides 前</h2><p>先检查<a href=\"license.html\">第三方来源的许可状态</a>。需要 Node.js / npm 才能运行 skills CLI；没有 CLI 时，可把对应 skill 文件夹放进宿主支持的 skill 目录。具体加载方式以宿主文档为准。</p><div class=\"command\"><pre><code>npx skills add qqc0821/subaru-skills --skill subaru-slides</code></pre><button type=\"button\" data-copy aria-live=\"polite\">复制</button></div>\n<blockquote>用 $subaru-slides 把我的资料做成 6 页中文汇报。Full Auto，优先可编辑 PPTX，保留数据来源；缺工具时说明替代方案。</blockquote>\n<h2 id=\"compatibility\">本次实际运行环境</h2><div class=\"table-wrap\"><table><tr><th>范围</th><th>已验证</th><th>未验证</th></tr><tr><td>案例编写</td><td>本次 Codex 会话直接读取本地 skill 指引并产出文件</td><td>其他宿主的加载、自动选中与调用</td></tr><tr><td>原生 PPTX</td><td>python-pptx 构建与复读；LibreOffice 渲染</td><td>PowerPoint、Keynote、Google Slides 实机与跨机字体</td></tr><tr><td>CLI</td><td>文档提供安装命令</td><td>本任务未做临时宿主中的端到端安装更新</td></tr></table></div>\n<h2>Agent 没有使用 skill 时</h2><ol><li>检查宿主是否识别安装目录。</li><li>按宿主要求重新加载或开启新会话。</li><li>显式调用 $subaru-slides 或 $subaru-brainstorm；不支持该语法时，要求 Agent 使用对应 skill。</li><li>检查名称与文件内容是否正确，反馈时附宿主、命令与错误信息，不附密钥。</li></ol>\n<h2>更新与版本</h2><div class=\"command\"><pre><code>npx skills update subaru-brainstorm -p</code></pre><button type=\"button\" data-copy aria-live=\"polite\">复制</button></div><p>在原项目目录更新；全局安装使用 -g。更新前备份自定义内容。版本读取各包 SKILL.md 的 metadata.version；默认安装跟随 main，不等于稳定版。<a href=\"{{repo}}/blob/main/docs/installation.md\">完整更新与固定 tag 说明</a>。</p>",
+    "nav": "安装与兼容性"
+  },
+  {
+    "id": "install",
+    "path": "en/install.html",
+    "lang": "en",
+    "title": "Install a skill and complete a first task",
+    "description": "Install commands, sample prompts, actual authoring environment, updates and first-use troubleshooting.",
+    "body": "<p>Select one skill, install it, then have your host load it. You do not need the whole repository.</p><h2>Install brainstorm</h2><div class=\"command\"><pre><code>npx skills add qqc0821/subaru-skills --skill subaru-brainstorm</code></pre><button type=\"button\" data-copy aria-live=\"polite\">Copy</button></div>\n<blockquote>Use $subaru-brainstorm to explore new uses for a team knowledge library. Give eight directions with different mechanisms; do not rank them yet.</blockquote>\n<h2>Before using slides</h2><p>Read the <a href=\"license.html\">third-party license status</a>. The skills CLI needs Node.js / npm. Without it, place the desired skill folder in a directory your host supports; consult that host's loading instructions.</p><div class=\"command\"><pre><code>npx skills add qqc0821/subaru-skills --skill subaru-slides</code></pre><button type=\"button\" data-copy aria-live=\"polite\">Copy</button></div>\n<blockquote>Use $subaru-slides to turn my material into six Chinese slides. Full Auto, prefer editable PPTX and keep sources. Explain alternatives when tools are missing.</blockquote>\n<h2 id=\"compatibility\">Actual authoring environment</h2><div class=\"table-wrap\"><table><tr><th>Scope</th><th>Verified</th><th>Unverified</th></tr><tr><td>Authoring</td><td>This Codex session directly read local skill guidance and produced files</td><td>Loading, automatic selection and invocation in other hosts</td></tr><tr><td>Native PPTX</td><td>python-pptx export/re-import; LibreOffice rendering</td><td>PowerPoint, Keynote, Google Slides and recipient fonts</td></tr><tr><td>CLI</td><td>Installation commands documented</td><td>No end-to-end install/update in a temporary host in this task</td></tr></table></div>\n<h2>If your agent does not use the skill</h2><ol><li>Check whether the host recognizes the installation directory.</li><li>Reload or start a new session as required.</li><li>Invoke $subaru-slides / $subaru-brainstorm explicitly; otherwise request the named skill in plain language.</li><li>When reporting a failure, include the host, command and error. Exclude credentials.</li></ol>\n<h2>Updates and versions</h2><div class=\"command\"><pre><code>npx skills update subaru-brainstorm -p</code></pre><button type=\"button\" data-copy aria-live=\"polite\">Copy</button></div><p>Update from the original project; use -g for global installations. Back up local customizations first. Package versions come from SKILL.md metadata.version; main is development content, not a stable release. <a href=\"{{repo}}/blob/main/docs/installation.en.md\">Full update and fixed-tag instructions</a>.</p>",
+    "nav": "Install & compatibility"
+  },
+  {
+    "id": "editable-ppt",
+    "path": "editable-ppt.html",
+    "lang": "zh-CN",
+    "title": "怎样制作可编辑中文 PPT？",
+    "description": "区分原生可编辑对象与整页图片；提供调用提示、原生表格图表案例和中文字体边界。",
+    "body": "<p class=\"lead\">指定“文字、表格、图表与流程图保持原生可编辑”，并让 Agent 先检查是否有原生构建能力。</p><h2>明确你要编辑什么</h2><div class=\"table-wrap\"><table><tr><th>内容</th><th>原生 PPTX</th><th>整页图片型 PPTX</th></tr><tr><td>文字</td><td>可选中修改</td><td>图片中的字通常不能直接修改</td></tr><tr><td>图表与表格</td><td>可修改对象；图表需保留数据</td><td>只能替换或裁切图片</td></tr><tr><td>照片与插图</td><td>可以是位图，说明边界</td><td>与其他内容合在一张图中</td></tr></table></div><h2>可以直接使用的要求</h2><blockquote>用 $subaru-slides 将以下材料做成 6 页中文管理层汇报。优先原生可编辑 PPTX；文字、表格、图表与流程图用原生对象。仅使用提供的数据，保留来源和备注；没有原生构建器时先说明。</blockquote><h2>检查实际产物</h2><p>下载<a href=\"cases.html#management-report\">管理层汇报案例</a>，检查图表、表格、流程图和备注。结构检查证明对象存在；仍需在目标应用中检查编辑操作。</p><h2>中文字体边界</h2><p>本例使用 PingFang SC，字体未嵌入。本机 LibreOffice 渲染通过不代表收件人的设备有同样字体。换成已授权、可用的字体后重新渲染；不要把字体声明当作字体已经加载。</p>",
+    "nav": "可编辑中文 PPT"
+  },
+  {
+    "id": "editable-ppt",
+    "path": "en/editable-ppt.html",
+    "lang": "en",
+    "title": "How do I make an editable Chinese PPT?",
+    "description": "Distinguish native editable objects from slide images, with a prompt, native examples and Chinese font limits.",
+    "body": "<p class=\"lead\">Ask for native editable text, tables, charts and diagrams, and have the agent check for a native builder first.</p><h2>Specify what must be editable</h2><div class=\"table-wrap\"><table><tr><th>Content</th><th>Native PPTX</th><th>Full-slide image PPTX</th></tr><tr><td>Text</td><td>Select and edit text</td><td>Text within the image is usually not directly editable</td></tr><tr><td>Charts and tables</td><td>Edit native objects; charts must retain data</td><td>Replace or crop the image</td></tr><tr><td>Photos and illustrations</td><td>May remain raster; disclose the boundary</td><td>Combined with the rest of the slide</td></tr></table></div><h2>A prompt to reuse</h2><blockquote>Use $subaru-slides for six Chinese executive slides from the following material. Prefer native editable PPTX. Use native text, tables, charts and diagrams. Use only supplied data; keep sources and notes. Explain if a native builder is unavailable.</blockquote><h2>Inspect the actual result</h2><p>Download the <a href=\"cases.html#management-report\">management example</a> and inspect its chart, table, diagram and notes. Structural checks establish object presence; editing still needs verification in the target application.</p><h2>Chinese font limits</h2><p>The example uses PingFang SC without font embedding. Local LibreOffice rendering does not establish font availability on a recipient's machine. Substitute a licensed available font and render again. A font declaration is not proof that it loaded.</p>",
+    "nav": "Editable Chinese PPT"
+  },
+  {
+    "id": "without-imagegen",
+    "path": "without-imagegen.html",
+    "lang": "zh-CN",
+    "title": "没有生图工具还能做演示文稿吗？",
+    "description": "没有生图能力时使用原生文字、图表、表格与流程图；解释 HTML 与图片型 PPTX 的边界。",
+    "body": "<p class=\"lead\">可以。生图是可选增强；有原生构建器时，可以使用原生文字、图表、表格与流程图完成演示文稿。</p><h2>先确认可用能力</h2><p>让 Agent 按 skill 指引探测构建、渲染与字体能力。缺少生图时，省略场景插图并重排页面；不能把“省略插图”说成已经生成了插图。</p><blockquote>用 $subaru-slides 做 6 页技术分享。不用 AI 配图，架构图与流程图用原生对象。说明当前能导出的格式，以及没有完成的检查。</blockquote><h2>本次实际案例</h2><p><a href=\"cases.html#rag-sharing\">RAG 技术分享</a>完全没有使用生成图片。技术关系由原生矩形、文字和连接线表达。</p><h2>如果原生构建器也缺失</h2><p>Agent 应说明是否能提供 HTML deck，或只有图片型 PPTX 兜底。HTML 文件可编辑不等于已经导出 PPTX；图片装配也不会恢复原生文字。具体路径规则以 <a href=\"{{repo}}/blob/main/skills/subaru-slides/SKILL.md\">SKILL.md</a> 为准。</p>",
+    "nav": "没有生图工具"
+  },
+  {
+    "id": "without-imagegen",
+    "path": "en/without-imagegen.html",
+    "lang": "en",
+    "title": "Can I make slides without image generation?",
+    "description": "Use native text, charts, tables and diagrams without image generation; understand HTML and image-only limits.",
+    "body": "<p class=\"lead\">Yes. Image generation is optional. With a native builder, text, charts, tables and diagrams can form the presentation.</p><h2>Check available capabilities first</h2><p>Have the agent probe construction, rendering and fonts using the skill guidance. Without image generation, omit scene illustrations and rearrange the page. Omission must not be reported as successful generation.</p><blockquote>Use $subaru-slides for six technical slides. Do not use AI images. Make architecture and flow diagrams native objects. State available exports and checks not performed.</blockquote><h2>An actual example</h2><p>The <a href=\"cases.html#rag-sharing\">RAG presentation</a> uses no generated images. Native rectangles, text and connectors explain the relationships.</p><h2>If there is no native builder either</h2><p>The agent should explain whether HTML or an image-only PPTX is available. Editable HTML does not establish PPTX export; image assembly does not recover native text. The runtime source of truth is <a href=\"{{repo}}/blob/main/skills/subaru-slides/SKILL.md\">SKILL.md</a>.</p>",
+    "nav": "Without image generation"
+  },
+  {
+    "id": "brainstorm",
+    "path": "brainstorm.html",
+    "lang": "zh-CN",
+    "title": "AI 点子总是相似，怎样换入口？",
+    "description": "使用 subaru-brainstorm 拆假设、改变机制、保留分支，查看八个方向到实验卡的原创示例。",
+    "body": "<p class=\"lead\">指出已有想法共同依赖的条件，再要求换一个思考动作。增加数量本身不证明方向变得不同。</p><h2>从具体重复开始</h2><blockquote>用 $subaru-brainstorm 继续。现有方案都依赖成员主动上传资料；拆开这个假设，再给 8 个不同机制的方向。先不评价，也不要只是换名字。</blockquote><h2>保留能继续的方向</h2><p>引用想法编号，例如“沿 I07 展开一次具体交互，I02 暂存”。归类不会自动成为排名；需要比较时再说清目标和条件。</p><h2>从方向到小实验</h2><p><a href=\"cases.html#knowledge-library\">知识库用途案例</a>保存八个想法、一个助手选择的演示分支、三人实验卡与续谈摘要。没有补造用户选择或实验结果。</p><h2>效果边界</h2><p>这是思考与协作方法，不承诺创造力提升。示例只是一次实际编写的产物，不是独立评审或配对模型效果证据。</p>",
+    "nav": "突破重复点子"
+  },
+  {
+    "id": "brainstorm",
+    "path": "en/brainstorm.html",
+    "lang": "en",
+    "title": "How do I move beyond repetitive AI ideas?",
+    "description": "Use subaru-brainstorm to question assumptions, vary mechanisms and retain branches; inspect a worked experiment example.",
+    "body": "<p class=\"lead\">Name the shared dependency behind existing ideas, then request a different thinking action. More ideas alone do not establish greater variety.</p><h2>Identify the repetition</h2><blockquote>Continue with $subaru-brainstorm. These ideas all require members to upload material voluntarily. Question that assumption and give eight different mechanisms, without ranking or merely renaming them.</blockquote><h2>Retain branches you can revisit</h2><p>Refer to stable identifiers: “Expand one interaction for I07; keep I02 for later.” Grouping does not automatically rank ideas. Request comparison with explicit goals and conditions when needed.</p><h2>From direction to a small experiment</h2><p>The <a href=\"cases.html#knowledge-library\">knowledge-library example</a> retains eight ideas, a branch selected by the assistant for demonstration, a three-person experiment card and a resume snapshot. No user choices or observations were invented.</p><h2>Evidence limits</h2><p>This is a thinking and collaboration method, not a promise of increased creativity. The saved example is one authored result, not independent review or paired-model evidence.</p>",
+    "nav": "Beyond repetitive ideas"
+  },
+  {
+    "id": "resume",
+    "path": "resume.html",
+    "lang": "zh-CN",
+    "title": "怎样保存讨论并接着展开？",
+    "description": "保留目标、限制、稳定编号、评价约定与未决事项，通过可携带摘要跨会话续谈。",
+    "body": "<p class=\"lead\">让 Agent 导出续谈摘要。下一次提供该摘要，并说明从哪个分支继续；不用依赖宿主拥有永久记忆。</p><h2>暂停时</h2><blockquote>用 $subaru-brainstorm 保存当前讨论摘要：目标、限制、先别评价的约定、稳定编号、当前分支、其他保留路线和未知。不要补造我没有作出的选择。</blockquote><h2>恢复时</h2><blockquote>根据下面摘要继续。目标不变，先展开 B01 没有人接续的情况。保留其他路线，暂时不排名。</blockquote><h2>检查摘要</h2><p>检查编号是否保持原指向、助手建议是否被误写成用户决定、实验设计是否被误写成观察。缺失信息应保持未知。</p><p>有文件工具时可以保存到自己的项目目录；没有时复制文本。<a href=\"{{assets}}knowledge-library/session.md\">查看实际快照文件</a>。</p>",
+    "nav": "保存与续谈"
+  },
+  {
+    "id": "resume",
+    "path": "en/resume.html",
+    "lang": "en",
+    "title": "How do I save and resume a discussion?",
+    "description": "Carry goals, constraints, stable identifiers, evaluation agreement and unknowns into the next session.",
+    "body": "<p class=\"lead\">Export a resume summary. Provide it in the next session and name the branch to continue. Permanent host memory is not required.</p><h2>When pausing</h2><blockquote>Use $subaru-brainstorm to save the goal, constraints, deferred evaluation agreement, stable identifiers, active branch, retained routes and unknowns. Do not invent choices I have not made.</blockquote><h2>When resuming</h2><blockquote>Continue from this summary. Keep the goal and other routes. First expand what happens when nobody continues B01; do not rank ideas yet.</blockquote><h2>Check the summary</h2><p>Check that identifiers retain their meaning, assistant suggestions are not recorded as user choices, and experiment plans are not recorded as observations. Missing information stays unknown.</p><p>Save in your own project when file tools exist; otherwise copy the text. <a href=\"{{assets}}knowledge-library/session.md\">Inspect an actual snapshot</a>.</p>",
+    "nav": "Save & resume"
+  },
+  {
+    "id": "cases",
+    "path": "cases.html",
+    "lang": "zh-CN",
+    "title": "三个完整案例：从输入到可检查的产物",
+    "description": "下载两份可编辑 PPTX，查看头脑风暴结果、输入、调用提示、续谈摘要与验证边界。",
+    "body": "<p class=\"lead\">可以下载、检查和复用的原创材料。场景与产物类型写在每个案例旁边，不将演示数据当成真实客户结果。</p><section class=\"case\" id=\"management-report\"><h2>管理层汇报：知识库两周试点</h2><p>6 页 / 8 分钟。虚构业务场景，含原生图表、表格、流程图和备注。</p><figure><img class=\"preview\" loading=\"lazy\" src=\"{{assets}}management-report/preview.webp\" width=\"1280\" height=\"720\" alt=\"管理层汇报：知识库两周试点的实际 PPTX 封面\"><figcaption>来自本次最终 PPTX 的 LibreOffice 渲染。</figcaption></figure><div class=\"actions\"><a class=\"primary\" href=\"{{assets}}management-report/deck.pptx\" download>下载可编辑 PPTX</a><a href=\"{{assets}}management-report/gallery.webp\">查看六页总览</a></div><p><a href=\"{{assets}}management-report/source.json\">输入与逐页内容</a> · <a href=\"{{assets}}management-report/prompt.md\">调用提示</a> · <a href=\"{{assets}}management-report/receipt.json\">验证记录</a></p><p class=\"muted\">字体未嵌入；PowerPoint、Keynote、Google Slides 与跨机字体未验证。案例作者是本次 Codex 会话，按本地 skill 指引直接编写；不是自动流水线或用户满意度证明。</p></section><section class=\"case\" id=\"rag-sharing\"><h2>技术分享：从检索到有来源的回答</h2><p>6 页 / 10 分钟。原创教学材料，无生图；未运行 RAG 服务或性能基准。</p><figure><img class=\"preview\" loading=\"lazy\" src=\"{{assets}}rag-sharing/preview.webp\" width=\"1280\" height=\"720\" alt=\"技术分享：从检索到有来源的回答的实际 PPTX 封面\"><figcaption>来自本次最终 PPTX 的 LibreOffice 渲染。</figcaption></figure><div class=\"actions\"><a class=\"primary\" href=\"{{assets}}rag-sharing/deck.pptx\" download>下载可编辑 PPTX</a><a href=\"{{assets}}rag-sharing/gallery.webp\">查看六页总览</a></div><p><a href=\"{{assets}}rag-sharing/source.json\">输入与逐页内容</a> · <a href=\"{{assets}}rag-sharing/prompt.md\">调用提示</a> · <a href=\"{{assets}}rag-sharing/receipt.json\">验证记录</a></p><p class=\"muted\">字体未嵌入；PowerPoint、Keynote、Google Slides 与跨机字体未验证。案例作者是本次 Codex 会话，按本地 skill 指引直接编写；不是自动流水线或用户满意度证明。</p></section><section id=\"knowledge-library\"><h2>创意探索：知识库还能做什么？</h2><p>一个假设场景，八个不同机制的想法，一个演示展开分支与三人实验卡。助手选择了演示分支；没有用户多轮对话、访谈或实际实验。</p><div class=\"actions\"><a class=\"primary\" href=\"{{assets}}knowledge-library/result.md\">阅读完整产物</a><a href=\"{{assets}}knowledge-library/session.md\">下载续谈摘要</a></div><p><a href=\"{{assets}}knowledge-library/prompt.md\">输入提示</a> · <a href=\"{{assets}}knowledge-library/receipt.json\">产物记录</a></p></section><h2>复现与许可</h2><p>输入与调用提示可以交给自己的 Agent；结果可能不同。确定性重建脚本仅重建已编写的两份 PPTX，不运行模型：<a href=\"{{repo}}/blob/main/examples/build_decks.py\">build_decks.py</a>。它需要 python-pptx，可使用 uv 解析声明依赖。本站案例为原创内容，适用仓库 MIT；不改变 slides 包的第三方许可边界。</p>",
+    "nav": "案例与下载"
+  },
+  {
+    "id": "cases",
+    "path": "en/cases.html",
+    "lang": "en",
+    "title": "Three worked examples: from input to inspectable output",
+    "description": "Download two editable PPTX files and inspect brainstorming output, inputs, prompts, snapshots and verification limits.",
+    "body": "<p class=\"lead\">Original material you can download, inspect and reuse. Scenarios and evidence types are explicit; demonstration data is not customer evidence.</p><section class=\"case\" id=\"management-report\"><h2>Management report: a knowledge-library pilot</h2><p>Six slides / eight minutes. Fictional business scenario, with native chart, table, diagram and notes.</p><figure><img class=\"preview\" loading=\"lazy\" src=\"{{assets}}management-report/preview.webp\" width=\"1280\" height=\"720\" alt=\"Actual PPTX cover for Management report: a knowledge-library pilot\"><figcaption>LibreOffice rendering of the final PPTX.</figcaption></figure><div class=\"actions\"><a class=\"primary\" href=\"{{assets}}management-report/deck.pptx\" download>Download editable PPTX</a><a href=\"{{assets}}management-report/gallery.webp\">View all six slides</a></div><p><a href=\"{{assets}}management-report/source.json\">Input and slide content</a> · <a href=\"{{assets}}management-report/prompt.md\">Prompt</a> · <a href=\"{{assets}}management-report/receipt.json\">Verification receipt</a></p><p class=\"muted\">Fonts are not embedded. PowerPoint, Keynote, Google Slides and recipient fonts were not tested. Authored directly in this Codex session using local skill guidance; not proof of automated execution or user satisfaction.</p></section><section class=\"case\" id=\"rag-sharing\"><h2>Technical sharing: RAG and sources</h2><p>Six slides / ten minutes. Original teaching material without generated images; no RAG service or benchmark was run.</p><figure><img class=\"preview\" loading=\"lazy\" src=\"{{assets}}rag-sharing/preview.webp\" width=\"1280\" height=\"720\" alt=\"Actual PPTX cover for Technical sharing: RAG and sources\"><figcaption>LibreOffice rendering of the final PPTX.</figcaption></figure><div class=\"actions\"><a class=\"primary\" href=\"{{assets}}rag-sharing/deck.pptx\" download>Download editable PPTX</a><a href=\"{{assets}}rag-sharing/gallery.webp\">View all six slides</a></div><p><a href=\"{{assets}}rag-sharing/source.json\">Input and slide content</a> · <a href=\"{{assets}}rag-sharing/prompt.md\">Prompt</a> · <a href=\"{{assets}}rag-sharing/receipt.json\">Verification receipt</a></p><p class=\"muted\">Fonts are not embedded. PowerPoint, Keynote, Google Slides and recipient fonts were not tested. Authored directly in this Codex session using local skill guidance; not proof of automated execution or user satisfaction.</p></section><section id=\"knowledge-library\"><h2>Idea exploration: new uses for a knowledge library</h2><p>One hypothetical scenario, eight mechanisms, one demonstration branch and a three-person experiment card. The assistant selected the branch; there was no multi-turn user interview or executed experiment.</p><div class=\"actions\"><a class=\"primary\" href=\"{{assets}}knowledge-library/result.md\">Read the saved result</a><a href=\"{{assets}}knowledge-library/session.md\">Download the resume snapshot</a></div><p><a href=\"{{assets}}knowledge-library/prompt.md\">Input prompt</a> · <a href=\"{{assets}}knowledge-library/receipt.json\">Artifact receipt</a></p></section><h2>Reproduction and license</h2><p>Give the input and prompt to your own agent; results may differ. The deterministic script rebuilds the two authored PPTX files, not model behavior: <a href=\"{{repo}}/blob/main/examples/build_decks.py\">build_decks.py</a>. It needs python-pptx; uv can resolve its declared dependency. These original cases use the repository MIT license and do not change the third-party license boundary of the slides package.</p>",
+    "nav": "Examples & downloads"
+  },
+  {
+    "id": "license",
+    "path": "license.html",
+    "lang": "zh-CN",
+    "title": "许可与发布状态",
+    "description": "原创内容与第三方来源的许可边界、当前开发版本、稳定发布所需证据。",
+    "body": "<p class=\"lead\">原创案例和 subaru-brainstorm 适用仓库 MIT。subaru-slides 含第三方来源内容，其再分发授权仍待确认。</p><h2>许可按内容区分</h2><p><a href=\"{{repo}}/blob/main/LICENSE\">根 MIT LICENSE</a>覆盖仓库原创内容，不能替第三方复制内容授予许可。<a href=\"{{repo}}/blob/main/PROVENANCE.md\">PROVENANCE.md</a>记录 slides 上游审计基线没有根 LICENSE，以及风格样例图的许可边界。</p><p>本站的新案例、代码和预览均为原创；没有打包第三方 PDF、截图、logo 或字体。它们的公开展示不代表 slides 包已解决授权问题。</p><h2>当前发布状态</h2><p>2026-10-07 只读核查远端 tag 列表为空；本次没有创建 Release 或稳定 tag。当前包版本带开发预发布标记。发布状态以后以 <a href=\"{{repo}}/releases\">GitHub Releases</a> 的实际记录为准。</p><h2>稳定发布前</h2><ul><li>slides 第三方内容取得授权，或由维护者确认后替换、移除并检查引用。</li><li>完成目标宿主安装、加载与更新的端到端验证。</li><li>记录版本、发布范围、测试结果与未验证能力。</li><li>经授权创建不可变 tag 和 Release，再提供固定 tag 命令。</li></ul><p>单次案例和结构检查不等于通用质量证明。Brainstorm 的配对模型证据与跨机 PPTX 兼容性仍未完成。</p>",
+    "nav": "许可与发布"
+  },
+  {
+    "id": "license",
+    "path": "en/license.html",
+    "lang": "en",
+    "title": "License and release status",
+    "description": "License boundaries for original and third-party content, development versions and stable-release readiness.",
+    "body": "<p class=\"lead\">Original cases and subaru-brainstorm use the repository MIT license. Redistribution permission for third-party content in subaru-slides remains unresolved.</p><h2>Content-specific licensing</h2><p>The <a href=\"{{repo}}/blob/main/LICENSE\">root MIT LICENSE</a> covers original content; it cannot grant rights to copied third-party content. <a href=\"{{repo}}/blob/main/PROVENANCE.md\">PROVENANCE.md</a> records the missing upstream root license at the slides audit baseline and sample-image boundaries.</p><p>New cases, code and previews on this site are original. No third-party PDF, screenshot, logo or font is bundled. Publishing these cases does not resolve the slides package's authorization gap.</p><h2>Release status</h2><p>A read-only remote tag check on 2026-10-07 returned no tags. This task created no Release or stable tag. Package versions carry development suffixes. Future status should be checked against actual <a href=\"{{repo}}/releases\">GitHub Releases</a>.</p><h2>Before a stable release</h2><ul><li>Obtain slides redistribution permission, or have maintainers confirm replacement/removal and check references.</li><li>Verify end-to-end installation, loading and updating in target hosts.</li><li>Record versions, release scope, checks and unverified capabilities.</li><li>Create an immutable tag and Release with authorization, then document the fixed-tag command.</li></ul><p>Single examples and structure checks do not prove general quality. Paired brainstorm evidence and cross-machine PPTX compatibility remain incomplete.</p>",
+    "nav": "License & releases"
+  }
+]

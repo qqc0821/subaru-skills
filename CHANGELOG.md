@@ -2,7 +2,16 @@
 
 本文件记录 `subaru-skills` 的版本变更。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+
 ## Unreleased
+
+### 项目发现与使用入口（2026-10-07）
+
+- 重写中英文首页，突出第一次使用、实际产物与证据边界。
+- 新增两份原创可编辑 PPTX 和一份创意探索产物，附输入、预览与 receipt。
+- 新增零第三方依赖的双语静态文档站与手动 GitHub Pages 工作流。
+- 统一质量门增加站内链接、锚点、元信息、sitemap 与下载 hash 检查，并补充负向回归。
+- 保留 slides 第三方授权、远端部署、端到端安装与发现效果的待验证状态。
 
 ### 新增
 

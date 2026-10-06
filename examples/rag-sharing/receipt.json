@@ -1,0 +1,35 @@
+{
+  "file": "deck.pptx",
+  "sha256": "8343a45aa0512cc996af0c8f4f01095fc2315e5b3a8281eab184d3e492f3e596",
+  "bytes": 49702,
+  "slides": 6,
+  "native_tables": 1,
+  "native_charts": 0,
+  "native_text_shapes": 56,
+  "notes": 6,
+  "font": "PingFang SC",
+  "font_embedded": false,
+  "builder": "python-pptx",
+  "authoring": "Codex single worked run using local subaru-slides guidance",
+  "data_boundary": "原创教学材料；没有运行 RAG 系统或性能基准。示例问题与政策内容为虚构。参考 Microsoft RAG 架构指南，仅概括通用模式。",
+  "verified": [
+    "export and re-import",
+    "native object counts",
+    "LibreOffice final PPTX to PDF and six PNGs",
+    "Full-size visual review of all six final pages",
+    "validate_pptx: 0 errors / 0 warnings"
+  ],
+  "not_verified": [
+    "PowerPoint",
+    "Keynote",
+    "Google Slides",
+    "recipient fonts",
+    "independent design review"
+  ],
+  "rendering_boundary": "Local fontconfig required explicit system font directories and writable cache. Fonts remain unembedded.",
+  "rendered_slides": 6,
+  "pixel_qa": {
+    "status": "heuristic warnings manually reviewed",
+    "boundary": "Detector flagged intentional separate text lines and table fills; no unintended clipping, numeric wrapping or overlap observed in full-size review."
+  }
+}

@@ -1,76 +1,69 @@
 # subaru-skills
 
-A Chinese-first [Agent Skills](https://agentskills.io/) repository for presentation building and brainstorming.
+Chinese-first [Agent Skills](https://agentskills.io/) for presentations and idea exploration. Start with your own material or question and produce something you can inspect and develop further.
 
-[中文](README.md) · [Changelog](CHANGELOG.md) · [Provenance and licensing](PROVENANCE.md)
+[中文](README.md) · [Three worked examples](examples/README.en.md) · [Installation and updates](docs/installation.en.md) · [Provenance and licensing](PROVENANCE.md)
 
-## Skills in this repository
+![Actual cover of the original management presentation proposing a small knowledge-library pilot](examples/management-report/preview.webp)
 
-| Skill | Capability | Docs |
+An original six-slide example with native chart, table and diagram. Business data is explicitly fictional. [Download PPTX](examples/management-report/deck.pptx) · [Input and verification limits](examples/management-report/README.md).
+
+## Complete one small task first
+
+Start with brainstorm, which needs no third-party runtime:
+
+~~~bash
+npx skills add qqc0821/subaru-skills --skill subaru-brainstorm
+~~~
+
+> Use $subaru-brainstorm to explore new uses for a team knowledge library. Give eight different mechanisms; do not rank them yet.
+
+Reload the skill or start a new session as required by your host. If `$skill-name` syntax is unavailable, request the named skill in plain language. Without the CLI, place `skills/<name>/` in a directory supported by your host.
+
+Third-party redistribution permission for `subaru-slides` remains unresolved; read [PROVENANCE.md](PROVENANCE.md) first. After checking the applicable license, install it separately:
+
+~~~bash
+npx skills add qqc0821/subaru-skills --skill subaru-slides
+~~~
+
+> Use $subaru-slides to turn this material into six Chinese executive slides. Full Auto, prefer editable PPTX and retain sources and notes. Explain alternatives when tools are missing.
+
+## Choose a skill for the job
+
+| Your job | Skill | Entry |
 |---|---|---|
-| `subaru-slides` | From a topic, source material, or existing document to an editable PPTX / HTML deck: content structuring, style selection, construction, and delivery QA | [Guide](skills/subaru-slides/README.en.md) · [SKILL.md](skills/subaru-slides/SKILL.md) |
-| `subaru-brainstorm` | Reframe questions, switch thinking methods, retain branches, resume from summaries, and develop proposals or experiments | [Guide](skills/subaru-brainstorm/README.en.md) · [SKILL.md](skills/subaru-brainstorm/SKILL.md) |
+| Turn topics or documents into reports, lessons or technical presentations | `subaru-slides` | [Guide](skills/subaru-slides/README.en.md) · [Worked case](examples/rag-sharing/README.md) |
+| Explore options, move beyond repetitive ideas, develop proposals or resume discussions | `subaru-brainstorm` | [Guide](skills/subaru-brainstorm/README.en.md) · [Saved result](examples/knowledge-library/result.md) |
 
-Install with the [skills CLI](https://github.com/vercel-labs/skills):
+Prefer native objects for text, tables, charts and diagrams that must be edited. Missing native construction triggers an explained fallback; image-only PPTX does not restore native text. Image generation is optional. Each package's `SKILL.md` owns runtime behavior.
 
-~~~bash
-npx skills add qqc0821/subaru-skills                          # into the current project
-npx skills add qqc0821/subaru-skills --global                 # into the user-level skill directory
-npx skills add qqc0821/subaru-skills --skill subaru-slides    # only subaru-slides
-npx skills add qqc0821/subaru-skills --skill subaru-brainstorm # only subaru-brainstorm
-~~~
+## Inspect inputs and results
 
-Then hand the task to your host Agent, for example: `Use $subaru-slides to turn this market analysis into a 10-slide executive presentation.`
+| Example | Actual output | Evidence limit |
+|---|---|---|
+| [Management report: a knowledge-library pilot](examples/management-report/README.md) | Six-slide PPTX, chart, table, diagram and notes | Original fictional scenario; no customer or business outcome evidence |
+| [Technical sharing: RAG and sources](examples/rag-sharing/README.md) | Six-slide PPTX, two flows, evaluation checklist and notes | Original teaching material; no RAG service or benchmark run |
+| [Idea exploration: knowledge-library uses](examples/knowledge-library/README.md) | Eight mechanisms, a branch, experiment card and resume summary | One assistant-authored result; no multi-turn user interview or executed experiment |
 
-Without the CLI, copy `skills/<name>/` into your Agent's skill directory.
+The decks were authored directly in this Codex session using local skill guidance, built with python-pptx and rendered slide by slide with LibreOffice. Fonts are not embedded. PowerPoint, Keynote, Google Slides and recipient fonts were not tested. These cases do not establish automatic loading or execution in every host; end-to-end CLI installation/update remains unverified.
 
-## Versions, updates, and stable releases
+## Versions and licenses
 
-Read `metadata.version` in the installed `SKILL.md` for the package version. A `-dev.N` suffix marks unpublished development content, which may change before release; use CLI source records or a Git commit for exact revision tracking.
+Packages are unpublished development content. Read `metadata.version` in each `SKILL.md`. Default installation tracks `main`, not a stable release. Fixed installations must use an actual tag in [Releases](https://github.com/qqc0821/subaru-skills/releases). [Full update/version instructions](docs/installation.en.md).
 
-The default installation fetches the latest content from `main`, including unpublished changes. This differs from the latest stable release.
+The root [MIT LICENSE](LICENSE) covers original content only. Brainstorm and the new examples are original; third-party slides documents and sample images have separate boundaries in [PROVENANCE.md](PROVENANCE.md).
 
-For [skills CLI](https://github.com/vercel-labs/skills#skills-update) installations, run project updates from the original project directory, or select global scope:
+## Documentation and contributions
 
-~~~bash
-npx skills update subaru-slides subaru-brainstorm -p
-npx skills update subaru-slides subaru-brainstorm -g
-~~~
+The [static documentation source](site/README.md) includes matching Chinese/English question guides, downloads and release status. Local construction and manual GitHub Pages deployment are prepared; this does not establish that the website is online.
 
-Updates use recorded sources and content, rather than selecting a stable Release from `metadata.version`. If an older CLI lacks the command or source records are missing, reinstall with the original `npx skills add` command, choosing the same agent and scope (add `--global` for global installations). Back up customizations first; reload the skill or start a new session as required by your host afterward.
-
-For manually downloaded ZIPs or copied folders, download the desired branch or release again, back up the old folder, and replace the entire installed folder with the corresponding `skills/<name>/` folder to avoid retaining deleted files. Pulling the downloaded repository does not synchronize copied installations, and manual copies are not guaranteed to be tracked by the CLI.
-
-Stable versions: [GitHub Releases](https://github.com/qqc0821/subaru-skills/releases). As of 2026-10-06, the remote has no Release or tag, so no stable version is available for installation. The historical `0.1.0` record does not establish a published stable release.
-
-Once a release exists, choose an actual tag containing the desired skill:
+For feedback, provide the host, command, input and specific failure: [open an issue](https://github.com/qqc0821/subaru-skills/issues). Engineering guidance: [AGENTS.md](AGENTS.md). Publishing/discovery maintenance: [operations guide](docs/discovery.md).
 
 ~~~bash
-# Template: replace <release-tag> with an existing tag from the Release page
-npx skills add "https://github.com/qqc0821/subaru-skills/tree/<release-tag>"
+make check       # repository gate, including site links and metadata
+make test        # tools and builder tests
+make doctor      # local capability probe
+make site        # build to output/site/ with no third-party dependency
 ~~~
 
-A fixed tag installation retains that version and does not automatically switch to newer stable tags. Read the target release notes and reinstall using the new tag URL to upgrade. Reinstall without a tag to return to the default branch.
-
-## Repository layout
-
-- `skills/<name>/` — independently installable skill packages; install only the ones you need;
-- `schemas/`, `tools/`, `tests/`, `evals/`, `docs/` — development and regression harness, not installed with the skill; see [AGENTS.md](AGENTS.md).
-
-## Development and quality gates
-
-~~~bash
-make check      # links / consistency / assets / style system / installability (the only mandatory gate)
-make test       # tool smoke tests and unit tests
-make doctor     # probe the current machine
-make eval-brainstorm # conversation evidence and semantic review gate; missing real runs cannot pass
-
-make validate PPTX=deck.pptx
-make render   PPTX=deck.pptx OUT=preview/
-make pixel-qa DIR=preview/            # pixel-level render QA: wrapped digits, oversized glyphs, band cuts
-make montage  DIR=preview/ OUT=montage.webp
-~~~
-
-## License
-
-Original repository content is released under the [MIT License](LICENSE). `skills/subaru-slides` is derived from `huashu-slides`, whose audit baseline had no root LICENSE; read [PROVENANCE.md](PROVENANCE.md) before redistribution.
+See [CHANGELOG.md](CHANGELOG.md) for history.
