@@ -17,6 +17,7 @@
 | [ADR-002](002-derived-style-router.md) | 已采纳 | 风格数据与派生摘要 |
 | [ADR-003](003-context-budget.md) | 已采纳 | 安装体积与上下文成本 |
 | [ADR-004](004-layered-deck-validation.md) | 已采纳 | 分层质检与检测边界 |
+| [ADR-005](005-portable-brainstorm-sessions.md) | 已采纳；效果待验证 | 对话调度、可携带会话与行为证据 |
 
 ## 历史条目迁移核对
 

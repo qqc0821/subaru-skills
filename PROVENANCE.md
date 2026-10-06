@@ -12,6 +12,8 @@
 
 ## 许可边界
 
+`skills/subaru-brainstorm` 及其新增会话协议、评测案例和检查器为本仓库原创，适用根 MIT LICENSE；未复制第三方文档、脚本或图片。
+
 - 仓库根 `LICENSE`（MIT，LesBit）**仅覆盖本仓库原创内容**。
 - 它**不自动覆盖**上述第三方复制内容，也不覆盖 `skills/subaru-slides/assets/style-samples/`
   中作为风格样例收录的示意图（其版权归各自来源所有，仅作风格对照用途）。

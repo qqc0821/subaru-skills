@@ -1,0 +1,78 @@
+{
+  "subaru-slides": {
+    "paths": {
+      "default": [
+        "SKILL.md",
+        "styles/router.md",
+        "styles/foundation.json",
+        "styles/warm-comic-strip.md",
+        "references/content-structure.md",
+        "references/paths/path-b2-hybrid.md",
+        "references/qa/render-and-validate.md",
+        "references/qa/checklist.md"
+      ]
+    },
+    "budgets": {
+      "default": 6400
+    },
+    "entry_limit": 2000,
+    "file_limit": 1200,
+    "optional": [
+      "references/prompt-templates.md",
+      "references/design-principles.md",
+      "references/design-movements.md",
+      "references/paths/path-a-native.md"
+    ],
+    "conditional": [
+      "references/design-principles.md",
+      "references/design-movements.md",
+      "references/prompt-templates.md"
+    ],
+    "preset_glob": "styles/*.md",
+    "preset_exclude": [
+      "styles/router.md"
+    ],
+    "preset_sample": "styles/warm-comic-strip.md",
+    "router_pair": [
+      "styles/router.md",
+      "styles/index.json"
+    ]
+  },
+  "subaru-brainstorm": {
+    "paths": {
+      "explore": [
+        "SKILL.md"
+      ],
+      "switch": [
+        "SKILL.md",
+        "references/techniques.md"
+      ],
+      "resume": [
+        "SKILL.md",
+        "references/session.md"
+      ],
+      "proposal": [
+        "SKILL.md",
+        "references/outputs.md"
+      ]
+    },
+    "budgets": {
+      "explore": 1200,
+      "switch": 2200,
+      "resume": 2200,
+      "proposal": 1800
+    },
+    "entry_limit": 1200,
+    "file_limit": 1000,
+    "optional": [
+      "references/techniques.md",
+      "references/session.md",
+      "references/outputs.md"
+    ],
+    "conditional": [
+      "references/techniques.md",
+      "references/session.md",
+      "references/outputs.md"
+    ]
+  }
+}

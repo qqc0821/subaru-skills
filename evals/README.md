@@ -1,5 +1,7 @@
 # Eval Harness
 
+本页维护 deck 产物评测；对话 skill 的案例和证据闸门见 [brainstorm eval](brainstorm/README.md)，入口为 `make eval-brainstorm`。
+
 固定 brief + 结构断言的回归基准，用于在修改 skill 后确认没有"改 A 坏 B"。
 
 ## 结构

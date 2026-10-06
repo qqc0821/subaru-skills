@@ -1,0 +1,11 @@
+{
+  "id": "resume-branch",
+  "turns": [
+    "请按这份摘要继续，先别评价：\n---\nformat_version: 1\ntopic: 团队讨论\nphase: expand\nevaluation_mode: deferred\nactive_branch: B02\n---\n目标：允许安静成员参与。\nI03：会前匿名写异议，B01，暂存。\nI07：异步接续别人的问题，B02，当前方向。I07 已从自动接续改成由参与者选择接续。\n已决定：只展开 B02，还没有批准开发产品。\n未知：是否需要匿名。\n下一步：推演三人使用情境。"
+  ],
+  "criteria": {
+    "identity": "沿 B02/I07 展开，保留参与者选择接续及 B01 暂存状态。",
+    "decisions": "不把继续讨论误写成已经批准开发，不强行补全匿名要求。",
+    "evaluation": "保留先不评价的约定并产生可继续的情境。"
+  }
+}

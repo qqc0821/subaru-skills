@@ -9,6 +9,7 @@ make check     # = validate_skills + check_links + check_consistency + check_ass
 make test      # 脚本冒烟 / 单元测试
 make doctor    # 环境能力自检
 make eval      # 本机 eval 覆盖率闸门（PASS / FAIL / SKIP / BLOCKED）
+make eval-brainstorm # 固定对话案例、配对运行证据与语义审阅闸门
 make eval-clean # 干净检出重建固定输入产物后执行独立覆盖率闸门
 make new-task  # 从 docs/templates/ 生成任务三件套
 make baseline  # 把当前 findings 记为已知债务（仅在有意接受时使用）
@@ -30,6 +31,7 @@ make new-style ID=x NAME=...       # 新建风格 preset（可选 REGISTER=1）
 ```
 python3 tools/context_savings.py [--baseline HEAD]  # 必读路径 / 可选设计参考的前后对比
 python3 tools/check_context_budget.py --report      # 当前必读 + 可选 + 全量合计
+python3 tools/check_context_budget.py --report --skill subaru-brainstorm # 分路线成本
 ```
 
 本地、Agent 与自建 CI 使用**同一个入口**，避免"我本地过了"。
@@ -48,6 +50,7 @@ python3 tools/check_context_budget.py --report      # 当前必读 + 可选 + �
 | **H6** | `evals/` 回归基准（5 个 case + `run_evals` + `pptx_inspect`） | 已完成 |
 | **H7** | pre-commit（`make hooks`） | 已完成（可选启用） |
 | **H8** | 上下文成本护栏：`styles/router.md` 选型摘要 + `check_context_budget`（必读路径预算与按需读取纪律） | 已完成 |
+| **H9** | 对话证据护栏：brainstorm 固定案例、配对参数、原文引用与语义审阅检查 | 检查器与案例已实现；真实模型对照结果待验证 |
 
 协作与知识维护入口见 [工程决策](decisions/README.md)；历史条目迁移结果在索引中核对。
 
@@ -68,7 +71,8 @@ subaru-skills/
 ├── VERSION / CHANGELOG.md     # 发布版本与变更记录
 ├── LICENSE                    # MIT（LesBit）；不自动覆盖第三方内容
 ├── skills/
-│   └── subaru-slides/         # 可独立安装的 skill 包
+│   ├── subaru-slides/         # 可独立安装的演示 skill
+│   └── subaru-brainstorm/     # 可独立安装的对话 skill
 ├── schemas/                   # (H2) 机读契约：skill frontmatter / openai-agent / styles.*
 ├── tools/                     # (H3) 校验器：validate_skills / check_links / check_consistency / ...
 ├── docs/                      # 验收清单、模板、工程规范、决策与验证缺口
@@ -77,3 +81,10 @@ subaru-skills/
 ```
 
 `Hx` 对应上面的维护状态；目录内容以当前检出为准。
+
+## 4. 对话行为证据
+
+`make eval-brainstorm` 与 deck eval 分开运行，避免把对话质量混入对象计数断言。
+案例、运行格式、重复次数与人工/模型/自评边界见 [brainstorm eval](../evals/brainstorm/README.md)。
+检查器不调用模型。缺真实运行或缺审阅时闸门失败，不以 synthetic 单元 fixture 补覆盖率。
+生成结果统一存入已有忽略目录 `evals/results/brainstorm/`，不得进入 skill 安装包或暂存区。
