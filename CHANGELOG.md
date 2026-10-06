@@ -6,6 +6,9 @@
 
 ### 新增
 
+- 各 skill 增加独立 `metadata.version`：subaru-slides 为 `0.2.0-dev.0`，subaru-brainstorm 为 `0.1.0-dev.0`；schema 与质量门校验 SemVer。
+- 根目录和两个 skill 的中英文 README 补齐 CLI 更新、手动替换、版本查询及稳定 tag 安装模板。
+
 - `subaru-slides` 增加渲染图像素质检：随 skill 分发的 `scripts/detect_pixel_artifacts.py`
   （零依赖、只读、不联网）对逐页渲染的 PNG 检查三类"乱样式"——
   数字组换行产生的孤字（`wrapped-numbers`）、被 autofit 撑大的孤字（`oversized-glyph`）、
@@ -30,7 +33,7 @@
 
 ## 0.1.0 - 2026-09-12
 
-首个发布版本。仓库可作为 Agent Skill 被安装使用。
+首个仓库版本记录。仓库可作为 Agent Skill 被安装使用；截至 2026-10-06，远端无对应 tag 或 GitHub Release，此记录不代表已发布稳定版。
 
 ### 新功能
 
@@ -70,5 +73,3 @@
 - 6 个缺少对照样例图的风格 preset（`fathom-data`、`muller-brockmann-grid`、
   `pentagram-editorial`、`neo-brutalism`、`build-luxury-minimal`、`takram-speculative`）
   的 `proven` 由 `true` 修正为 `false`，不再声称已验证。
-
-[0.1.0]: https://github.com/qqc0821/subaru-skills/releases/tag/v0.1.0

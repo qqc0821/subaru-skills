@@ -20,7 +20,7 @@
 - [ ] `SKILL.md` ≤ 200 行；长文在 `references/`
 - [ ] skill 的 `README(.en).md` 只写"是什么 / 怎么用"，未复制 `SKILL.md` 的路径表、能力表或风格计数
 - [ ] 新增 skill 已在 `tools/context-budgets.json` 声明读取路径与预算，按需参考文件在入口标明读取条件
-- [ ] frontmatter 的 name 与目录名一致；description 写清触发场景
+- [ ] frontmatter 的 name 与目录名一致；description 写清触发场景；metadata.version 为独立 SemVer，开发版与已发布稳定版明确区分
 - [ ] `agents/openai.yaml` 字段完整
 - [ ] 无外部 skill 硬依赖；能力均有探测与降级路径
 - [ ] 风格相关的计数/命名/推荐只引用 `styles/index.json`，不重复维护

@@ -50,6 +50,7 @@
 
 ### 包与资产预算
 
+- 每个 skill 在 `SKILL.md` 的 `metadata.version` 声明独立 SemVer；版本与发布约定见 [Skill 包工程规范](docs/engineering.md#12-skillmd-frontmatter)，未发布版本不得称为稳定版。
 - `SKILL.md` ≤200 行；长文下沉 `references/`，单个 reference ≤600 行，skill 包总量 ≤5MB。
 - 新增 skill 在 `tools/context-budgets.json` 声明典型读取路径与预算；按需参考文件在入口写清读取条件。
 - 样例图使用 WebP 与稳定的英文小写风格 id；声明的尺寸、体积必须与实际一致。
