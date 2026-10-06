@@ -1,261 +1,108 @@
-# AGENTS.md — subaru-skills 工程与 AI 协作规范
+# 在这个仓库中开发
 
-> 本文件是本仓库对 **AI 编码代理**（Claude Code / Codex / Cursor / DSH 等）与人类贡献者的
-> **单一事实源（single source of truth）**。开始任何修改前，请先完整阅读。
-> `CLAUDE.md` 只是指向本文件的入口，不重复规则。
->
-> 冲突时的优先级：**仓库工程约定以本文件为准；某个 skill 的运行时行为以该 skill 的 `SKILL.md` 为准。**
+## 1. 项目目标与取舍
 
----
+本仓库维护可独立安装、可降级运行的 Agent Skills，当前主要开发 `skills/subaru-slides/`。
+开发时优先保证用户能用、行为与文档一致，并通过已有校验防止回归。
+沿用已有实现与约定，以完成当前目标所需的改动为范围。
 
-## 1. 仓库是什么
+本文件是仓库开发协作的入口；`CLAUDE.md` 只指向这里，不重复规则。
+仓库工程约定由本文件与其链接的工程文档维护；某个 skill 的运行时行为以该 skill 的 `SKILL.md` 为准。
+这些约定在系统、开发者与用户指令允许的范围内适用；用户对当前任务的明确要求优先。
 
-- `subaru-skills` 是一个**项目级 Agent Skill 仓库**，当前包含 `skills/subaru-slides/`（从内容到成品 PPTX 的演示文稿制作）。
-- 每个 `skills/<name>/` 子目录是一个可被 Agent 直接加载的 skill 包。
-- 仓库同时维护一套 **Harness**（校验器、模板、回归基准），用于约束 AI 辅助开发，见第 8 节。
+## 2. 与用户协作
 
-当前 / 目标目录结构：
+- 用户要求方案、分析或评审时，先交付可审阅的结论；获得实施要求后再修改文件。
+- 用户明确要求实现或修复时，持续推进到完成和验证；范围内的常规实现选择自主处理。
+- 信息不足时先检查仓库。不影响使用方式、兼容性或交付范围的细节采用合理假设，并在必要时说明。
+- 遇到影响上述结果的分歧，提供具体选项、影响和推荐，再请用户决定；等待时继续不依赖该决定的工作。
+- 已有授权继续有效，不反复询问。请求确认时提供具体、可审阅的方案或结果。
+- 用户中途补充要求时，更新当前目标与验收条件，继续已有工作；明确取消或替换目标时再停止原任务。
+- 遇到阻塞时说明原因、已尝试的方法及需要的最小帮助；继续可完成的部分。
+- 长任务在阶段完成、重要发现或方向变化时简要汇报，说明下一步要解决的问题。
+- 用户可见文案中文优先，保留必要英文术语；代码、路径、文件名、JSON key 与 commit message 用英文。
 
-```
-subaru-skills/
-├── AGENTS.md                  # 本文件（单一事实源）
-├── CLAUDE.md                  # → 指向本文件
-├── README.md                  # 面向使用者：安装、能力、依赖
-├── PROVENANCE.md              # 上游出处与再分发授权记录
-├── VERSION / CHANGELOG.md     # 发布版本与变更记录
-├── LICENSE                    # MIT（LesBit）；不自动覆盖第三方内容
-├── skills/
-│   └── subaru-slides/         # 一个 skill 包，见第 3 节
-├── schemas/                   # (H2) 机读契约：skill frontmatter / openai-agent / styles.*
-├── tools/                     # (H3) 校验器：validate_skills / check_links / check_consistency / ...
-├── docs/                      # (H5) definition-of-done / templates / lessons-learned
-├── evals/                     # (H6) 回归基准：固定 brief + 结构断言
-├── tests/                     # harness 单元测试
-```
+## 3. 开始任务与按规模推进
 
-> `(Hx)` 标注对应 Pre-P0 Harness 建设项；H2–H6 已落地，状态见第 8.3 节。
+开始修改前：
 
----
+1. 明确目标、范围和验收条件，优先从用户要求与现有实现中确定。
+2. 检查工作区状态与相关 diff，识别并保留已有修改；不覆盖、不回退、不清理无关工作。
+3. 修改 skill 时读取目标 `SKILL.md` 与本次涉及的 references；按任务需要读取相关代码、测试和工程文档。
+4. 确定最小可交付改动和验证方式，再实施。
 
-## 2. 硬性规则（Must / Must Not）
+按任务规模选择留痕方式：
 
-### Must（必须）
+| 任务 | 工作方式 |
+|---|---|
+| 方案讨论、只读评审 | 直接交付结论，不生成任务三件套 |
+| 范围清楚的小修改 | 直接修改并验证，在交付说明中记录结果 |
+| 跨文件、多个阶段或需要交接的任务 | 用 `make new-task`，持续维护目标、发现与进度 |
 
-1. **过闸**：任何 skill 改动提交前必须通过 `make check`；本地、Agent 与自建 CI 共用这一入口。
-2. **薄入口**：一个 skill 的 `SKILL.md` ≤ **200 行**，超出部分下沉到 `references/`。
-3. **零外部依赖为默认**：需要外部能力时先做**能力探测**，并提供**降级路径**；外部 skill 只能"检测到则增强"，不能设为必需。
-4. **语言**：用户可见文案**中文优先**（保留必要英文术语）；代码、路径、文件名、JSON key、commit message 用**英文**。
-5. **任务留痕**：开任务前用 `make new-task` 生成 `task_plan.md` / `findings.md` / `progress.md` 三件套并边做边更新；**这三个文件不入库**（发布仓库只保留用户可见内容），结项时把结论固化成 `docs/lessons-learned.md` 或代码注释。
-6. **改名即修链**：改路径/重命名后，必须同步检查并修复所有相对链接与交叉引用。
-7. **新依赖先说明**：新增依赖、脚本或二进制资产前，先说明必要性，并记录到本文件或该 skill 的依赖文档。
+三件套是 `task_plan.md` / `findings.md` / `progress.md`，仅作本地过程记录，不入库。
+已有记录时检查是否属于当前任务；保留历史，更新或追加当前任务内容，不直接用 `--force` 覆盖。
+交接时记录已完成内容、未完成事项、验证结果和下一步，使后续开发可以继续。
+修复缺陷时按风险补充可复现的测试或校验；改变重要设计取舍时更新 [工程决策](docs/decisions/README.md)。
+当前约束写入对应规范，未验证判断记录证据与 [验证缺口](docs/verification-gaps.md)，不要求每次任务追加文档。
 
-### Must Not（禁止）
+## 4. 工程底线与按需阅读入口
 
-1. 提交 **>1MB 的二进制**；样例图必须压缩为 WebP，并遵守体积预算。
-2. 提交 **secrets / token / API key**、`.DS_Store`、临时产物、依赖缓存（`node_modules/`、`.venv/` 等）。
-3. 硬编码用户主目录或机器相关绝对路径（`~/.claude`、`/Users/<name>`、`$HOME/.agents` 等）。一律用"skill 相对路径 + 运行时探测"。
-4. 把外部 skill 名写死为必需依赖（如 `$presentations`、`imagegen`）。
-5. 在 `SKILL.md` 里堆长文；或把同一份信息（风格计数、色板、推荐表）重复维护到多处。
-6. **文档说 A、实现做 B**；改实现必须同步改文档。
+- `SKILL.md` ≤200 行；长文下沉 `references/`，单个 reference ≤600 行，skill 包总量 ≤5MB。
+- 不提交 >1MB 的二进制、secrets、token、API key、系统垃圾文件、临时产物或依赖缓存。
+- 样例图使用 WebP 与稳定的英文小写风格 id；声明的尺寸、体积必须与实际一致。
+- 不硬编码用户主目录或机器相关绝对路径；使用 skill 相对路径与运行时探测。
+- 外部能力先探测并提供降级路径；外部 skill 只能检测到则增强，不能作为必需依赖。
+- 能力缺失影响执行路径或交付结果时，明确告知用户，不静默换路或夸大完成范围。
+- 新增依赖、脚本或二进制资产前说明必要性，并记录到相关工程或 skill 依赖文档。
+- 文档与实现同步更新；改路径或重命名后搜索旧引用，修复相对链接与交叉引用。
+- 同一信息只维护一处：skill 运行时规则在 `SKILL.md`；风格数量、命名、推荐与样例映射在 `styles/index.json`。
+- 风格选型读取由 index 生成的 `styles/router.md`；修改风格后用 `make style-router` 重新生成。
+- Skill README 只写“是什么 / 怎么用”，保持可独立安装，不引用仓库专有工具、schema、规则或 make 目标。
 
----
+按任务读取：
 
-## 3. Skill 包规范
+| 任务 | 阅读入口 |
+|---|---|
+| 修改包结构、frontmatter、脚本或 UI 元数据 | [Skill 包工程规范](docs/engineering.md) 与相关 schema |
+| 新增或修改风格 | [风格系统约定](docs/engineering.md#2-风格系统约定)、index、目标 preset 与样例；登记后生成 router |
+| 修改 slides 构建能力或降级行为 | [subaru-slides 依赖与能力策略](skills/subaru-slides/references/dependencies.md) |
+| 使用或维护校验器、eval、上下文预算 | [Harness 使用与维护](docs/harness.md) 与相关实现、测试 |
+| 改变重要设计取舍或补齐验证证据 | [工程决策索引](docs/decisions/README.md) 与 [验证缺口](docs/verification-gaps.md) |
+| 引入第三方内容或准备再分发 | [PROVENANCE](PROVENANCE.md) 与相应许可记录 |
 
-### 3.1 目录结构
+## 5. 验证与交付
 
-```
-skills/<name>/
-├── SKILL.md               # 薄入口（Agent 视角）：路由 + 铁律 + 流程 + 检查点（≤200 行）
-├── README.md / .en.md     # 使用者视角：能力、调用方式、编辑性边界（中文优先 + 英文镜像）
-├── agents/openai.yaml     # UI 元数据（见 3.5）
-├── references/            # 按需加载的长文（设计原则、路径细节、QA 清单…）
-├── scripts/               # 可执行辅助脚本（见 3.4）
-├── assets/                # 样例图等静态资产（见 3.6）
-└── styles/                # （可选）机读风格系统（见第 4 节）
-```
+- 所有仓库改动交付前运行 `make check`；skill 改动提交前必须通过，且不得有新增阻塞项。
+- 脚本或校验器逻辑变更运行相关测试；影响生成行为或回归覆盖时运行相应 eval。
+- 检查通过后，只有新增修改、失败或未解决问题需要时才扩大或重复验证。
+- 缺工具、依赖或固定产物时报告验证边界；区分已验证、未运行和受环境阻塞的检查，不把跳过描述为通过。
+- 不用更新 baseline 掩盖新增问题；有意接受债务时遵循 [Baseline 机制](docs/harness.md#3-baseline-机制)。
+- 交付时说明完成了什么、为何这样改、如何验证，以及尚未解决的限制，并提供必要的文件或结果入口。
+- 代码改动与 PR 按适用项检查 [Definition of Done](docs/definition-of-done.md)；不适用项说明原因。
 
-文档分层：skill 的 `README` 只写"是什么 / 怎么用"，`SKILL.md` 是运行时规则的**唯一事实源**。
-路径表、能力降级表、风格计数等只允许维护一处，其余文档引用它。skill 的 `README` 会随包发布，
-因此不得引用仓库专有路径（`tools/`、`schemas/`、`AGENTS.md`、`make` 目标）。
+常用入口：
 
-### 3.2 `SKILL.md` frontmatter
-
-```yaml
----
-name: <skill-name>        # 必须与目录名完全一致，小写连字符
-description: <一句话>      # 必须写清"当用户……时使用"，包含中英文触发词与同义词
----
-```
-
-### 3.3 行数与体积预算
-
-- `SKILL.md` ≤ 200 行。
-- 单个 reference 文件 ≤ 600 行；超出需拆分。
-- 一个 skill 包总量 ≤ 5MB。
-
-### 3.4 `scripts/`
-
-- 优先 Python 3.10+，使用 **PEP 723 内联依赖**，用 `uv run` 可直接执行。
-- 每个脚本必须有 `--help`、清晰的错误信息与明确的退出码。
-- 依赖环境的脚本提供 `--doctor` 自检（缺什么、怎么装）。
-- 不写死路径；默认不联网（除非用户明确要求）。
-
-### 3.5 `agents/openai.yaml`
-
-```yaml
-interface:
-  display_name: "<显示名>"
-  short_description: "<一句话，说明能力>"
-  brand_color: "#RRGGBB"
-  default_prompt: "Use $<name> to <目标>. <关键约束>."
-policy:
-  allow_implicit_invocation: true
+```sh
+make check     # 统一质量门：本地、Agent 与自建 CI 共用
+make test      # 脚本冒烟与单元测试
+make doctor    # 环境能力探测
+make eval      # 本机回归覆盖率闸门
+make eval-clean # 干净检出重建固定输入产物并检查覆盖率
 ```
 
-### 3.6 `assets/`
+其余命令与 Harness 维护状态按需查阅，不要求每个任务运行全部入口。
 
-- 样例图使用 **WebP**；文档中声明的体积/尺寸必须与实际一致。
-- 命名使用稳定的风格 id（英文小写连字符），不要用中文或空格。
+## 6. Git 与提交范围
 
----
+- 分支使用 `<type>/<scope>-<short-desc>`，例如 `feat/subaru-slides-styles-index`。
+- 提交信息使用 `<type>(<scope>): <subject>`；type 为 `feat`、`fix`、`docs`、`chore`、`refactor`、`test` 或 `ci`。
+- 一个提交只做一件事，不夹带无关格式化或重排；提交前检查 diff 与暂存区。
+- 三件套、生成物与缓存不进入暂存区；构建和评测产物应被 `.gitignore` 覆盖。
+- 完成修改、提交、推送与发布分别按用户授权范围执行；不因实现完成就自动推送或发布。
+- 不 force-push 主分支。创建 PR 时按 [PR 模板](.github/PULL_REQUEST_TEMPLATE.md) 记录变更与验证，并检查 DoD。
 
-## 4. 风格系统约定
+## 7. 维护这些约定
 
-- 若 skill 提供多风格，`styles/index.json` 是**风格数量、命名、主题推荐、样例映射的唯一事实源**。
-- `SKILL.md`、gallery 文档、样例目录**不得各自维护**一份可能漂移的计数；只引用 index。
-- 每个风格一个 `styles/<id>.md` preset（字段定义见 P0-5）。
-- 风格 base prompt 保持**简短**（≤5 行），描述情绪与世界观；不微操构图、不写 NOT 约束。
-
----
-
-## 5. 依赖与能力策略
-
-- 执行能力分四类：**原生可编辑构建器** / **图片生成** / **HTML deck 运行时** / **渲染器**（LibreOffice 等）。
-- 选择顺序（详见 `skills/subaru-slides/references/dependencies.md`）：
-  `A 原生可编辑 → B' 混合 → C HTML deck → B 全 AI 视觉 → create_slides.py 兜底`。
-- 任一能力缺失必须**明确告知用户**，不得静默换路或假装端到端。
-- 外部 skill 仅作为增强，必须可选、可降级。
-
----
-
-## 6. Git / 提交 / PR
-
-- 分支：`<type>/<scope>-<short-desc>`（如 `feat/subaru-slides-styles-index`）。
-- 提交信息：`<type>(<scope>): <subject>`；`type ∈ {feat, fix, docs, chore, refactor, test, ci}`。
-- 一个提交只做一件事；不夹带无关格式化或重排。
-- 不 force-push 主分支；不提交生成物（`.codex-build/`、`output/`、`.chart-data-*/` 等应进 `.gitignore`，由 H4 的 `check_assets` 兜底）。
-- PR 逐项勾选 Definition of Done（H5 的 PR 模板）。
-
----
-
-## 7. 常见任务的正确做法
-
-- **改某个 skill 的文档/脚本**：先读该 skill 的 `SKILL.md` 与其 `references/`，再改；改完跑第 8 节质量门。
-- **加一个新风格**：在 `styles/index.json` 与 `styles/<id>.md` 同步登记；补样例图；重新生成 `styles/router.md`（`make style-router`，Agent 选型只读它）；不要只改 SKILL.md 的描述。
-- **改路径 / 重命名**：全库搜索旧路径与引用，修完再校验。
-- **引入新能力**：走"能力探测 + 降级"，不要新增硬依赖。
-- **开新任务**：运行 `make new-task` 从 `docs/templates/` 生成三件套（已存在时跳过，`--force` 覆盖）。
-
----
-
-## 8. 校验与质量门
-
-### 8.1 统一入口（已落地）
-
-```
-make check     # = validate_skills + check_links + check_consistency + check_assets + check_style_system + gen_style_router + check_context_budget + check_installability
-make test      # 脚本冒烟 / 单元测试
-make doctor    # 环境能力自检
-make eval      # 本机 eval 覆盖率闸门（PASS / FAIL / SKIP / BLOCKED）
-make eval-clean # 干净检出重建固定输入产物后执行独立覆盖率闸门
-make new-task  # 从 docs/templates/ 生成任务三件套
-make baseline  # 把当前 findings 记为已知债务（仅在有意接受时使用）
-```
-
-针对具体 deck 的工具：
-
-```
-make validate PPTX=deck.pptx      # 结构错误 + 启发式警告
-make render   PPTX=deck.pptx OUT=d # 逐页 PNG/PDF
-make montage  DIR=slides/ OUT=m.webp
-make lint-copy SRC=deck.pptx      # 文案反 AI 味初筛
-make pixel-qa DIR=renders/       # 渲染图像素缺陷检查
-make new-style ID=x NAME=...       # 新建风格 preset（可选 REGISTER=1）
-```
-
-上下文成本核算（只读，用于复核优化幅度）：
-
-```
-python3 tools/context_savings.py [--baseline HEAD]  # 必读路径 / 可选设计参考的前后对比
-python3 tools/check_context_budget.py --report      # 当前必读 + 可选 + 全量合计
-```
-
-本地、Agent 与自建 CI 使用**同一个入口**，避免"我本地过了"。
-
-仓库当前**不附带 CI workflow**（`.github/workflows/` 已移除）；`make eval-clean` 供本地、Agent 或自建 CI 在干净检出上重建不入库的固定测试产物，用 `uv` 解析内置 `create_slides.py` 已声明的 PEP 723 依赖。这不把 uv、图片生成或其他外部 skill 变成 `subaru-slides` 的强制运行时依赖。
-
-### 8.2 辅助手动检查（可选；已被 `make check` 覆盖）
-
-```bash
-# 1) 外部依赖 / 用户路径扫描（期望：无输出）
-grep -rnE '\$presentations|\$imagegen|nano-banana|~/.claude|/Users/|\.agents/skills' skills/ || true
-
-# 2) 系统垃圾文件（期望：无输出）
-find . -name '.DS_Store' -not -path './.git/*' -print
-
-# 3) 单文件体积预算（>1MB 需说明）
-find skills -type f -size +1M -print
-
-# 4) skill 包体积
-du -sh skills/*
-
-# 5) Markdown 相对链接可达性（在 check_links.py 落地前人工核对改动涉及的文件）
-```
-
-### 8.3 Harness 建设状态
-
-| 项 | 内容 | 状态 |
-|---|---|---|
-| **H1** | `AGENTS.md` + `CLAUDE.md` | 已完成 |
-| **H2** | `schemas/` 机读契约（4 个 schema） | 已完成 |
-| **H3** | `tools/` 校验器（validate_skills / check_links / check_consistency / check_assets / check_style_system / gen_style_router / check_context_budget / check_installability / doctor） | 已完成 |
-| **H4** | `Makefile` 质量门统一入口（CI workflow 已移除） | 已完成 |
-| **H5** | 任务模板 `docs/templates/` + Definition of Done + PR 模板 + `make new-task` | 已完成 |
-| **H6** | `evals/` 回归基准（5 个 case + `run_evals` + `pptx_inspect`） | 已完成 |
-| **H7** | pre-commit（`make hooks`）+ `docs/lessons-learned.md` | 已完成（可选启用） |
-| **H8** | 上下文成本护栏：`styles/router.md` 选型摘要 + `check_context_budget`（必读路径预算与按需读取纪律） | 已完成 |
-
-### 8.4 基线（baseline）机制
-
-- 历史遗留问题记录在 `tools/baseline.json`，被 suppress 的 finding **不会**让 `make check` 失败。
-- 只有**新出现**的阻塞项才失败——既让存量债务不一次性阻断，又能防止回归。
-- 有意接受新的债务时运行 `make baseline`（写回 baseline）；不要用它掩盖真实 bug。
-
----
-
-## 9. 任务工作流（AI 协作标准动作）
-
-1. 读本文件 + 目标 skill 的 `SKILL.md` 与相关 `references/`。
-2. `make new-task` 生成 `task_plan.md`（目标、阶段、验收、错误日志），边做边更新 `progress.md`，发现记入 `findings.md`。
-3. 小步改动，保持三件套与实现同步。
-4. 跑第 8 节质量门，修复所有阻塞项。
-5. 更新验收结论与残余风险。
-6. 结项：把可复用的结论写入 `docs/lessons-learned.md`，并确认三件套**没有被 `git add`**。
-7. 按第 6 节约定提交。
-
----
-
-## 10. 出处与许可
-
-- `subaru-slides` 派生自上游 `huashu-slides`（审计基线 commit `791450a2594a3506144917517ff5533c344a62b0`）；上游当时**无根 LICENSE**。
-- 再分发前须确认授权；provenance 记录见 `PROVENANCE.md`。
-- 仓库根 MIT LICENSE 覆盖本仓库原创内容，**不自动覆盖**第三方复制内容。
-
----
-
-## 11. 本文件的维护
-
-- 本文件由 Pre-P0 H1 建立。
-- 任何对硬性规则的增删，必须在**同一提交**内更新本文件。
-- H2–H7 落地后，同步更新第 8.3 节状态表。
+硬性规则调整时同步更新本文件、相关工程文档与验收清单，避免出现相互冲突的要求。
+工程文档维护细节，Harness 文档维护工具入口与建设状态；本文件保留协作判断和关键底线。
+根 MIT LICENSE 覆盖本仓库原创内容，不自动覆盖第三方复制内容；再分发前确认授权并更新 provenance。
