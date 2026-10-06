@@ -124,6 +124,7 @@ def node_modules_have(module: str) -> bool:
 
 def detect():
     node = which("node")
+    image_hint = find_first(IMAGEGEN_HINTS)
     return {
         "python": sys.version.split()[0],
         "uv": which("uv"),
@@ -137,14 +138,19 @@ def detect():
         "artifact_tool": (node_has("@oai/artifact-tool") if node else False) or node_modules_have("@oai/artifact-tool"),
         "deck_stage": find_first(DECK_STAGE_HINTS) or search_for("deck-stage.js", [HOME / ".agents" / "skills", HOME / ".claude" / "skills"]),
         "html2pptx": search_for("html2pptx.js", [HOME / ".agents" / "skills", HOME / ".claude" / "skills"]),
-        "imagegen": find_first(IMAGEGEN_HINTS),
+        "imagegen": image_hint,
+        "image_generation": {
+            "status": "unknown",
+            "local_hint": image_hint,
+            "requires_host_check": True,
+        },
         "create_slides_py": str(SCRIPT_DIR / "create_slides.py") if (SCRIPT_DIR / "create_slides.py").is_file() else None,
     }
 
 
 def recommend(caps):
     native = bool(caps.get("artifact_tool") or caps.get("python_pptx"))
-    image = bool(caps.get("imagegen"))
+    image = caps.get("image_generation", {}).get("status") in ("callable", "generated")
     html = bool(caps.get("deck_stage") or caps.get("html2pptx"))
     if native:
         return "A", "native editable builder; add image generation only when the selected design needs it"
@@ -173,6 +179,7 @@ def main() -> int:
     print("reason: " + reason)
     print("")
     print("order: A -> B2 -> C -> B -> fallback")
+    print("imagegen directories are hints only; inspect host tools and verify the first asset")
     return 0
 
 

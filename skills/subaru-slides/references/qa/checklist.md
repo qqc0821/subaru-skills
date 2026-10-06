@@ -34,3 +34,4 @@ Run this on **every** slide at full size (contact sheets are for deck-level flow
 - [ ] Illustrations convey planned meaning without invented claims, accidental text or crop damage.
 - [ ] Cutouts have real alpha and clean edges on the intended background.
 - [ ] Required labels/relationships stay native; identify generated scenes as illustrative where needed.
+- [ ] Failed assets leave no placeholders; fallback layouts and asset records follow `../illustrations.md`.
