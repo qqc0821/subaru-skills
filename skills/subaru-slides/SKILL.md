@@ -1,11 +1,13 @@
 ---
 name: subaru-slides
 description: 端到端制作 PPT / 幻灯片 / 演示文稿 / Keynote：内容结构化、风格选择、原生可编辑或 AI 视觉构建、PPTX 装配与质检。当用户提到"做PPT""做幻灯片""演示文稿""keynote""slides""路演""汇报""课件"时使用。
+metadata:
+  version: "0.2.0-dev.0"
 ---
 
 # subaru-slides · Presentation Router
 
-> 薄入口：本文件只做路由与铁律。流程细节在 `references/`；风格选型表在 `styles/router.md`。
+> 入口负责路由与铁律；流程见 `references/`，风格读 `styles/router.md`。
 
 ## When to use / not use
 - **用**：从主题或文档做演示文稿；需要可编辑 PPTX；需要 AI 视觉风格；需要 HTML deck。
@@ -16,7 +18,7 @@ description: 端到端制作 PPT / 幻灯片 / 演示文稿 / Keynote：内容�
 2. **风格是数据**：`styles/index.json` 是唯一事实源，`styles/router.md` 是它自动生成的选型摘要；
    选风格只读 router，改风格只改 index，其他文件不得重复维护。
 <!-- repo-only -->
-   > 开发仓库内重生成 router：`make style-router`；`make check` 会因两者漂移而失败。
+   > 仓库重生成 router：`make style-router`；`make check` 会因两者漂移而失败。
 <!-- /repo-only -->
 3. **能力探测优先**：先跑 `scripts/detect_capabilities.py`；中文/跨平台交付再跑 `scripts/detect_fonts.py`；缺能力必须明说并降级，禁止静默换路。
 4. **中文优先**：slide 文案中文优先（保留必要英文术语）；代码、路径、JSON key 用英文。

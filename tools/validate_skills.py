@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import _common as C
 
 CHECK = "validate_skills"
+VERSION_RE = re.compile('^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$')
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
 
@@ -31,7 +32,16 @@ def check_skill(skill: Path):
             "SKILL.md is " + str(lines) + " lines (max " + str(C.MAX_SKILL_MD_LINES) + "); move detail to references/",
             C.rel(skill_md)))
 
-    fm, _ = C.parse_frontmatter(text)
+    fm, closing = C.parse_frontmatter(text)
+    nested = C.parse_simple_yaml("\n".join(text.splitlines()[1:closing]))
+    metadata = nested.get("metadata")
+    version = metadata.get("version") if isinstance(metadata, dict) else None
+    if version is None or version == "":
+        findings.append(C.Finding(CHECK, name + ":missing-version",
+                                  "frontmatter metadata.version is required", C.rel(skill_md), 1))
+    elif not isinstance(version, str) or not VERSION_RE.fullmatch(version):
+        findings.append(C.Finding(CHECK, name + ":version-format",
+                                  "metadata.version must be a SemVer string", C.rel(skill_md), 1))
     fm_name = str(fm.get("name", "")).strip()
     if not fm_name:
         findings.append(C.Finding(CHECK, name + ":missing-name", "frontmatter is missing name", C.rel(skill_md), 1))

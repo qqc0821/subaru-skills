@@ -22,6 +22,8 @@
 | [ADR-007](007-content-led-illustration-assets.md) | 已采纳；效果待审阅 | 已认可设计基线与内容插图组合 |
 | [ADR-008](008-role-based-typography.md) | 已采纳；效果待审阅 | 角色与脚本字款解析、声明校验 |
 
+| [ADR-009](009-skill-version-channels.md) | 已采纳 | 独立包版本与默认分支 / 稳定发布渠道 |
+
 ## 历史条目迁移核对
 
 下表仅记录本次整理结果，不继续作为追加日志维护。历史编号供 Git 内容比对；具体要求以链接的目标为准。

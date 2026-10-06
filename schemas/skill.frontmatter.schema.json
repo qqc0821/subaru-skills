@@ -5,7 +5,8 @@
   "type": "object",
   "required": [
     "name",
-    "description"
+    "description",
+    "metadata"
   ],
   "additionalProperties": true,
   "properties": {
@@ -19,6 +20,20 @@
       "minLength": 10,
       "maxLength": 1024,
       "description": "Must state when to use the skill, with trigger terms."
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "version"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(\\.(0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$",
+          "description": "Per-skill SemVer; prerelease identifies unpublished development content."
+        }
+      }
     }
   }
 }

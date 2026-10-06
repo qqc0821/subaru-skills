@@ -27,8 +27,14 @@ skills/<name>/
 ---
 name: <skill-name>        # 必须与目录名完全一致，小写连字符
 description: <一句话>      # 必须写清"当用户……时使用"，包含中英文触发词与同义词
+metadata:
+  version: "0.1.0-dev.0"   # 每包必需，SemVer 字符串
 ---
 ```
+
+版本的唯一来源是各包 `SKILL.md` 的 `metadata.version`，不在 README 重复维护当前版本号。各 skill 独立递增：修复升 patch、兼容能力新增升 minor、不兼容变更升 major；未发布内容使用预发布标记。开发版本发布前可继续修改，精确修订由 Git commit / CLI 内容记录识别。`validate_skills` 与 schema 检查存在性和 SemVer 格式。
+
+仓库 `VERSION` 与根 CHANGELOG 记录仓库发布批次，不替代包版本。准备发布时在 CHANGELOG 记录各受影响 skill 与版本，更新包版本并通过质量门；经用户授权创建不可变 tag 和 GitHub Release 后，才将它称作稳定发布。一个仓库 tag 固定整仓快照，可以包含版本不同的 skill。默认分支安装跟随 `main`；稳定安装固定实际 tag，后续稳定升级通过指定新 tag 重新安装，不提供浮动 `latest` tag。
 
 ### 1.3 行数与体积预算
 

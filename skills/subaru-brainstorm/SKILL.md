@@ -1,6 +1,8 @@
 ---
 name: subaru-brainstorm
 description: 当用户要头脑风暴、brainstorm、探索创意或用途、重新定义问题、突破思路重复、保留不同方向或继续上次创意讨论时使用。帮助切换思考方式、展开分支，再按用户要求整理为方案或实验。
+metadata:
+  version: "0.1.0-dev.0"
 ---
 
 # subaru-brainstorm
