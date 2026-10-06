@@ -29,7 +29,7 @@ typography:
 VISUAL REFERENCE: Charles Schulz Peanuts comic strip — warm, philosophical, charming.
 CANVAS: 16:9, 2048x1152, high quality.
 COLOR SYSTEM: warm cream/newspaper tones, soft muted pastels, warm ink lines (not harsh black).
-Do NOT constrain composition, character count, or poses — describe mood only.
+Keep mood central; add subject/action and framing requirements only when needed for meaning or assembly.
 ```
 
 ## 版式组件

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "default_profile": "portable-single",
+  "default_style": "Regular",
+  "role_styles": {
+    "cover-title": "Bold",
+    "display-title": "Bold",
+    "section-title": "Bold",
+    "slide-title": "Bold",
+    "key-message": "Bold",
+    "module-title": "Bold"
+  },
+  "profiles": {
+    "portable-single": {
+      "description": "延续基础便携候选；同家族覆盖中文、Latin 与数字。",
+      "ea": {
+        "foundation": "portable",
+        "platform_fallback": true
+      },
+      "latin": {
+        "same_as": "ea"
+      },
+      "style_fallbacks": {
+        "Bold": [
+          "Semibold"
+        ]
+      }
+    },
+    "v5-reference": {
+      "description": "已认可 v5 的字体组合；需实际验证，不强制用于其他项目。",
+      "ea": {
+        "families": [
+          "Noto Sans CJK SC"
+        ],
+        "foundation": "portable",
+        "platform_fallback": true
+      },
+      "latin": {
+        "families": [
+          "Helvetica Neue"
+        ],
+        "same_as": "ea",
+        "include_ea": true
+      }
+    },
+    "product-clean": {
+      "description": "MiSans 产品表达候选；缺字体时明示回退，不自动替换基线。",
+      "ea": {
+        "families": [
+          "MiSans"
+        ],
+        "foundation": "portable",
+        "platform_fallback": true
+      },
+      "latin": {
+        "same_as": "ea"
+      }
+    }
+  },
+  "sources": {
+    "MiSans": "https://hyperos.mi.com/font/zh/download/",
+    "Noto Sans CJK SC": "https://github.com/notofonts/noto-cjk",
+    "Source Han Sans SC": "https://github.com/adobe-fonts/source-han-sans"
+  }
+}

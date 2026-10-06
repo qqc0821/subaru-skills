@@ -12,7 +12,7 @@ description: 端到端制作 PPT / 幻灯片 / 演示文稿 / Keynote：内容�
 - **不用**：单独做图表、纯文档排版（用对应的图表/文档 skill）。
 
 ## The 6 rules
-1. **可编辑是默认**：会被修改的文字/表格/图表必须原生；只有装饰视觉可以是位图。
+1. **可编辑是默认**：会被修改的文字/表格/图表/关系图必须原生；场景插图、照片与材质可用位图，交付说明编辑边界。
 2. **风格是数据**：`styles/index.json` 是唯一事实源，`styles/router.md` 是它自动生成的选型摘要；
    选风格只读 router，改风格只改 index，其他文件不得重复维护。
 <!-- repo-only -->
@@ -47,7 +47,7 @@ python3 scripts/detect_capabilities.py     # 或 --json
 与**输出形态**（可编辑 PPTX / 视觉 PPTX / HTML deck）。详见 `references/workflow.md`。
 
 ## Step 3 · Structure the content
-标题=断言句；每页 1 个观点、≤4 条要点；5/5/5。
+标题按页意选择：介绍页用主题，发现页用有证据的结论；每页 1 个主要信息。
 读 `references/content-structure.md`，产出逐页大纲。
 **Checkpoint 1**：展示大纲表，请用户确认或调整。
 
@@ -55,13 +55,15 @@ python3 scripts/detect_capabilities.py     # 或 --json
 读 `styles/router.md`（唯一需要读的风格文件，约一张表），按 `主题推荐` → `formality` → `path` 匹配，
 选 **3 个方向不同**的候选；每个给出：一句话 + 调色板 + 样例图。
 **只读选中的那 1 个 preset**（`styles/<id>.md`）取 Base Style Prompt；不要预读另外两个，也不读 `styles/index.json`。
-先读 `styles/foundation.json` 选择字号 profile、中文字体策略与版式护栏；preset 不得降低基础字号。
+先读 `styles/foundation.json` 选择字号 profile 与版式护栏；preset 不得降低基础字号。
+商业稿或“高级感/排版”重做，按需读 `references/business-design.md` 与 `references/business-references.md`，拆解真实内容页；先记录用户已认可的设计基线。
+中文排版按需读 `references/typography-cjk.md`；改字体时按需读 `references/typography-system.md`，解析字款后做原生对照。
 **Checkpoint 2**：请用户选一个。若宿主能渲染，直接给 3 张封面预览而不是文字描述。
 仅在用户点名设计运动/流派时才读 `references/design-movements.md`。
 
 ## Step 5 · Build
 按选定路径执行：
-- AI 配图/出图：读 `references/illustrations.md`，并使用该风格 preset（`styles/<id>.md`）的 **Base Style Prompt**。
+- 配图/出图：按需读 `references/illustrations.md`，先在大纲中补视觉计划，再按用途制作局部插图或背景；共用已选 preset 的 **Base Style Prompt** 或用户认可的视觉基线。
   参考文档按需读：与当前页无关的 reference 不要为了"求全"而预读。
 - 原生对象与单位护栏：`references/paths/path-a-native.md`。
 - 流程图/重复模块：读 `references/layout-grammar.md`，同角色等尺寸、默认正交连接。
@@ -85,18 +87,12 @@ contact sheet 只用于整册节奏，**不替代**逐页检查。
 - section label（INSIGHT / TAKEAWAY / PART 03）可作设计元素。
 - 标题短小写实；不要强行制造悬念、张力或"金句"。
 
-## Quick reference
-- 5/5/5：≤5 词/行，≤5 要点/页，文字密集页不超过连续 5 页。
-- 按 foundation 的文字角色与字号区间排版；配色 60-30-10；每页至少一个视觉元素。
-- 一个观点，一分钟一页。
-- 中文出图：标题 ≤8 字，正文每行 ≤30 字，避免生僻字。
-
 ## Reference index
 | 文件 | 内容 |
 |---|---|
 | `references/workflow.md` | 端到端 7 步与检查点 |
 | `references/content-structure.md` | 内容结构化与大纲模板 |
-| `references/illustrations.md` | AI 出图方法论与 custom style |
+| `references/illustrations.md` | 按需：视觉计划、局部插图、全页出图与一致性 |
 | `references/dependencies.md` | 能力矩阵与降级策略 |
 | `references/paths/*.md` | 四条执行路径 + fallback |
 | `references/qa/*.md` | 目检、渲染、像素缺陷库、交付 |

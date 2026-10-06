@@ -1,49 +1,80 @@
-# Illustrations and AI Images
+# 插图与视觉资产
 
-## Which slides get illustrations (Path A / B')
-1. Cover - always.
-2. Key insight slides - the "aha" moments.
-3. Closing - optional but impactful.
-4. Data-heavy slides - charts/diagrams instead of AI art.
+用于需要配图、AI 出图或封面视觉延展的页面。先决定画面要解释什么，再选择资产与制作方式。
+纯排版可以独立成页，封面不强制配图；数据页优先给证据留空间。
 
-## The golden rule: describe mood, do not micro-manage
-Short prompts > long prompts. Constraints kill diversity. Do **not** specify color ratios, layout
-positions, character poses, or negative constraints such as "NOT Snoopy".
+## 1. 按表达职责选择
 
-| Don't | Do |
-|---|---|
-| Specify color ratios (60/25/15) | Describe the mood ("warm like a Sunday comic page") |
-| Dictate layout ("title centered, image right") | Reference a specific aesthetic ("Peanuts comic strip") |
-| Add negative constraints ("NOT Snoopy") | Let the model interpret the style |
-| List every visual element | Describe what the viewer should feel |
+| 职责 | 画面任务 | 制作方式 |
+|---|---|---|
+| 品牌主视觉 | 建立印象，提供与主题相关的视觉隐喻 | 原创 AI 图、授权图片或纯排版 |
+| 业务场景 | 展示具体人物/物体的行动、问题与变化 | AI 场景或局部插图，标签原生叠加 |
+| 概念解释 | 表现分散、汇聚、协作等概念 | 材质/物体可 AI；准确关系与标签原生 |
+| 产品演示 | 解释一个真实或题设明确的任务 | 真实界面或标明“界面示意”的原生对象 |
+| 数据与流程 | 保留数值、顺序、因果与可编辑性 | 原生图表、表格、关系图 |
 
-## Base style prompt (once per deck, <=5 lines)
-Read the chosen preset `../styles/<id>.md` - its `Base Style Prompt` block is canonical.
-Append it to every per-slide prompt; do not repeat style details in each slide.
+位图可解释场景，但不能冒充真实产品、客户或实测证据。不要把所有文字改成图标，
+或用同一抽象光带装饰每张内容页。产品示意的内容只能来自已知设定。
 
-## Per-slide prompt structure
+## 2. 将视觉计划放进逐页大纲
+
+每个需要资产的页面记录一行：
+
+`观众要理解什么 / 类型 / 主体与关键关系 / 使用区域与留白 / 原生层 / 共用视觉特征`
+
+例如：观众理解同一客户的信息分散；聊天、表格、笔记三个独立物体；画面在右侧；
+标题在左，来源标签原生；延续封面的蓝色玻璃材质。不要仅写“科技感、高级”。
+只指定影响理解或装配的条件，不穷举无关装饰；必要的主体数量、行动、视角和文字留白可以明确。
+
+## 3. 先做代表资产，再延展
+
+- 使用选中 preset 的 Base Style Prompt（≤5 行）作为整册视觉语言；有用户认可的品牌基线时以其为准。
+- 先生成一张最能检验内容表达的插图，放进实际页面审阅。
+- 后续以已认可资产作为视觉参考，固定材质、色彩、视角与光照；仅重复风格文字不保证一致。
+- 区分参考角色：风格参考、构图参考与编辑目标。迭代只改失败项，保留已认可部分。
+- 同一客户/角色跨页出现时保持身份；系列物体保持尺度与镜头关系，避免每页像不同素材库。
+
+## 4. 局部资产提示词（Path A/B'）
+
+```text
+用途：[场景插图 / 概念物体 / 背景材质]，用于解释 [具体含义]。
+视觉语言：[选中 preset 的 Base Style Prompt 或认可基线]。
+参考图角色：[风格参考 / 编辑目标及须保留的内容，若有]。
+主体与关系：[物体或人物、动作、必须准确的关系]。
+装配条件：[横/竖比例、视角、完整主体、文字留白或真实透明背景]。
+文字：图片无文字、数字或标签；精确文字与关系由原生层表达。
 ```
-Create a [style] slide about [topic].
 
-[Base Style]
+- 透明 cutout 需请求真实 alpha；PNG 保存透明度，不能把棋盘格当透明背景。
+- 矩形场景按实际占用区选择比例；整页背景才按幻灯片比例。
+- preset 的 CANVAS 是整页出图默认；局部资产在简报中明确覆盖为其用途所需比例。
+- 按宿主能力请求足够清晰的分辨率，并核对实际尺寸；不把提示词里的尺寸当输出保证。
+- 裁切前确认主体完整。用 contain 保全关键细节，只有不会丢信息时才用 cover。
+- 保存独立资产、用途、生成/来源记录与参考关系；记录位图不可按对象编辑的边界。
 
-DESIGN INTENT: [1 sentence - what the viewer should FEEL]
+## 5. 全页视觉提示词（Path B）
 
-TEXT TO RENDER:
-- Title: "[exact text]"
-- Body: "[exact text]"
-
-[Optional: 1-2 sentences of scene/mood. Let the model decide composition.]
+```text
+生成一张关于 [主题] 的完整幻灯片，16:9，目标 2048x1152。
+[Base Style Prompt]
+页面目的：[观众要理解的内容]。
+画面：[主体、行动和必要构图]。
+逐字渲染文字：[准确标题、标签及正文]。
 ```
 
-## Technical rules
-- Always specify resolution: `2048x1152` (16:9) for crisp text.
-- Always include "no text in image" for Path B' base images (text is overlaid natively).
-- For Path B, include all text verbatim and keep Chinese titles <=8 characters.
-- Generate in parallel batches of 3-5 when the host supports it.
-- Verify text accuracy after generation; regenerate with simplified text if wrong.
+中文字宜短，标题尽量 ≤8 字，正文每行 ≤30 字；逐字核对。错误时简化或重生成，
+不能把图片里的文字宣称为原生可编辑。宿主支持并行时可批量生成独立资产；
+需要以新资产作为参考的后续生成应顺序执行。
+
+## 6. 能力与验收
+
+- 无图片生成：使用已有授权资产或原生示意，告知未实现的插图效果；不静默改为其他付费/API 路线。
+- 不支持透明输出：改为与页面匹配的矩形场景，说明限制；不声称已交付透明资产。
+- 无原生构建器：按 `dependencies.md` 降级，不声称保留原生标签与关系。
+- 将最终资产放进页面，检查含义、主体完整、透明边缘、文字对比和视觉焦点。
+- 连看封面、场景、概念及产品页，检查视觉连续性与页面节奏；未溢出不等于设计成立。
 
 ## Custom character style
-Treat "Doraemon style" or "Studio Ghibli" as a **style reference**, not a request to draw copyrighted characters.
-Extract the visual DNA and write it as a custom preset under `../styles/custom-<slug>.md`:
-shape language, line quality, palette, character proportions, background treatment, emotional tone.
+
+将角色/动画风格请求提炼为形状、线条、颜色、比例、背景和情绪等视觉特征。
+确需自定义 preset 时遵循 `design-system.md`；不要仅凭一个风格名称添加特定角色。

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://subaru-skills/schemas/typography.profiles.schema.json",
+  "title": "typography/profiles.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "default_profile",
+    "default_style",
+    "profiles"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "default_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "default_style": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role_styles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/profile"
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  },
+  "$defs": {
+    "slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "families"
+          ]
+        },
+        {
+          "required": [
+            "foundation"
+          ]
+        },
+        {
+          "required": [
+            "same_as"
+          ]
+        }
+      ],
+      "properties": {
+        "families": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "foundation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "same_as": {
+          "enum": [
+            "ea",
+            "latin"
+          ]
+        },
+        "include_ea": {
+          "type": "boolean"
+        },
+        "platform_fallback": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "required": [
+        "ea",
+        "latin"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "ea": {
+          "$ref": "#/$defs/slot"
+        },
+        "latin": {
+          "$ref": "#/$defs/slot"
+        },
+        "style_fallbacks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

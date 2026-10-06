@@ -5,11 +5,11 @@
 
 ## 1. Ten Evidence-Based Rules
 
-From PLOS Computational Biology: [Ten Simple Rules for Effective Presentation Slides](https://pmc.ncbi.nlm.nih.gov/articles/PMC8638955/)
+Selected guidance adapted from PLOS Computational Biology: [Ten Simple Rules for Effective Presentation Slides](https://pmc.ncbi.nlm.nih.gov/articles/PMC8638955/)
 
 1. **One idea per slide** — Each slide conveys exactly one core message
 2. **One minute per slide** — 20-minute talk ≈ 20 slides
-3. **Title = assertion** — Change "Results" to "X proves Y" — the title is the abstract
+3. **Title fits the purpose** — Use a direct subject for setup and a supported takeaway for findings
 4. **Only include what you'll discuss** — If you won't talk about it, remove it
 5. **Cite inline** — Attribution goes on the slide, not a final references slide
 6. **Lead with visuals** — Almost no slide should be text-only; build around images/charts
@@ -24,7 +24,9 @@ Developed by Michael Alley at Penn State. A controlled experiment with 110 engin
 approach produces better comprehension, fewer misconceptions, lower perceived cognitive load and better
 delayed recall.
 
-**Core method:** slide titles are complete assertion sentences, not topic words.
+**Core method:** use a complete assertion title supported by visual evidence.
+
+Apply this to findings with evidence; setup and overview pages in this skill may use a concise topic title.
 
 | Traditional | Assertion-Evidence |
 |------------|-------------------|

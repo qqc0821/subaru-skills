@@ -17,7 +17,7 @@ Run this on **every** slide at full size (contact sheets are for deck-level flow
 
 ## Content
 - [ ] No placeholder text ("Chart Title", "lorem", "xxxx", "TODO").
-- [ ] Titles are assertions and read as a coherent story in order.
+- [ ] Titles name the subject or state a supported finding, and read coherently in order.
 - [ ] Charts/tables carry the intended data and units.
 
 ## Consistency
@@ -25,3 +25,12 @@ Run this on **every** slide at full size (contact sheets are for deck-level flow
 - [ ] Same-role diagram nodes use the same size, radius and internal padding; arrows point in the intended direction.
 - [ ] Section dividers and repeated labels look identical.
 - [ ] Colors and fonts match the chosen style preset and the foundation's font resolution; each accent color has one clear meaning on the slide.
+
+## Design review
+- [ ] For commercial/reference-led decks, the chosen reference pages map to concrete layout decisions; see `../business-design.md`.
+- [ ] CJK family and actual weight are verified in the renderer; compare samples when needed under `../typography-cjk.md`.
+- [ ] Main evidence remains prominent; title weight, empty space and repeated containers do not obscure the reading order.
+- [ ] Cover/content preserve the accepted baseline and visual continuity.
+- [ ] Illustrations convey planned meaning without invented claims, accidental text or crop damage.
+- [ ] Cutouts have real alpha and clean edges on the intended background.
+- [ ] Required labels/relationships stay native; identify generated scenes as illustrative where needed.

@@ -32,13 +32,32 @@ def validate_foundation(skill: Path, foundation_path: Path):
     if isinstance(profiles, dict) and default and default not in profiles:
         findings.append(C.Finding(CHECK, "foundation-default-profile:" + skill.name,
                                   "default_profile is not declared in profiles", rel))
-    if isinstance(profiles, dict):
+    typography_path = skill / "typography/profiles.json"
+    if typography_path.is_file():
+        try:
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("slides_typography_contract", C.ROOT / "skills/subaru-slides/scripts/typography.py")
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            module.validate_configuration(data, module.read_json(typography_path))
+            for name in profiles:
+                roles = module.resolve_viewing_profile(data, name)
+                for role in ("slide-title", "body", "diagram-node", "footnote"):
+                    if role not in roles:
+                        findings.append(C.Finding(CHECK, "foundation-role:" + skill.name + ":" + name + ":" + role,
+                                                  "profile " + name + " is missing text role " + role, rel))
+        except (ValueError, KeyError, TypeError, AttributeError) as exc:
+            findings.append(C.Finding(CHECK, "typography-contract:" + skill.name, str(exc), C.rel(typography_path)))
+    elif isinstance(profiles, dict) and skill.name != "subaru-slides":
         for name, profile in profiles.items():
             roles = profile.get("text_roles", {}) if isinstance(profile, dict) else {}
             for role in ("slide-title", "body", "diagram-node", "footnote"):
                 if role not in roles:
                     findings.append(C.Finding(CHECK, "foundation-role:" + skill.name + ":" + name + ":" + role,
                                               "profile " + name + " is missing text role " + role, rel))
+    elif skill.name == "subaru-slides":
+        findings.append(C.Finding(CHECK, "missing-typography:" + skill.name,
+                                  "typography/profiles.json is missing", C.rel(typography_path)))
     return findings
 
 

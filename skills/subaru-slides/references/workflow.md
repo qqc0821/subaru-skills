@@ -16,13 +16,14 @@ If the user has not specified them, confirm:
 
 | Checkpoint | Show | Continue when |
 |---|---|---|
-| 1 | Slide-by-slide outline: assertion title, up to four points, visual type | User approves or adjusts |
-| 2 | Three style candidates with one-liner, palette and sample | User selects a direction |
-| 3 | Two or three key slides (all slides in Collaborative mode) | User approves or requests revision |
+| 1 | Slide-by-slide outline: purpose-appropriate title, up to four points, visual type; add a visual plan when assets are needed | User approves or adjusts |
+| 2 | Complete same-copy directions when exploring design; retain the user's accepted baseline when refining | User selects a direction or has already authorized its use |
+| 3 | Cover and representative content/product/evidence pages together (all slides in Collaborative mode) | User approves or has authorized execution; inspect before expanding |
 | 4 | Final path, QA receipt and claim boundary | User accepts delivery |
 
-Full Auto combines checkpoints 1–3 into one approval. When the user does not respond,
-use the stated default mode and make the smallest reversible assumption.
+Existing authorization applies to these checkpoints. A request to execute an agreed plan does
+not require repeated approval. For optional unanswered choices, state a small reversible assumption;
+silence does not approve a choice that requires user input.
 
 ## Exceptions and fallback
 
