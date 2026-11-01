@@ -32,6 +32,7 @@ npx skills add qqc0821/subaru-skills --skill subaru-slides
 
 | 你的问题 | Skill | 入口 |
 |---|---|---|
+| 分析网页加载、主线程文件耗时与 LCP | `subaru-performance` | [使用说明](skills/subaru-performance/README.md) |
 | 把主题、资料或文档变成中文汇报、课件或技术分享 | `subaru-slides` | [使用说明](skills/subaru-slides/README.md) · [实际案例](examples/rag-sharing/README.md) |
 | 打开思路、突破重复点子、发展方案或保存讨论 | `subaru-brainstorm` | [使用说明](skills/subaru-brainstorm/README.md) · [完整产物](examples/knowledge-library/result.md) |
 
