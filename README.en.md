@@ -67,3 +67,7 @@ make site        # build to output/site/ with no third-party dependency
 ~~~
 
 See [CHANGELOG.md](CHANGELOG.md) for history.
+
+## Web performance
+
+Use `subaru-performance` to turn Chrome traces into a local main-thread and LCP report. [Usage](skills/subaru-performance/README.en.md).

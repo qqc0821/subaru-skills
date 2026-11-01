@@ -39,3 +39,7 @@
 `examples/management-report/`、`examples/rag-sharing/`、`examples/knowledge-library/` 与 `site/` 为本次新编写的原创内容，适用根 MIT LICENSE。管理层案例的业务数据为虚构；RAG 案例为原创教学总结，技术参考 URL 与读取日期记录在 `examples/rag-sharing/source.json`，未复制第三方图表、截图或文档正文。PPTX 与 WebP 预览使用原生对象渲染，未分发字体文件。
 
 上述原创案例的发布不会改变 `skills/subaru-slides` 上游复制内容与原有风格样例的授权状态；该缺口仍需分别取得许可、替换或经审查移除。本站构建只复制新案例，不上传 skill 包。
+
+## subaru-performance
+
+`skills/subaru-performance/` contains original capture/analysis scripts and an original HTML report template developed in this repository workflow. No third-party library, browser binary, recording, screenshot, or website asset is bundled. Runtime dependency notes: [capture reference](skills/subaru-performance/references/capture.md).

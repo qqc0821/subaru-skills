@@ -1,0 +1,7 @@
+interface:
+  brand_color: "#203E32"
+  display_name: "主线程性能透视"
+  short_description: "采集网页性能并生成文件级主线程耗时、长任务与 LCP 可视报告"
+  default_prompt: "Use $subaru-performance to analyze a page-load recording and generate a local main-thread report with file attribution and LCP. Distinguish measured evidence from inferred causes."
+policy:
+  allow_implicit_invocation: true

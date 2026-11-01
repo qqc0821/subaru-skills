@@ -84,5 +84,28 @@
       "references/session.md",
       "references/outputs.md"
     ]
+  },
+  "subaru-performance": {
+    "paths": {
+      "offline": [
+        "SKILL.md"
+      ],
+      "capture": [
+        "SKILL.md",
+        "references/capture.md"
+      ]
+    },
+    "budgets": {
+      "offline": 1800,
+      "capture": 3000
+    },
+    "entry_limit": 1800,
+    "file_limit": 1600,
+    "optional": [
+      "references/capture.md"
+    ],
+    "conditional": [
+      "references/capture.md"
+    ]
   }
 }
