@@ -7,3 +7,5 @@ Turn a recorded page load into a local interactive main-thread report: scripts, 
 Alternatively provide an uncompressed Chrome Performance JSON for offline analysis. Execution attribution is evidence, not proof of every loading bottleneck. Worker and iframe execution are excluded.
 
 Requires Python 3.10+. Live capture optionally uses ego-browser. The generated HTML has no external dependencies.
+
+The report focuses on work before LCP. Zoom and pan the Canvas timeline and select tasks or scripts to inspect execution evidence. Later activity is available separately. Open the standalone HTML directly in a browser; no server is required.
