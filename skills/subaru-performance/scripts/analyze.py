@@ -45,7 +45,7 @@ def normalize(raw, perf=None, navigation=0):
         resources = [{'url': r['name'], 'start': r['startTime'], 'duration': r['duration'], 'cache': r.get('deliveryType') == 'cache'} for r in perf.get('resources', [])]
         last = perf.get('lcp', [])[-1] if perf.get('lcp') else {}
         r = next((r for r in perf.get('resources', []) if r['name'] == last.get('url')), None)
-        n = perf.get('navigation', [{}])[0]
+        n = (perf.get('navigation') or [{}])[0]
         if r and lcp is not None and 0 <= n.get('responseStart', -1) <= r['startTime'] <= r['responseEnd'] <= lcp:
             breakdown = [{'name': k, 'value': v} for k, v in zip(['等待文档首字节', 'LCP 资源开始前', 'LCP 资源加载', '资源完成至 LCP'], [n['responseStart'], r['startTime'] - n['responseStart'], r['duration'], lcp - r['responseEnd']])]
     else:
@@ -56,7 +56,11 @@ def normalize(raw, perf=None, navigation=0):
                 pending[d['requestId']] = {'url': d.get('url', ''), 'start': (e['ts'] - base) / 1000}
             elif e['name'] == 'ResourceFinish' and d.get('requestId') in pending:
                 r = pending.pop(d['requestId']);r['duration'] = (e['ts'] - base) / 1000 - r['start'];resources.append(r)
-    data = {'url': nav['args']['data']['documentLoaderURL'], 'duration': duration, 'lcp': lcp, 'tasks': outer, 'resources': resources, 'breakdown': breakdown}
+    data = {'url': nav['args']['data']['documentLoaderURL'], 'duration': duration, 'lcp': lcp, 'tasks': outer, 'resources': resources, 'breakdown': breakdown, 'responseStart': None}
+    if perf:
+        timing = perf.get('navigation', [{}])[0].get('responseStart') if perf.get('navigation') else None
+        if isinstance(timing, (int, float)) and 0 < timing <= duration:
+            data['responseStart'] = timing
     return data, main, base
 
 
@@ -87,6 +91,12 @@ def attribute(data, main, base):
     return data
 
 
+def render_report(data):
+    """Embed data without allowing trace strings to terminate the JSON script."""
+    template = (Path(__file__).resolve().parent.parent / 'assets/viewer.html').read_text()
+    return template.replace('__DATA__', json.dumps(data, ensure_ascii=False).replace('<', r'\u003c'))
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('trace',type=Path);p.add_argument('--perf',type=Path,help='Optional same-capture Performance API snapshot')
@@ -95,9 +105,9 @@ def main():
     try:
         raw=json.loads(args.trace.read_text());perf=json.loads(args.perf.read_text()) if args.perf else None
         data,events,base=normalize(raw,perf,args.navigation);attribute(data,events,base)
-        template=(Path(__file__).resolve().parent.parent/'assets/viewer.html').read_text()
+
         args.out.parent.mkdir(parents=True,exist_ok=True)
-        args.out.write_text(template.replace('__DATA__',json.dumps(data,ensure_ascii=False).replace('<','\\u003c')))
+        args.out.write_text(render_report(data))
         print(json.dumps({'output':str(args.out),'lcp_ms':data['lcp'],'tasks':len(data['tasks']),'files':len(data['files'])}))
     except (ValueError,OSError,KeyError,TypeError) as e:
         p.exit(2,f'Analysis failed: {e}\n')
