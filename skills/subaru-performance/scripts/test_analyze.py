@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Offline invariants for attribution and missing metrics."""
 import unittest
-from analyze import normalize, attribute
+import json
+import re
+from analyze import normalize, attribute, render_report
 
 class AttributionTests(unittest.TestCase):
     def trace(self):
@@ -28,5 +30,25 @@ class AttributionTests(unittest.TestCase):
         with self.assertRaises(ValueError):normalize(t,navigation=99)
     def test_no_navigation_fails(self):
         with self.assertRaises(ValueError):normalize({'traceEvents':[]})
+
+class ReportTests(unittest.TestCase):
+    def test_optional_response_timing(self):
+        d, _, _ = normalize(AttributionTests().trace())
+        self.assertIsNone(d['responseStart'])
+        for value, expected in [(25, 25), (0, None), (-1, None), (2000, None)]:
+            perf = {'url': 'https://example.test/', 'now': 1000, 'navigation': [{'responseStart': value}]}
+            d, _, _ = normalize(AttributionTests().trace(), perf)
+            self.assertEqual(d['responseStart'], expected)
+
+    def test_report_data_roundtrip_and_script_safety(self):
+        d, events, base = normalize(AttributionTests().trace())
+        attribute(d, events, base)
+        d['url'] = 'https://example.test/</script><script>alert(1)</script>'
+        html = render_report(d)
+        embedded = re.search(r'<script id="data" type="application/json">(.*?)</script>', html, re.S).group(1)
+        self.assertNotIn('<', embedded)
+        self.assertEqual(json.loads(embedded), d)
+        self.assertNotIn('__DATA__', html)
+        self.assertNotIn('EcoFlow', html)
 
 if __name__=='__main__':unittest.main()

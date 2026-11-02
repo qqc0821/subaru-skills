@@ -7,3 +7,5 @@ Turn a recorded page load into a local interactive main-thread report: scripts, 
 Alternatively provide an uncompressed Chrome Performance JSON for offline analysis. Execution attribution is evidence, not proof of every loading bottleneck. Worker and iframe execution are excluded.
 
 Requires Python 3.10+. Live capture optionally uses ego-browser. The generated HTML has no external dependencies.
+
+The report starts with the complete navigation-to-LCP story, with inline long-task evidence. A script cost ledger supports search, expandable files and related tasks, and a full-recording scope. Missing LCP falls back to the full recording with an explicit notice. Open the standalone HTML directly; no server is required.

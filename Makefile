@@ -61,6 +61,7 @@ test:
 	@$(PYTHON) tools/make_montage.py --help > /dev/null && echo "make_montage: OK"
 	@$(PYTHON) tools/prepare_eval_artifacts.py --help > /dev/null && echo "prepare_eval_artifacts: OK"
 	@$(PYTHON) -m unittest discover -s tests
+	@$(PYTHON) -m unittest discover -s skills/subaru-performance/scripts -p 'test_*.py'
 
 eval:
 	@$(PYTHON) tools/run_evals.py
